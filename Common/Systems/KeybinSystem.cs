@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Terraria.Localization;
+using Terraria.ModLoader;
+
+namespace LootCoins.Common.Systems
+{
+    public class KeybinSystem : ModSystem
+    {
+        public static ModKeybind RandomBuffKeybind { get; private set; }
+
+        public override void Load()
+        {
+            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue($"Mods.LootCoins.Hint.兑换面板开关"), "P");
+        }
+
+        public override void Unload()
+        {
+            RandomBuffKeybind = null;
+        }
+    }
+}

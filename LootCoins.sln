@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LootCoins", "LootCoins.csproj", "{F3342618-A5BC-4444-A939-B52954186CE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3342618-A5BC-4444-A939-B52954186CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3342618-A5BC-4444-A939-B52954186CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3342618-A5BC-4444-A939-B52954186CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3342618-A5BC-4444-A939-B52954186CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F5786BC-98EA-4742-8E0A-A856E42D82E3}
+	EndGlobalSection
+EndGlobal

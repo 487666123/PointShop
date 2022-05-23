@@ -1,0 +1,4 @@
+displayName = 积分制（测试版）
+author = 自爆局局长
+version = 1.0
+hideCode = true

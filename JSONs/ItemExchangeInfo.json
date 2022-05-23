@@ -1,0 +1,1310 @@
+[
+    {
+        "name": "太空",
+        "image": "Bestiary_Sky",
+        "items": [
+            {
+                "id": 65,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 159,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4978,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 2197,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 1516,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 4379,
+                "value": 100,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "森林",
+        "image": "Bestiary_Surface",
+        "items": [
+            {
+                "id": 3084,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 3068,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 953,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 285,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 216,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 236,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 832,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 933,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 1304,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 1309,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 485,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 889,
+                "value": 150,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "洞穴",
+        "image": "Bestiary_Caverns",
+        "items": [
+            {
+                "id": 18,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 49,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 50,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 53,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 54,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 118,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 158,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 215,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 238,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 285,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 393,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 930,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 975,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 989,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 997,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1166,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1303,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1320,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1325,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 3102,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4144,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 5011,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 5097,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 88,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 410,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 411,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 29,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 682,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 723,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 885,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 886,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 890,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1321,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 754,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 755,
+                "value": 100,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "地狱",
+        "image": "Bestiary_The_Underworld",
+        "items": [
+            {
+                "id": 267,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 272,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 906,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 1322,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 1323,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 112,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 218,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 220,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 274,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 485,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 3282,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 4443,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 4551,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 4737,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 5010,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 683,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1518,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 3290,
+                "value": 150,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "丛林",
+        "image": "Bestiary_The_Jungle",
+        "items": [
+            {
+                "id": 211,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 212,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 213,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 753,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 887,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 964,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 2204,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 2292,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 3017,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 960,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 961,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 962,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 885,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1265,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 1328,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 1521,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1611,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1533,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 3286,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1291,
+                "value": 100,
+                "mode": 3
+            }
+        ]
+    },
+    {
+        "name": "海洋",
+        "image": "Bestiary_Ocean",
+        "items": [
+            {
+                "id": 186,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 187,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 268,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 277,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 863,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1303,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4404,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 4425,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 4460,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 1315,
+                "value": 100,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "雪地",
+        "image": "Bestiary_Snow",
+        "items": [
+            {
+                "id": 1309,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 670,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 724,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 950,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1319,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 987,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1579,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 3199,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 669,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 2198,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 951,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 393,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 5097,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 18,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 118,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1253,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 5096,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 4613,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 4428,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 676,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 725,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1264,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1312,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1519,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 2161,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 726,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1306,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 3289,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 1537,
+                "value": 150,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "沙漠",
+        "image": "Bestiary_Desert",
+        "items": [
+            {
+                "id": 934,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 857,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 848,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 866,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 3772,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 4056,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4055,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4061,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 4062,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 4263,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4346,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 4276,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4262,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 889,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 890,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 888,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 527,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 528,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 893,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 3783,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 4669,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 4714,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 3795,
+                "value": 100,
+                "mode": 2
+            }
+
+        ]
+    },
+    {
+        "name": "腐化",
+        "image": "Bestiary_The_Corruption",
+        "items": [
+            {
+                "id": 96,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 162,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 64,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 111,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 115,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 5094,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 956,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 957,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 958,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 5091,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 1534,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 4611,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 996,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 888,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 892,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 890,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 3008,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3023,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3012,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3014,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3015,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 891,
+                "value": 150,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "猩红",
+        "image": "Bestiary_The_Crimson",
+        "items": [
+            {
+                "id": 800,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 802,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 1256,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 1290,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 3062,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 5094,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 5091,
+                "value": 150,
+                "mode": 0
+            },
+            {
+                "id": 1535,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 996,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 888,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 527,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 890,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 891,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 892,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 3006,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3007,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3013,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3016,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3020,
+                "value": 200,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "神圣",
+        "image": "Bestiary_The_Hallow",
+        "items": [
+            {
+                "id": 5097,
+                "value": 50,
+                "mode": 0
+            },
+            {
+                "id": 1309,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 1536,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 890,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 889,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 893,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 528,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 3260,
+                "value": 150,
+                "mode": 2
+            },
+            {
+                "id": 856,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 4684,
+                "value": 50,
+                "mode": 2
+            },
+            {
+                "id": 1326,
+                "value": 500,
+                "mode": 2
+            },
+            {
+                "id": 3029,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3030,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3051,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 3022,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 4988,
+                "value": 200,
+                "mode": 2
+            },
+            {
+                "id": 4961,
+                "value": 200,
+                "mode": 4
+            }
+        ]
+    },
+    {
+        "name": "地牢",
+        "image": "Bestiary_The_Dungeon",
+        "items": [
+            {
+                "id": 113,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 148,
+                "value": 50,
+                "mode": 1
+            },
+            {
+                "id": 155,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 156,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 157,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 163,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 164,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 165,
+                "value": 50,
+                "mode": 1
+            },
+            {
+                "id": 327,
+                "value": 50,
+                "mode": 1
+            },
+            {
+                "id": 329,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 891,
+                "value": 150,
+                "mode": 1
+            },
+            {
+                "id": 932,
+                "value": 50,
+                "mode": 1
+            },
+            {
+                "id": 1307,
+                "value": 50,
+                "mode": 1
+            },
+            {
+                "id": 2192,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 2999,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 3000,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 3095,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 3317,
+                "value": 100,
+                "mode": 1
+            },
+            {
+                "id": 671,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 679,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 759,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 938,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 963,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 977,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1183,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1254,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1266,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1300,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1444,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1445,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1446,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1513,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 1517,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 3291,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 4679,
+                "value": 150,
+                "mode": 4
+            },
+            {
+                "id": 4789,
+                "value": 150,
+                "mode": 4
+            }
+        ]
+    }
+]
