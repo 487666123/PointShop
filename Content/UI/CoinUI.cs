@@ -1,4 +1,4 @@
-﻿using LootCoins.Common.Players;
+﻿using PointShop.Common.Players;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,7 +9,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LootCoins.Content.UI
+namespace PointShop.Content.UI
 {
     /// <summary>
     /// 一共有三个面板，一个主面板，其他两个在主面板内，分别是菜单面板和物品展示面板
@@ -84,9 +84,9 @@ namespace LootCoins.Content.UI
 
             // 循环添加菜单
             float offsetX = 0;
-            for (int i = 0; i < LootCoins.ItemExchangeInfo.Count; i++)
+            for (int i = 0; i < PointShop.ItemExchangeInfo.Count; i++)
             {
-                MenuPanel.Append(new MenuButton(LootCoins.IconTextures[i], i, ref offsetX, this));
+                MenuPanel.Append(new MenuButton(PointShop.IconTextures[i], i, ref offsetX, this));
             }
 
             // 显示物品的面板
@@ -117,7 +117,7 @@ namespace LootCoins.Content.UI
             MainMenu.Width.Set(panel.Width.Pixels, 0f);
             MainMenu.Height.Set(50, 0f);
             // Logo
-            LogoImage = new(LootCoins.IconTextures[((int)huanJing)])
+            LogoImage = new(PointShop.IconTextures[((int)huanJing)])
             {
                 VAlign = 0.5f
             };
@@ -128,7 +128,7 @@ namespace LootCoins.Content.UI
             };
             text.Left.Set(LogoImage.Width.Pixels + 10f, 0f);
             // 关闭按钮
-            UIImageButton BackImageButton = new(ModContent.Request<Texture2D>("LootCoins/Images/Button_Back", AssetRequestMode.ImmediateLoad));
+            UIImageButton BackImageButton = new(ModContent.Request<Texture2D>("PointShop/Images/Button_Back", AssetRequestMode.ImmediateLoad));
             BackImageButton.VAlign = 0.5f;
             BackImageButton.HAlign = 1f;
             BackImageButton.OnClick += BackImageButton_OnClick;
@@ -137,7 +137,7 @@ namespace LootCoins.Content.UI
             MainMenu.Append(BackImageButton);
             this.Append(MainMenu);
 
-            JsonArray jsonArray = LootCoins.ItemExchangeInfo[((int)huanJing)].AsObject()["items"].AsArray();
+            JsonArray jsonArray = PointShop.ItemExchangeInfo[((int)huanJing)].AsObject()["items"].AsArray();
             // 在UI里面添加 Item
             MenuButton.AddItemInCoinUI(this, jsonArray, huanJing);
         }
@@ -199,8 +199,8 @@ namespace LootCoins.Content.UI
 
             // 提示文字
             CoinPlayer coinPlayer = Main.LocalPlayer.GetModPlayer<CoinPlayer>();
-            text.SetText(LootCoins.ItemExchangeInfo[((int)huanJing)].AsObject()["name"].ToString() +
-                Language.GetTextValue($"Mods.LootCoins.Hint.积分2") + coinPlayer.HuanJingFen[(int)huanJing]);
+            text.SetText(PointShop.ItemExchangeInfo[((int)huanJing)].AsObject()["name"].ToString() +
+                Language.GetTextValue($"Mods.PointShop.Hint.积分2") + coinPlayer.HuanJingFen[(int)huanJing]);
             text.Recalculate();
         }
     }

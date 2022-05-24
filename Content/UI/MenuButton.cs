@@ -7,9 +7,9 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static LootCoins.Content.UI.CoinUI;
+using static PointShop.Content.UI.CoinUI;
 
-namespace LootCoins.Content.UI
+namespace PointShop.Content.UI
 {
     public class MenuButton : UIImageButton
     {
@@ -36,9 +36,9 @@ namespace LootCoins.Content.UI
         // 点击事件
         public override void Click(UIMouseEvent evt)
         {
-            coinUI.LogoImage.SetImage(LootCoins.IconTextures[((int)huanJing)]);
+            coinUI.LogoImage.SetImage(PointShop.IconTextures[((int)huanJing)]);
             coinUI.huanJing = huanJing;
-            JsonArray jsonArray = LootCoins.ItemExchangeInfo[i].AsObject()["items"].AsArray();
+            JsonArray jsonArray = PointShop.ItemExchangeInfo[i].AsObject()["items"].AsArray();
             // 在UI里面添加 Item
             AddItemInCoinUI(coinUI, jsonArray, huanJing);
         }
@@ -72,7 +72,7 @@ namespace LootCoins.Content.UI
         // 绘制自己
         protected override void DrawSelf(SpriteBatch sb)
         {
-            JsonObject keyValuePairs = LootCoins.ItemExchangeInfo[i].AsObject();
+            JsonObject keyValuePairs = PointShop.ItemExchangeInfo[i].AsObject();
             base.DrawSelf(sb);
             // 在鼠标位置绘制文字
             if (ContainsPoint(Main.MouseScreen))

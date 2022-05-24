@@ -1,9 +1,9 @@
-﻿using LootCoins.Common.Systems;
-using LootCoins.Content.UI;
+﻿using PointShop.Common.Systems;
+using PointShop.Content.UI;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 
-namespace LootCoins.Common.Players
+namespace PointShop.Common.Players
 {
     public class KeybinPlayer : ModPlayer
     {

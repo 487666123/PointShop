@@ -1,14 +1,14 @@
-﻿using LootCoins.Common.GlobalNPCs;
-using LootCoins.Common.Systems;
-using LootCoins.Content.UI;
+﻿using PointShop.Common.GlobalNPCs;
+using PointShop.Common.Systems;
+using PointShop.Content.UI;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static LootCoins.Content.UI.CoinUI;
+using static PointShop.Content.UI.CoinUI;
 using static Terraria.ID.ContentSamples;
 
-namespace LootCoins.Common.Players
+namespace PointShop.Common.Players
 {
     // 保存环境得分
     public class CoinPlayer : ModPlayer

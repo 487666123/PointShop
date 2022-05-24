@@ -1,5 +1,5 @@
-﻿using LootCoins.Common.Players;
-using LootCoins.Common.Systems;
+﻿using PointShop.Common.Players;
+using PointShop.Common.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -13,9 +13,9 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static LootCoins.Content.UI.CoinUI;
+using static PointShop.Content.UI.CoinUI;
 
-namespace LootCoins.Content.UI
+namespace PointShop.Content.UI
 {
     public class SwitchUI : UIState
     {
@@ -31,7 +31,7 @@ namespace LootCoins.Content.UI
         public override void OnInitialize()
         {
             // 加载Logo
-            logoImage = LootCoins.IconTextures[((int)CoinModSystem.coinUI.huanJing)];
+            logoImage = PointShop.IconTextures[((int)CoinModSystem.coinUI.huanJing)];
 
             // 主面板
             panel = new()
@@ -58,7 +58,7 @@ namespace LootCoins.Content.UI
             };
             tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
 
-            button = new(ModContent.Request<Texture2D>("LootCoins/Images/ButtonPlay", AssetRequestMode.ImmediateLoad))
+            button = new(ModContent.Request<Texture2D>("PointShop/Images/ButtonPlay", AssetRequestMode.ImmediateLoad))
             {
                 VAlign = 0.5f,
                 HAlign = 1f
@@ -88,10 +88,10 @@ namespace LootCoins.Content.UI
                 Player player = Main.LocalPlayer;
                 CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
                 HuanJing huanJing = CoinPlayer.PlayerInHuanJing(player);
-                logoImage = LootCoins.IconTextures[((int)huanJing)];
+                logoImage = PointShop.IconTextures[((int)huanJing)];
                 logo.SetImage(logoImage);
                 tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
-                tileText.SetText(LootCoins.ItemExchangeInfo[((int)huanJing)].AsObject()["name"].ToString() + Language.GetTextValue($"Mods.LootCoins.Hint.积分2") + coinPlayer.HuanJingFen[(int)huanJing]);
+                tileText.SetText(PointShop.ItemExchangeInfo[((int)huanJing)].AsObject()["name"].ToString() + Language.GetTextValue($"Mods.PointShop.Hint.积分2") + coinPlayer.HuanJingFen[(int)huanJing]);
             }
             this.Recalculate();
         }

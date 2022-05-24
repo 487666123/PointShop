@@ -1,9 +1,9 @@
-﻿using LootCoins.Common.Configs;
+﻿using PointShop.Common.Configs;
 using System;
 using System.Text.RegularExpressions;
 using Terraria.ModLoader;
 
-namespace LootCoins
+namespace PointShop
 {
     public class MyUtils
     {

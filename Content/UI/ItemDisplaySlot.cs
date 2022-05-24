@@ -1,5 +1,5 @@
-﻿using LootCoins.Common.Players;
-using LootCoins.Common.Systems;
+﻿using PointShop.Common.Players;
+using PointShop.Common.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,9 +8,9 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static LootCoins.Content.UI.CoinUI;
+using static PointShop.Content.UI.CoinUI;
 
-namespace LootCoins.Content.UI
+namespace PointShop.Content.UI
 {
     public class ItemDisplaySlot : UIElement
     {
@@ -35,16 +35,16 @@ namespace LootCoins.Content.UI
 
         public ItemDisplaySlot(int itemType, int value, HuanJing HuanJing, int mode)
         {
-            PanelBorder = ModContent.Request<Texture2D>("LootCoins/Images/PanelBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            PanelBorderHover = ModContent.Request<Texture2D>("LootCoins/Images/PanelBorderHover", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            PanelBackground = ModContent.Request<Texture2D>("LootCoins/Images/PanelBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            PanelBorder = ModContent.Request<Texture2D>("PointShop/Images/PanelBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            PanelBorderHover = ModContent.Request<Texture2D>("PointShop/Images/PanelBorderHover", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            PanelBackground = ModContent.Request<Texture2D>("PointShop/Images/PanelBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             texture = ModContent.Request<Texture2D>("Terraria/Images/Item_" + itemType, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-            Locking = ModContent.Request<Texture2D>("LootCoins/Images/BossIcons/Lock", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons1 = ModContent.Request<Texture2D>("LootCoins/Images/BossIcons/Map_Icon_Skeletron", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons2 = ModContent.Request<Texture2D>("LootCoins/Images/BossIcons/Map_Icon_Wall_of_Flesh", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons3 = ModContent.Request<Texture2D>("LootCoins/Images/BossIcons/Map_Icon_Skeletron_Prime", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons4 = ModContent.Request<Texture2D>("LootCoins/Images/BossIcons/Map_Icon_Plantera", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Locking = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Lock", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            BossIcons1 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Skeletron", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            BossIcons2 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Wall_of_Flesh", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            BossIcons3 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Skeletron_Prime", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            BossIcons4 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Plantera", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
 
             item = new Item(itemType);
@@ -97,7 +97,7 @@ namespace LootCoins.Content.UI
             // 不能兑换直接退出
             if (locking)
             {
-                Main.NewText(Language.GetTextValue($"Mods.LootCoins.Hint.未解锁该物品"), Color.Red);
+                Main.NewText(Language.GetTextValue($"Mods.PointShop.Hint.未解锁该物品"), Color.Red);
                 return;
             }
 
@@ -106,12 +106,12 @@ namespace LootCoins.Content.UI
             if (coinPlayer.HuanJingFen[(int)CoinModSystem.coinUI.huanJing] >= value)
             {
                 coinPlayer.HuanJingFen[(int)CoinModSystem.coinUI.huanJing] -= value;
-                Main.NewText(Language.GetTextValue($"Mods.LootCoins.Hint.兑换成功"), new Color(0x00, 0x99, 0xff));
+                Main.NewText(Language.GetTextValue($"Mods.PointShop.Hint.兑换成功"), new Color(0x00, 0x99, 0xff));
                 Main.LocalPlayer.QuickSpawnItem(null, item.Clone());
             }
             else
             {
-                Main.NewText(Language.GetTextValue($"Mods.LootCoins.Hint.兑换失败积分不足"), Color.Red);
+                Main.NewText(Language.GetTextValue($"Mods.PointShop.Hint.兑换失败积分不足"), Color.Red);
             }
         }
 

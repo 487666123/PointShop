@@ -1,5 +1,5 @@
-﻿using LootCoins.Common.Players;
-using LootCoins.Common.Systems;
+﻿using PointShop.Common.Players;
+using PointShop.Common.Systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static LootCoins.Content.UI.CoinUI;
+using static PointShop.Content.UI.CoinUI;
 using static Terraria.ID.ContentSamples;
 
-namespace LootCoins.Common.GlobalNPCs
+namespace PointShop.Common.GlobalNPCs
 {
     public class SourceNPC : GlobalNPC
     {
@@ -63,7 +63,7 @@ namespace LootCoins.Common.GlobalNPCs
                 if (MyUtils.GetConfig().CombatJiaFen)
                 {
                     CombatText.NewText(player.getRect(), new(255, 255, 0),
-                    $"{LootCoins.ItemExchangeInfo[((int)huanJing)].AsObject()["name"]}{Language.GetTextValue($"Mods.LootCoins.Hint.积分1")} +" +
+                    $"{PointShop.ItemExchangeInfo[((int)huanJing)].AsObject()["name"]}{Language.GetTextValue($"Mods.PointShop.Hint.积分1")} +" +
                     $"{BestiaryHelper.GetBestiaryStarsPriority(npc)}");
                 }
 

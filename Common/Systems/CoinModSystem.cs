@@ -1,11 +1,11 @@
-﻿using LootCoins.Content.UI;
+﻿using PointShop.Content.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace LootCoins.Common.Systems
+namespace PointShop.Common.Systems
 {
     public class CoinModSystem : ModSystem
     {

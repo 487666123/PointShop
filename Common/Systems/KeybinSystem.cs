@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace LootCoins.Common.Systems
+namespace PointShop.Common.Systems
 {
     public class KeybinSystem : ModSystem
     {
@@ -14,7 +14,7 @@ namespace LootCoins.Common.Systems
 
         public override void Load()
         {
-            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue($"Mods.LootCoins.Hint.兑换面板开关"), "P");
+            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue($"Mods.PointShop.Hint.兑换面板开关"), "P");
         }
 
         public override void Unload()
