@@ -1,11 +1,10 @@
-﻿using PointShop.Common.Players;
-using PointShop.Common.Systems;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PointShop.Common.Players;
+using PointShop.Common.Systems;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static PointShop.Content.UI.CoinUI;
@@ -19,7 +18,7 @@ namespace PointShop.Content.UI
         public HuanJing HuanJing;
         public Item item;
         public float textureSize = 30f;
-        public Texture2D texture;
+        public Texture2D itemTexture;
         public Texture2D PanelBorder;
         public Texture2D PanelBorderHover;
         public Texture2D PanelBackground;
@@ -35,16 +34,17 @@ namespace PointShop.Content.UI
 
         public ItemDisplaySlot(int itemType, int value, HuanJing HuanJing, int mode)
         {
-            PanelBorder = ModContent.Request<Texture2D>("PointShop/Images/PanelBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            PanelBorderHover = ModContent.Request<Texture2D>("PointShop/Images/PanelBorderHover", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            PanelBackground = ModContent.Request<Texture2D>("PointShop/Images/PanelBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            texture = ModContent.Request<Texture2D>("Terraria/Images/Item_" + itemType, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            PanelBorder = MyUtils.GetTexture("PanelBorder2").Value;
+            PanelBorderHover = MyUtils.GetTexture("PanelBorderHover").Value;
+            PanelBackground = MyUtils.GetTexture("PanelBackground2").Value;
 
-            Locking = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Lock", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons1 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Skeletron", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons2 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Wall_of_Flesh", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons3 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Skeletron_Prime", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BossIcons4 = ModContent.Request<Texture2D>("PointShop/Images/BossIcons/Map_Icon_Plantera", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            itemTexture = ModContent.Request<Texture2D>("Terraria/Images/Item_" + itemType, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+            Locking = MyUtils.GetTexture("BossIcons/Lock").Value;
+            BossIcons1 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
+            BossIcons2 = MyUtils.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
+            BossIcons3 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron_Prime").Value;
+            BossIcons4 = MyUtils.GetTexture("BossIcons/Map_Icon_Plantera").Value;
 
 
             item = new Item(itemType);
@@ -97,7 +97,7 @@ namespace PointShop.Content.UI
             // 不能兑换直接退出
             if (locking)
             {
-                Main.NewText(Language.GetTextValue($"Mods.PointShop.Hint.未解锁该物品"), Color.Red);
+                Main.NewText(MyUtils.GetText("Hint.未解锁该物品"), Color.Red);
                 return;
             }
 
@@ -106,12 +106,12 @@ namespace PointShop.Content.UI
             if (coinPlayer.HuanJingFen[(int)CoinModSystem.coinUI.huanJing] >= value)
             {
                 coinPlayer.HuanJingFen[(int)CoinModSystem.coinUI.huanJing] -= value;
-                Main.NewText(Language.GetTextValue($"Mods.PointShop.Hint.兑换成功"), new Color(0x00, 0x99, 0xff));
+                Main.NewText(MyUtils.GetText("Hint.Success"), new Color(0x00, 0x99, 0xff));
                 Main.LocalPlayer.QuickSpawnItem(null, item.Clone());
             }
             else
             {
-                Main.NewText(Language.GetTextValue($"Mods.PointShop.Hint.兑换失败积分不足"), Color.Red);
+                Main.NewText(MyUtils.GetText("Hint.NotPoint"), Color.Red);
             }
         }
 
@@ -125,16 +125,16 @@ namespace PointShop.Content.UI
             }
 
             // 深色背景
-            DrawPanel(sb, GetDimensions(), PanelBackground, Color.White * 0.7f);
+            MyUtils.DrawPanel(sb, GetDimensions(), PanelBackground, Color.White * 0.7f);
 
             // 金色 Border
             if (ContainsPoint(Main.MouseScreen))
             {
-                DrawPanel(sb, GetDimensions(), PanelBorderHover, Color.White);
+                MyUtils.DrawPanel(sb, GetDimensions(), PanelBorderHover, Color.White);
             }
             else
             {
-                DrawPanel(sb, GetDimensions(), PanelBorder, Color.White);
+                MyUtils.DrawPanel(sb, GetDimensions(), PanelBorder, Color.White);
             }
 
             // 物品上锁标志
@@ -162,12 +162,12 @@ namespace PointShop.Content.UI
 
             // 绘制物品
             Vector2 position = GetDimensions().Position();
-            float size = (texture.Width > textureSize || texture.Height > textureSize) ?
-                texture.Width > texture.Height ? textureSize / texture.Width : textureSize / texture.Height :
+            float size = (itemTexture.Width > textureSize || itemTexture.Height > textureSize) ?
+                itemTexture.Width > itemTexture.Height ? textureSize / itemTexture.Width : textureSize / itemTexture.Height :
                 1f;
-            sb.Draw(texture,
-                position + new Vector2((Width.Pixels - texture.Width * size) / 2f,
-                (Height.Pixels - texture.Height * size) / 2f),
+            sb.Draw(itemTexture,
+                position + new Vector2((Width.Pixels - itemTexture.Width * size) / 2f,
+                (Height.Pixels - itemTexture.Height * size) / 2f),
                 null, Color.White * (locking ? 0.5f : 1f), 0f, Vector2.Zero, size, 0, 0f);
 
             // 绘制锁定标志
@@ -192,24 +192,6 @@ namespace PointShop.Content.UI
                     text.TextColor = Color.White * 0.5f;
                 }
             }
-        }
-
-        // 绘制面板
-        public static void DrawPanel(SpriteBatch sb, CalculatedStyle dimensions, Texture2D texture, Color color)
-        {
-            Point point = new Point((int)dimensions.X, (int)dimensions.Y);
-            Point point2 = new Point(point.X + (int)dimensions.Width - 12, point.Y + (int)dimensions.Height - 12);
-            int width = point2.X - point.X - 12;
-            int height = point2.Y - point.Y - 12;
-            sb.Draw(texture, new Rectangle(point.X, point.Y, 12, 12), new Rectangle(0, 0, 12, 12), color);
-            sb.Draw(texture, new Rectangle(point2.X, point.Y, 12, 12), new Rectangle(12 + 4, 0, 12, 12), color);
-            sb.Draw(texture, new Rectangle(point.X, point2.Y, 12, 12), new Rectangle(0, 12 + 4, 12, 12), color);
-            sb.Draw(texture, new Rectangle(point2.X, point2.Y, 12, 12), new Rectangle(12 + 4, 12 + 4, 12, 12), color);
-            sb.Draw(texture, new Rectangle(point.X + 12, point.Y, width, 12), new Rectangle(12, 0, 4, 12), color);
-            sb.Draw(texture, new Rectangle(point.X + 12, point2.Y, width, 12), new Rectangle(12, 12 + 4, 4, 12), color);
-            sb.Draw(texture, new Rectangle(point.X, point.Y + 12, 12, height), new Rectangle(0, 12, 12, 4), color);
-            sb.Draw(texture, new Rectangle(point2.X, point.Y + 12, 12, height), new Rectangle(12 + 4, 12, 12, 4), color);
-            sb.Draw(texture, new Rectangle(point.X + 12, point.Y + 12, width, height), new Rectangle(12, 12, 4, 4), color);
         }
     }
 }

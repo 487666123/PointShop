@@ -1,4 +1,5 @@
-﻿using PointShop.Common.Players;
+﻿using PointShop.Common.Configs;
+using PointShop.Common.Players;
 using PointShop.Common.Systems;
 using System;
 using System.Collections.Generic;
@@ -60,10 +61,10 @@ namespace PointShop.Common.GlobalNPCs
                 (SpawnNPCMode == 0 || SpawnNPCMode == 1))
             {
                 // 积分提示
-                if (MyUtils.GetConfig().CombatJiaFen)
+                if (PointConfig.Get().CombatJiaFen)
                 {
                     CombatText.NewText(player.getRect(), new(255, 255, 0),
-                    $"{PointShop.ItemExchangeInfo[((int)huanJing)].AsObject()["name"]}{Language.GetTextValue($"Mods.PointShop.Hint.积分1")} +" +
+                    $"{MyUtils.GetText("HuanJingName." + huanJing)}{MyUtils.GetText("Hint.Point")} +" +
                     $"{BestiaryHelper.GetBestiaryStarsPriority(npc)}");
                 }
 

@@ -21,7 +21,7 @@ namespace PointShop.Content.UI
     {
         public static bool Visible => !CoinUI.Visible;
 
-        public UIPanel panel;
+        public PointPanel panel;
         public UIImage logo;
         public UIText tileText;
         public UIImageButton button;
@@ -91,7 +91,7 @@ namespace PointShop.Content.UI
                 logoImage = PointShop.IconTextures[((int)huanJing)];
                 logo.SetImage(logoImage);
                 tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
-                tileText.SetText(PointShop.ItemExchangeInfo[((int)huanJing)].AsObject()["name"].ToString() + Language.GetTextValue($"Mods.PointShop.Hint.积分2") + coinPlayer.HuanJingFen[(int)huanJing]);
+                tileText.SetText(MyUtils.GetText("HuanJingName." + huanJing) + MyUtils.GetText("Hint.Point") + " : " + coinPlayer.HuanJingFen[(int)huanJing]);
             }
             this.Recalculate();
         }

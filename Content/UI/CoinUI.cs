@@ -1,11 +1,10 @@
-﻿using PointShop.Common.Players;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PointShop.Common.Players;
 using ReLogic.Content;
 using System.Text.Json.Nodes;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -25,8 +24,8 @@ namespace PointShop.Content.UI
         // 环境分类
         public enum HuanJing
         {
-            TianKong,
             SenLin,
+            TianKong,
             DongXue,
             DiYu,
             CongLin,
@@ -41,11 +40,11 @@ namespace PointShop.Content.UI
         }
 
         public HuanJing huanJing;
-        public UIPanel panel;
-        public UIPanel MenuPanel;
-        public UIPanel ItemListPanel;
+        public PointPanel panel;
+        public PointPanel MenuPanel;
+        public PointPanel ItemListPanel;
         public UIText text;
-        public UIPanel MainMenu;
+        public PointPanel MainMenu;
         public UIImage LogoImage;
 
         public override void OnInitialize()
@@ -109,7 +108,7 @@ namespace PointShop.Content.UI
 
 
             // 主菜单
-            MainMenu = new UIPanel()
+            MainMenu = new()
             {
                 PaddingLeft = 16f,
                 PaddingRight = 16f
@@ -199,8 +198,8 @@ namespace PointShop.Content.UI
 
             // 提示文字
             CoinPlayer coinPlayer = Main.LocalPlayer.GetModPlayer<CoinPlayer>();
-            text.SetText(PointShop.ItemExchangeInfo[((int)huanJing)].AsObject()["name"].ToString() +
-                Language.GetTextValue($"Mods.PointShop.Hint.积分2") + coinPlayer.HuanJingFen[(int)huanJing]);
+            text.SetText(MyUtils.GetText("HuanJingName." + huanJing) +
+                MyUtils.GetText("Hint.Point") + " : " + coinPlayer.HuanJingFen[(int)huanJing]);
             text.Recalculate();
         }
     }

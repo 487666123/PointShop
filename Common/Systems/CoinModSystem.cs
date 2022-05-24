@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
+using PointShop.Common.Configs;
 
 namespace PointShop.Common.Systems
 {
@@ -24,7 +25,7 @@ namespace PointShop.Common.Systems
 
         public override void UpdateUI(GameTime gameTime)
         {
-            if (MyUtils.GetConfig().HuanJingFenPanel)
+            if (PointConfig.Get().HuanJingFenPanel)
             {
                 switchUserInterface?.Update(gameTime);
             }
@@ -47,7 +48,7 @@ namespace PointShop.Common.Systems
                        {
                            coinUI.Draw(Main.spriteBatch);
                        }
-                       if (MyUtils.GetConfig().HuanJingFenPanel)
+                       if (PointConfig.Get().HuanJingFenPanel)
                        {
                            switchUI.Draw(Main.spriteBatch);
                        }

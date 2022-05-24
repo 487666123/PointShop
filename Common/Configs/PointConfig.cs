@@ -1,11 +1,18 @@
 ﻿using System.ComponentModel;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace PointShop.Common.Configs
 {
     [Label("$Mods.PointShop.Config.积分兑换")]
-    public class CoinConfig : ModConfig
+    public class PointConfig : ModConfig
     {
+        /// 获取配置
+        public static PointConfig Get()
+        {
+            return ModContent.GetInstance<PointConfig>();
+        }
+
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [Header("$Mods.PointShop.Config.面板设置")]

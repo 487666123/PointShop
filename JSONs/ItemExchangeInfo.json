@@ -1,41 +1,5 @@
 [
     {
-        "name": "太空",
-        "image": "Bestiary_Sky",
-        "items": [
-            {
-                "id": 65,
-                "value": 100,
-                "mode": 0
-            },
-            {
-                "id": 159,
-                "value": 100,
-                "mode": 0
-            },
-            {
-                "id": 4978,
-                "value": 100,
-                "mode": 0
-            },
-            {
-                "id": 2197,
-                "value": 100,
-                "mode": 2
-            },
-            {
-                "id": 1516,
-                "value": 100,
-                "mode": 2
-            },
-            {
-                "id": 4379,
-                "value": 100,
-                "mode": 2
-            }
-        ]
-    },
-    {
         "name": "森林",
         "image": "Bestiary_Surface",
         "items": [
@@ -97,6 +61,42 @@
             {
                 "id": 889,
                 "value": 150,
+                "mode": 2
+            }
+        ]
+    },
+    {
+        "name": "太空",
+        "image": "Bestiary_Sky",
+        "items": [
+            {
+                "id": 65,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 159,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 4978,
+                "value": 100,
+                "mode": 0
+            },
+            {
+                "id": 2197,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 1516,
+                "value": 100,
+                "mode": 2
+            },
+            {
+                "id": 4379,
+                "value": 100,
                 "mode": 2
             }
         ]

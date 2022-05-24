@@ -14,7 +14,7 @@ namespace PointShop.Common.Systems
 
         public override void Load()
         {
-            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, Language.GetTextValue($"Mods.PointShop.Hint.兑换面板开关"), "P");
+            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, MyUtils.GetText("Keybin.ShopUISwitch"), "P");
         }
 
         public override void Unload()
