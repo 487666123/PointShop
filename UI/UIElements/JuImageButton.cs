@@ -5,17 +5,17 @@ using System.Text.Json.Nodes;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
-using static PointShop.Content.UI.MainUI;
+using static PointShop.UI.ShopState;
 
-namespace PointShop.Content.UI
+namespace PointShop.UI.UIElements
 {
-    public class UIMenuButton : UIImageButton
+    public class JuImageButton : UIImageButton
     {
         public Terrain terrain;
         public int i;
 
-        public MainUI coinUI; // 记录
-        public UIMenuButton(Asset<Texture2D> texture, int i, ref float offsetX, MainUI coinUI) : base(texture)
+        public ShopState coinUI; // 记录
+        public JuImageButton(Asset<Texture2D> texture, int i, ref float offsetX, ShopState coinUI) : base(texture)
         {
             // 初始化数据
             this.coinUI = coinUI;
@@ -34,7 +34,7 @@ namespace PointShop.Content.UI
         // 点击事件
         public override void Click(UIMouseEvent evt)
         {
-            coinUI.LogoImage.SetImage(PointShop.IconTextures[((int)terrain)]);
+            coinUI.LogoImage.SetImage(PointShop.IconTextures[(int)terrain]);
             coinUI.LogoImage.Recalculate();
             coinUI.terrain = terrain;
             JsonArray jsonArray = PointShop.ItemExchangeInfo[i].AsObject()["items"].AsArray();
@@ -42,7 +42,7 @@ namespace PointShop.Content.UI
             LoadItemConfig(coinUI, jsonArray, terrain);
         }
 
-        public static void LoadItemConfig(MainUI mainUI, JsonArray itemConfig, Terrain terrain)
+        public static void LoadItemConfig(ShopState mainUI, JsonArray itemConfig, Terrain terrain)
         {
             // 先清除数据
             mainUI.ItemPanel.RemoveAllChildren();
@@ -53,14 +53,14 @@ namespace PointShop.Content.UI
                 float offsetY = 0;
                 for (int i = 0; i < itemConfig.Count; i++)
                 {
-                    ItemSlot2 itemSlot = new(((int)itemConfig[i]["id"]), ((int)itemConfig[i]["value"]), terrain, ((int)itemConfig[i]["mode"]));
+                    JuItemSlot itemSlot = new((int)itemConfig[i]["id"], (int)itemConfig[i]["value"], terrain, (int)itemConfig[i]["mode"]);
                     itemSlot.SetPos(offsetX, offsetY);
                     mainUI.ItemPanel.Append(itemSlot);
-                    offsetX += ItemSlot2.Size + 8f;
-                    if (offsetX + ItemSlot2.Size > mainUI.MainPanel.Width.Pixels - 16f * 2f - 10 * 2)
+                    offsetX += JuItemSlot.Size + 8f;
+                    if (offsetX + JuItemSlot.Size > mainUI.MainPanel.Width.Pixels - 16f * 2f - 10 * 2)
                     {
                         offsetX = 0;
-                        offsetY += ItemSlot2.Size + 8f;
+                        offsetY += JuItemSlot.Size + 8f;
                     }
                 }
                 mainUI.ItemPanel.Recalculate();

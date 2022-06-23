@@ -6,13 +6,12 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI;
-using static PointShop.Content.UI.MainUI;
+using static PointShop.UI.ShopState;
 
-namespace PointShop.Content.UI
+namespace PointShop.UI.UIElements
 {
-    public class ItemSlot2 : UIElement
+    public class JuItemSlot : UIElement
     {
         public static readonly Texture2D Locking = MyUtils.GetTexture("BossIcons/Lock").Value;
         public readonly static Texture2D BossIcons1 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
@@ -49,10 +48,10 @@ namespace PointShop.Content.UI
                 backgroundT2d = Main.Assets.Request<Texture2D>("Images/UI/PanelBackground", AssetRequestMode.ImmediateLoad).Value;
             }
 
-            itemTexture = Main.Assets.Request<Texture2D>("Images/Item_" + itemType, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            itemTexture = Main.Assets.Request<Texture2D>("Images/Item_" + itemType, AssetRequestMode.ImmediateLoad).Value;
         }
 
-        public ItemSlot2(int itemType, int value, Terrain HuanJing, int mode)
+        public JuItemSlot(int itemType, int value, Terrain HuanJing, int mode)
         {
             LoadTextures(itemType);
             item = new Item(itemType);
@@ -137,7 +136,7 @@ namespace PointShop.Content.UI
             bool locking = UnlockItem(mode);
             // 绘制物品
             Vector2 position = GetDimensions().Position();
-            float size = (itemTexture.Width > textureSize || itemTexture.Height > textureSize) ?
+            float size = itemTexture.Width > textureSize || itemTexture.Height > textureSize ?
                 itemTexture.Width > itemTexture.Height ? textureSize / itemTexture.Width : textureSize / itemTexture.Height :
                 1f;
             sb.Draw(itemTexture,

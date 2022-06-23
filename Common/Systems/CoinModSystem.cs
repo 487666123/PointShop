@@ -1,18 +1,18 @@
-﻿using PointShop.Content.UI;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 using PointShop.Common.Configs;
+using PointShop.UI;
 
 namespace PointShop.Common.Systems
 {
     public class CoinModSystem : ModSystem
     {
-        public static SwitchUI switchUI;
+        public static PointState switchUI;
         public static UserInterface switchUserInterface;
-        public static MainUI coinUI;
+        public static ShopState coinUI;
         public static UserInterface coinUserInterface;
 
         public override void Load()
@@ -29,7 +29,7 @@ namespace PointShop.Common.Systems
             {
                 switchUserInterface?.Update(gameTime);
             }
-            if (MainUI.Visible)
+            if (ShopState.Visible)
             {
                 coinUserInterface?.Update(gameTime);
             }
@@ -44,7 +44,7 @@ namespace PointShop.Common.Systems
                    "Test : CoinUI",
                    delegate
                    {
-                       if (MainUI.Visible)
+                       if (ShopState.Visible)
                        {
                            coinUI.Draw(Main.spriteBatch);
                        }

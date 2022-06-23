@@ -2,20 +2,21 @@
 using Microsoft.Xna.Framework.Graphics;
 using PointShop.Common.Players;
 using PointShop.Common.Systems;
+using PointShop.UI.UIElements;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static PointShop.Content.UI.MainUI;
+using static PointShop.UI.ShopState;
 
-namespace PointShop.Content.UI
+namespace PointShop.UI
 {
-    public class SwitchUI : UIState
+    public class PointState : UIState
     {
-        public static bool Visible => !MainUI.Visible;
+        public static bool Visible => !ShopState.Visible;
 
-        public UIPanel2 panel;
+        public JuPanel panel;
         public UIImage logo;
         public UIText tileText;
         public UIImageButton button;
@@ -25,7 +26,7 @@ namespace PointShop.Content.UI
         public override void OnInitialize()
         {
             // 加载Logo
-            logoImage = PointShop.IconTextures[((int)CoinModSystem.coinUI.terrain)];
+            logoImage = PointShop.IconTextures[(int)CoinModSystem.coinUI.terrain];
 
             // 主面板
             panel = new()
@@ -59,7 +60,7 @@ namespace PointShop.Content.UI
             };
             button.OnClick += Button_OnClick;
 
-            this.Append(panel);
+            Append(panel);
             panel.Append(logo);
             panel.Append(tileText);
             panel.Append(button);
@@ -67,7 +68,7 @@ namespace PointShop.Content.UI
 
         private void Button_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            MainUI.Visible = true;
+            ShopState.Visible = true;
         }
 
         private void Logo_OnUpdate(UIElement affectedElement)
@@ -82,12 +83,12 @@ namespace PointShop.Content.UI
                 Player player = Main.LocalPlayer;
                 CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
                 Terrain huanJing = CoinPlayer.PlayerInWhere();
-                logoImage = PointShop.IconTextures[((int)huanJing)];
+                logoImage = PointShop.IconTextures[(int)huanJing];
                 logo.SetImage(logoImage);
                 tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
                 tileText.SetText(MyUtils.GetText("HuanJingName." + huanJing) + MyUtils.GetText("Hint.Point") + " : " + coinPlayer.Point[(int)huanJing]);
             }
-            this.Recalculate();
+            Recalculate();
         }
     }
 }

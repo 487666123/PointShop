@@ -1,16 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using PointShop.Common.Players;
+using PointShop.UI.UIElements;
 using System.Text.Json.Nodes;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
-namespace PointShop.Content.UI
+namespace PointShop.UI
 {
     /// <summary>
     /// 一共有三个面板，一个主面板，其他两个在主面板内，分别是菜单面板和物品展示面板
     /// </summary>
-    public class MainUI : UIState
+    public class ShopState : UIState
     {
         // 是否显示它
         internal static bool Visible = false;
@@ -21,10 +22,10 @@ namespace PointShop.Content.UI
         public bool dragging = false;
 
         public Terrain terrain;
-        public UIPanel2 MainTile;
-        public UIPanel2 MainPanel;
-        public UIPanel2 MenuPanel;
-        public UIPanel2 ItemPanel;
+        public JuPanel MainTile;
+        public JuPanel MainPanel;
+        public JuPanel MenuPanel;
+        public JuPanel ItemPanel;
         public UIText TileUI;
         public UIImage LogoImage;
 
@@ -41,7 +42,7 @@ namespace PointShop.Content.UI
                 PaddingLeft = 10f,
                 PaddingRight = 10f
             };
-            MainPanel.Width.Set(ItemSlot2.Size * SizeWidth + 8 * (SizeWidth - 1) + 16 * 2 + 10 * 2, 0f);
+            MainPanel.Width.Set(JuItemSlot.Size * SizeWidth + 8 * (SizeWidth - 1) + 16 * 2 + 10 * 2, 0f);
             MainPanel.Height.Set(305f, 0f);
             MainPanel.Left.Set(Main.screenWidth / 2f - MainPanel.Width.Pixels / 2f, 0f);
             MainPanel.Top.Set(Main.screenHeight / 2f - MainPanel.Height.Pixels / 2f, 0f);
@@ -54,7 +55,7 @@ namespace PointShop.Content.UI
                 PaddingLeft = 16f,
                 PaddingRight = 16f
             };
-            MenuPanel.Width.Set(ItemSlot2.Size * SizeWidth + 8 * (SizeWidth - 1) + 16 * 2, 0f);
+            MenuPanel.Width.Set(JuItemSlot.Size * SizeWidth + 8 * (SizeWidth - 1) + 16 * 2, 0f);
             MenuPanel.Height.Set(45f, 0f);
             MenuPanel.Left.Set(0f, 0f);
             MenuPanel.Top.Set(0f, 0f);
@@ -63,7 +64,7 @@ namespace PointShop.Content.UI
             float offsetX = 0;
             for (int i = 0; i < PointShop.ItemExchangeInfo.Count; i++)
             {
-                MenuPanel.Append(new UIMenuButton(PointShop.IconTextures[i], i, ref offsetX, this));
+                MenuPanel.Append(new JuImageButton(PointShop.IconTextures[i], i, ref offsetX, this));
             }
 
             // 显示物品的面板
@@ -74,13 +75,13 @@ namespace PointShop.Content.UI
                 PaddingLeft = 16f,
                 PaddingRight = 16f
             };
-            ItemPanel.Width.Set(ItemSlot2.Size * SizeWidth + 8 * (SizeWidth - 1) + 16 * 2, 0f);
+            ItemPanel.Width.Set(JuItemSlot.Size * SizeWidth + 8 * (SizeWidth - 1) + 16 * 2, 0f);
             ItemPanel.Height.Set(MainPanel.Height.Pixels - MenuPanel.Height.Pixels - 8f * 2 - 10f, 0f);
             ItemPanel.Left.Set(0f, 0f);
             ItemPanel.Top.Set(MenuPanel.Height.Pixels + 6f, 0f);
 
             // 顺序：物品面板 → 菜单面板
-            this.Append(MainPanel);
+            Append(MainPanel);
             MainPanel.Append(ItemPanel);
             MainPanel.Append(MenuPanel);
 
@@ -114,11 +115,11 @@ namespace PointShop.Content.UI
             MainTile.Append(LogoImage);
             MainTile.Append(TileUI);
             MainTile.Append(BackImageButton);
-            this.Append(MainTile);
+            Append(MainTile);
 
             JsonArray ItemConfig = PointShop.ItemExchangeInfo[(int)terrain].AsObject()["items"].AsArray();
             // 在UI里面添加 Item
-            UIMenuButton.LoadItemConfig(this, ItemConfig, terrain);
+            JuImageButton.LoadItemConfig(this, ItemConfig, terrain);
         }
 
         public override void MouseUp(UIMouseEvent evt) { dragging = false; }

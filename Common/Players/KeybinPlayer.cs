@@ -1,5 +1,5 @@
 ﻿using PointShop.Common.Systems;
-using PointShop.Content.UI;
+using PointShop.UI;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 
@@ -11,7 +11,7 @@ namespace PointShop.Common.Players
         {
             if (KeybinSystem.RandomBuffKeybind.JustPressed)
             {
-                MainUI.Visible = !MainUI.Visible;
+                ShopState.Visible = !ShopState.Visible;
             }
         }
     }

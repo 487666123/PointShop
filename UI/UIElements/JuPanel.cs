@@ -5,9 +5,9 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
-namespace PointShop.Content.UI
+namespace PointShop.UI.UIElements
 {
-    public class UIPanel2 : UIElement
+    public class JuPanel : UIElement
     {
         public Asset<Texture2D> borderT2d;
         public Asset<Texture2D> backgroundT2d;
@@ -27,7 +27,7 @@ namespace PointShop.Content.UI
             }
         }
 
-        public UIPanel2()
+        public JuPanel()
         {
             LoadTextures();
         }
