@@ -1,27 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.Collections.Generic;
 using System.Text.Json.Nodes;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
 using Terraria.UI;
-using static PointShop.Content.UI.CoinUI;
+using static PointShop.Content.UI.MainUI;
 
 namespace PointShop.Content.UI
 {
-    public class MenuButton : UIImageButton
+    public class UIMenuButton : UIImageButton
     {
-        public HuanJing huanJing;
+        public Terrain terrain;
         public int i;
 
-        public CoinUI coinUI; // 记录
-        public MenuButton(Asset<Texture2D> texture, int i, ref float offsetX, CoinUI coinUI) : base(texture)
+        public MainUI coinUI; // 记录
+        public UIMenuButton(Asset<Texture2D> texture, int i, ref float offsetX, MainUI coinUI) : base(texture)
         {
             // 初始化数据
             this.coinUI = coinUI;
-            huanJing = (HuanJing)i;
+            terrain = (Terrain)i;
             this.i = i;
 
             // 以下只有设置位置和大小的代码
@@ -36,36 +34,36 @@ namespace PointShop.Content.UI
         // 点击事件
         public override void Click(UIMouseEvent evt)
         {
-            coinUI.LogoImage.SetImage(PointShop.IconTextures[((int)huanJing)]);
-            coinUI.huanJing = huanJing;
+            coinUI.LogoImage.SetImage(PointShop.IconTextures[((int)terrain)]);
+            coinUI.LogoImage.Recalculate();
+            coinUI.terrain = terrain;
             JsonArray jsonArray = PointShop.ItemExchangeInfo[i].AsObject()["items"].AsArray();
             // 在UI里面添加 Item
-            AddItemInCoinUI(coinUI, jsonArray, huanJing);
+            LoadItemConfig(coinUI, jsonArray, terrain);
         }
 
-        public static void AddItemInCoinUI(CoinUI coinUI, JsonArray jsonArray, HuanJing huanJing)
+        public static void LoadItemConfig(MainUI mainUI, JsonArray itemConfig, Terrain terrain)
         {
             // 先清除数据
-            coinUI.ItemListPanel.RemoveAllChildren();
+            mainUI.ItemPanel.RemoveAllChildren();
             // 判断有没有数据
-            if (jsonArray.Count > 0)
+            if (itemConfig.Count > 0)
             {
                 float offsetX = 0;
                 float offsetY = 0;
-                for (int i = 0; i < jsonArray.Count; i++)
+                for (int i = 0; i < itemConfig.Count; i++)
                 {
-                    ItemDisplaySlot itemDisplaySlot = new(((int)jsonArray[i]["id"]), ((int)jsonArray[i]["value"]), huanJing, ((int)jsonArray[i]["mode"]));
-                    itemDisplaySlot.Left.Set(offsetX, 0f);
-                    itemDisplaySlot.Top.Set(offsetY, 0f);
-                    coinUI.ItemListPanel.Append(itemDisplaySlot);
-                    offsetX += 55f + 14f;
-                    if (offsetX + 55f > coinUI.panel.Width.Pixels - 16f * 4f)
+                    ItemSlot2 itemSlot = new(((int)itemConfig[i]["id"]), ((int)itemConfig[i]["value"]), terrain, ((int)itemConfig[i]["mode"]));
+                    itemSlot.SetPos(offsetX, offsetY);
+                    mainUI.ItemPanel.Append(itemSlot);
+                    offsetX += ItemSlot2.Size + 8f;
+                    if (offsetX + ItemSlot2.Size > mainUI.MainPanel.Width.Pixels - 16f * 2f - 10 * 2)
                     {
                         offsetX = 0;
-                        offsetY += 55 + 14f;
+                        offsetY += ItemSlot2.Size + 8f;
                     }
                 }
-                coinUI.ItemListPanel.Recalculate();
+                mainUI.ItemPanel.Recalculate();
             }
         }
 

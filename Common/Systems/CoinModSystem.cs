@@ -12,7 +12,7 @@ namespace PointShop.Common.Systems
     {
         public static SwitchUI switchUI;
         public static UserInterface switchUserInterface;
-        public static CoinUI coinUI;
+        public static MainUI coinUI;
         public static UserInterface coinUserInterface;
 
         public override void Load()
@@ -29,7 +29,7 @@ namespace PointShop.Common.Systems
             {
                 switchUserInterface?.Update(gameTime);
             }
-            if (CoinUI.Visible)
+            if (MainUI.Visible)
             {
                 coinUserInterface?.Update(gameTime);
             }
@@ -44,7 +44,7 @@ namespace PointShop.Common.Systems
                    "Test : CoinUI",
                    delegate
                    {
-                       if (CoinUI.Visible)
+                       if (MainUI.Visible)
                        {
                            coinUI.Draw(Main.spriteBatch);
                        }

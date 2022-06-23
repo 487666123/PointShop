@@ -11,7 +11,7 @@ namespace PointShop.Common.Players
         {
             if (KeybinSystem.RandomBuffKeybind.JustPressed)
             {
-                CoinUI.Visible = !CoinUI.Visible;
+                MainUI.Visible = !MainUI.Visible;
             }
         }
     }

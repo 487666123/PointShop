@@ -1,27 +1,21 @@
-﻿using PointShop.Common.Players;
-using PointShop.Common.Systems;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PointShop.Common.Players;
+using PointShop.Common.Systems;
 using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static PointShop.Content.UI.CoinUI;
+using static PointShop.Content.UI.MainUI;
 
 namespace PointShop.Content.UI
 {
     public class SwitchUI : UIState
     {
-        public static bool Visible => !CoinUI.Visible;
+        public static bool Visible => !MainUI.Visible;
 
-        public PointPanel panel;
+        public UIPanel2 panel;
         public UIImage logo;
         public UIText tileText;
         public UIImageButton button;
@@ -31,7 +25,7 @@ namespace PointShop.Content.UI
         public override void OnInitialize()
         {
             // 加载Logo
-            logoImage = PointShop.IconTextures[((int)CoinModSystem.coinUI.huanJing)];
+            logoImage = PointShop.IconTextures[((int)CoinModSystem.coinUI.terrain)];
 
             // 主面板
             panel = new()
@@ -42,8 +36,8 @@ namespace PointShop.Content.UI
                 PaddingRight = 16f,
                 HAlign = 0.5f
             };
-            panel.Height.Set(50f, 0f);
-            panel.Width.Set(220f, 0f);
+            panel.Height.Set(45f, 0f);
+            panel.Width.Set(200f, 0f);
             panel.Top.Set(20f, 0f);
 
             logo = new(logoImage)
@@ -52,7 +46,7 @@ namespace PointShop.Content.UI
             };
             logo.OnUpdate += Logo_OnUpdate;
 
-            tileText = new("", 0.9f)
+            tileText = new("", 0.8f)
             {
                 VAlign = 0.5f
             };
@@ -73,7 +67,7 @@ namespace PointShop.Content.UI
 
         private void Button_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            CoinUI.Visible = true;
+            MainUI.Visible = true;
         }
 
         private void Logo_OnUpdate(UIElement affectedElement)
@@ -87,11 +81,11 @@ namespace PointShop.Content.UI
             {
                 Player player = Main.LocalPlayer;
                 CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
-                HuanJing huanJing = CoinPlayer.PlayerInHuanJing(player);
+                Terrain huanJing = CoinPlayer.PlayerInWhere();
                 logoImage = PointShop.IconTextures[((int)huanJing)];
                 logo.SetImage(logoImage);
                 tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
-                tileText.SetText(MyUtils.GetText("HuanJingName." + huanJing) + MyUtils.GetText("Hint.Point") + " : " + coinPlayer.HuanJingFen[(int)huanJing]);
+                tileText.SetText(MyUtils.GetText("HuanJingName." + huanJing) + MyUtils.GetText("Hint.Point") + " : " + coinPlayer.Point[(int)huanJing]);
             }
             this.Recalculate();
         }

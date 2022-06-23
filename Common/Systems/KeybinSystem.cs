@@ -14,7 +14,7 @@ namespace PointShop.Common.Systems
 
         public override void Load()
         {
-            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, MyUtils.GetText("Keybin.ShopUISwitch"), "P");
+            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, MyUtils.GetText("Keybin.SuperVault"), "P");
         }
 
         public override void Unload()

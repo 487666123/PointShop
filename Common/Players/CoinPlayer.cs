@@ -1,12 +1,9 @@
-﻿using PointShop.Common.GlobalNPCs;
-using PointShop.Common.Systems;
+﻿using PointShop.Common.Systems;
 using PointShop.Content.UI;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static PointShop.Content.UI.CoinUI;
-using static Terraria.ID.ContentSamples;
+using static PointShop.Content.UI.MainUI;
 
 namespace PointShop.Common.Players
 {
@@ -14,19 +11,29 @@ namespace PointShop.Common.Players
     public class CoinPlayer : ModPlayer
     {
         // 环境得分
-        public int[] HuanJingFen = new int[(int)CoinUI.HuanJing.Count];
+        public int[] Point = new int[(int)MainUI.Terrain.Count];
+
+        public static int GetPoint(Terrain huanJing)
+        {
+            return Main.LocalPlayer.GetModPlayer<CoinPlayer>().Point[(int)huanJing];
+        }
+
+        public static void LocalPlayerAdd(int point)
+        {
+            Main.LocalPlayer.GetModPlayer<CoinPlayer>().Point[(int)PlayerInWhere()] += point;
+        }
 
         public override void SaveData(TagCompound tag)
         {
-            tag.Add("HuanJingFen", HuanJingFen);
+            tag.Add("HuanJingFen", Point);
         }
 
         public override void LoadData(TagCompound tag)
         {
-            HuanJingFen = tag.Get<int[]>("HuanJingFen");
-            if (HuanJingFen.Length < (int)CoinUI.HuanJing.Count)
+            Point = tag.Get<int[]>("HuanJingFen");
+            if (Point.Length < (int)MainUI.Terrain.Count)
             {
-                HuanJingFen = new int[(int)CoinUI.HuanJing.Count];
+                Point = new int[(int)MainUI.Terrain.Count];
             }
         }
 
@@ -38,58 +45,59 @@ namespace PointShop.Common.Players
             CoinModSystem.coinUserInterface.SetState(CoinModSystem.coinUI);
         }
 
-        public static HuanJing PlayerInHuanJing(Player player)
+        public static Terrain PlayerInWhere()
         {
-            HuanJing huanJing;
+            Player player = Main.LocalPlayer;
+            Terrain huanJing;
             if (player.ZoneDungeon) // 地牢
             {
-                huanJing = HuanJing.DiLao;
+                huanJing = Terrain.DiLao;
             }
             else if (player.ZoneSkyHeight) // 天空
             {
-                huanJing = HuanJing.TianKong;
+                huanJing = Terrain.TianKong;
             }
             else if (player.ZoneUnderworldHeight) // 地狱
             {
-                huanJing = HuanJing.DiYu;
+                huanJing = Terrain.DiYu;
             }
             else if (player.ZoneSnow) // 雪地
             {
-                huanJing = HuanJing.XueDi;
+                huanJing = Terrain.XueDi;
             }
             else if (player.ZoneDesert) // 沙漠
             {
-                huanJing = HuanJing.ShaMo;
+                huanJing = Terrain.ShaMo;
             }
             else if (player.ZoneJungle) // 丛林
             {
-                huanJing = HuanJing.CongLin;
+                huanJing = Terrain.CongLin;
             }
             else if (player.ZoneBeach) // 海洋
             {
-                huanJing = HuanJing.HaiYang;
+                huanJing = Terrain.HaiYang;
             }
             else if (player.ZoneHallow) // 神圣
             {
-                huanJing = HuanJing.ShenSheng;
+                huanJing = Terrain.ShenSheng;
             }
             else if (player.ZoneCorrupt) // 腐化
             {
-                huanJing = HuanJing.FuHua;
+                huanJing = Terrain.FuHua;
             }
             else if (player.ZoneCrimson) // 猩红
             {
-                huanJing = HuanJing.XingHong;
+                huanJing = Terrain.XingHong;
             }
             else if (player.ZoneRockLayerHeight && (player.ZoneNormalUnderground || player.ZoneNormalCaverns ||
                 player.ZoneMarble || player.ZoneGranite || player.ZoneGlowshroom)) // 洞穴
             {
-                huanJing = HuanJing.DongXue;
+                huanJing = Terrain.DongXue;
             }
             // 森林
             else
             {
-                huanJing = HuanJing.SenLin;
+                huanJing = Terrain.SenLin;
             }
             return huanJing;
         }

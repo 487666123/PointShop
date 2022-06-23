@@ -1,3 +1,5 @@
+最新版支持联机
+---------------------------
 一个用于兑换稀有物品的商店
 
     玩家击杀敌怪会奖励玩家积分，根据怪物稀有度加分
@@ -8,6 +10,8 @@
 
     商店面板开关可以在“控制”内设置快捷键
 
+The latest version supports online
+---------------------------
 A shop to exchange rare items
     
     Players get bonus points upon defeating enemies, depend on the enemies's rarity
