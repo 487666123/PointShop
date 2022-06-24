@@ -2,46 +2,52 @@
 using Microsoft.Xna.Framework.Graphics;
 using PointShop.Common.Configs;
 using PointShop.Common.Players;
+using PointShop.UI;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static PointShop.UI.ShopState;
+using static PointShop.UI.PointShopGUI;
 using static Terraria.ID.ContentSamples;
 
 namespace PointShop.Common.GlobalNPCs
 {
-    public class SourceNPC : GlobalNPC
+    public class PointShopNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
         public override GlobalNPC Clone(NPC npc, NPC npcClone) => base.Clone(npc, npcClone);
         public bool HitByLocalPlayer = false;
         private enum SpawnType
         {
-            Default,
-            SpawnNPC,
+            NotSpawn,
+            NatureSpawnNPC,
             Parent,
-            SourceNull,
+            EntitySourceIsNull,
             Unknown
         }
 
-        private SpawnType SpawnMode = SpawnType.Default;
+        private SpawnType SpawnMode = SpawnType.NotSpawn;
+        private int EntitySoureType = -1;
         // 在NPC生成时候
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
             if (source is EntitySource_SpawnNPC)
             {
-                SpawnMode = SpawnType.SpawnNPC;
+                SpawnMode = SpawnType.NatureSpawnNPC;
             }
             else if (source is EntitySource_Parent)
             {
                 SpawnMode = SpawnType.Parent;
+                if ((source as EntitySource_Parent).Entity is NPC)
+                {
+                    EntitySoureType = ((source as EntitySource_Parent).Entity as NPC).type;
+                };
             }
             else if (source is null)
             {
-                SpawnMode = SpawnType.SourceNull;
+                SpawnMode = SpawnType.EntitySourceIsNull;
             }
             else
             {
@@ -51,12 +57,26 @@ namespace PointShop.Common.GlobalNPCs
 
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
         {
-            HitByLocalPlayer = true;
+            if (npc.realLife == -1)
+            {
+                HitByLocalPlayer = true;
+            }
+            else
+            {
+                Main.npc[npc.realLife].GetGlobalNPC<PointShopNPC>().HitByLocalPlayer = true;
+            }
         }
 
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            HitByLocalPlayer = true;
+            if (npc.realLife == -1)
+            {
+                HitByLocalPlayer = true;
+            }
+            else
+            {
+                Main.npc[npc.realLife].GetGlobalNPC<PointShopNPC>().HitByLocalPlayer = true;
+            }
         }
 
         public override void OnKill(NPC npc)
@@ -72,13 +92,18 @@ namespace PointShop.Common.GlobalNPCs
                 }
                 else if (Main.netMode == NetmodeID.SinglePlayer)
                 {
-                    int point = (byte)BestiaryHelper.GetBestiaryStarsPriority(npc);
+                    int point = BestiaryHelper.GetBestiaryStarsPriority(npc);
                     CoinPlayer.LocalPlayerAdd(point);
                     // 积分提示
                     if (PointConfig.Get().CombatJiaFen)
                     {
-                        CombatText.NewText(Main.LocalPlayer.getRect(), new(255, 255, 0),
-                        $"{MyUtils.GetText("HuanJingName." + CoinPlayer.PlayerInWhere()) + MyUtils.GetText("Hint.Point")} +{point}");
+                        string text = $"{MyUtils.GetText("HuanJingName." + CoinPlayer.PlayerInWhere()) + MyUtils.GetText("Hint.Point")} +{point}";
+                        AdvancedPopupRequest request = default;
+                        request.Text = text;
+                        request.DurationInFrames = 120;
+                        request.Velocity = new(0, -2);
+                        request.Color = TerrainColor[(int)CoinPlayer.PlayerInWhere()];
+                        PopupText.NewText(request, Main.LocalPlayer.Top + new Vector2(0, -10));
                     }
                 }
             }
@@ -91,10 +116,21 @@ namespace PointShop.Common.GlobalNPCs
         /// <returns></returns>
         private bool CanEarnPoint(NPC npc)
         {
-            if (npc.netID < 0)
-                return true;
-            return npc.damage > 0 && !npc.friendly && npc.lifeMax > 0 && npc.realLife == -1 &&
-                (SpawnMode == SpawnType.SpawnNPC || SpawnMode == SpawnType.SourceNull);
+            if (SpawnMode == SpawnType.NotSpawn)
+            {
+                if (npc.netID < 0)
+                    return true;
+                if (npc.type == NPCID.IceSlime)
+                    return true;
+            }
+            if (SpawnMode == SpawnType.Parent)
+            {
+                if (EntitySoureType == 594)
+                    return true;
+            }
+
+            return npc.damage > 0 && !npc.friendly && npc.lifeMax > 0 &&
+                (SpawnMode == SpawnType.NatureSpawnNPC || SpawnMode == SpawnType.EntitySourceIsNull);
         }
 
         /*public override void PostDraw(NPC npc, SpriteBatch sb, Vector2 screenPos, Color drawColor)
@@ -110,9 +146,12 @@ namespace PointShop.Common.GlobalNPCs
             position.X += npc.width / 2 - textW / 2;
             position.Y -= 60f;
             Utils.DrawBorderString(sb, npc.netID.ToString(), position, Color.White);
-        }*/
 
-        // 绿色史莱姆颜色
-        // private readonly static Color GreenSlime = new(0, 220, 40, 100);
+            textW = FontAssets.MouseText.Value.MeasureString($"{CanEarnPoint(npc)}").X;
+            position = npc.position - Main.screenPosition;
+            position.X += npc.width / 2 - textW / 2;
+            position.Y -= 80f;
+            Utils.DrawBorderString(sb, $"{CanEarnPoint(npc)}", position, Color.White);
+        }*/
     }
 }

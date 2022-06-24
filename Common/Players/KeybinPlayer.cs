@@ -11,7 +11,7 @@ namespace PointShop.Common.Players
         {
             if (KeybinSystem.RandomBuffKeybind.JustPressed)
             {
-                ShopState.Visible = !ShopState.Visible;
+                PointShopGUI.Visible = !PointShopGUI.Visible;
             }
         }
     }

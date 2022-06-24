@@ -1,9 +1,10 @@
-﻿using PointShop.Common.Configs;
+﻿using Microsoft.Xna.Framework;
+using PointShop.Common.Configs;
 using PointShop.Common.GlobalNPCs;
 using PointShop.Common.Players;
 using System.IO;
 using Terraria;
-using static PointShop.UI.ShopState;
+using static PointShop.UI.PointShopGUI;
 using static Terraria.ID.ContentSamples;
 
 namespace PointShop
@@ -22,7 +23,7 @@ namespace PointShop
             {
                 case MessageType.EarnPoint: // 处理积分数据
                     NPC npc = Main.npc[reader.ReadByte()];
-                    SourceNPC sourceNPC = npc.GetGlobalNPC<SourceNPC>();
+                    PointShopNPC sourceNPC = npc.GetGlobalNPC<PointShopNPC>();
                     if (sourceNPC.HitByLocalPlayer)
                     {
                         int point = (byte)BestiaryHelper.GetBestiaryStarsPriority(npc);
@@ -30,9 +31,13 @@ namespace PointShop
                         // 积分提示
                         if (PointConfig.Get().CombatJiaFen)
                         {
-                            CombatText.NewText(Main.LocalPlayer.getRect(), new(255, 255, 0),
-                            $"{MyUtils.GetText("HuanJingName." + CoinPlayer.PlayerInWhere())}{MyUtils.GetText("Hint.Point")} +" +
-                            $"{point}");
+                            string text = $"{MyUtils.GetText("HuanJingName." + CoinPlayer.PlayerInWhere()) + MyUtils.GetText("Hint.Point")} +{point}";
+                            AdvancedPopupRequest request = default;
+                            request.Text = text;
+                            request.DurationInFrames = 120;
+                            request.Velocity = new(0, -2);
+                            request.Color = TerrainColor[(int)CoinPlayer.PlayerInWhere()];
+                            PopupText.NewText(request, Main.LocalPlayer.Top + new Vector2(0, -10));
                         }
                     }
                     break;

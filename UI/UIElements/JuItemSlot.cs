@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
-using static PointShop.UI.ShopState;
+using static PointShop.UI.PointShopGUI;
 
 namespace PointShop.UI.UIElements
 {
@@ -62,10 +62,10 @@ namespace PointShop.UI.UIElements
             this.HuanJing = HuanJing;
             this.mode = mode;
 
-            text = new($"{value}", 0.6f)
+            text = new($"P: {value}", 0.6f)
             {
-                VAlign = 0.2f,
-                HAlign = 0.8f
+                VAlign = 0.8f,
+                HAlign = 0.5f
             };
             Append(text);
 
@@ -157,14 +157,6 @@ namespace PointShop.UI.UIElements
                 lockImage.Color *= 0f;
                 BossT2d.Color *= 0f;
                 CoinPlayer coinPlayer = Main.LocalPlayer.GetModPlayer<CoinPlayer>();
-                if (coinPlayer.Point[(int)CoinModSystem.coinUI.terrain] >= value)
-                {
-                    text.TextColor = Color.White;
-                }
-                else
-                {
-                    text.TextColor = Color.White * 0.5f;
-                }
             }
         }
 

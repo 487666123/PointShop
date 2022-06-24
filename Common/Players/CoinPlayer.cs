@@ -3,7 +3,7 @@ using PointShop.UI;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static PointShop.UI.ShopState;
+using static PointShop.UI.PointShopGUI;
 
 namespace PointShop.Common.Players
 {
@@ -11,7 +11,7 @@ namespace PointShop.Common.Players
     public class CoinPlayer : ModPlayer
     {
         // 环境得分
-        public int[] Point = new int[(int)ShopState.Terrain.Count];
+        public int[] Point = new int[(int)PointShopGUI.Terrain.Count];
 
         public static int GetPoint(Terrain huanJing)
         {
@@ -31,9 +31,9 @@ namespace PointShop.Common.Players
         public override void LoadData(TagCompound tag)
         {
             Point = tag.Get<int[]>("HuanJingFen");
-            if (Point.Length < (int)ShopState.Terrain.Count)
+            if (Point.Length < (int)PointShopGUI.Terrain.Count)
             {
-                Point = new int[(int)ShopState.Terrain.Count];
+                Point = new int[(int)PointShopGUI.Terrain.Count];
             }
         }
 

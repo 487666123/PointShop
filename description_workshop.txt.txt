@@ -1,0 +1,11 @@
+﻿The latest version supports online
+---------------------------
+A shop to exchange rare items
+    
+    Players get bonus points upon defeating enemies, depend on the enemies's rarity
+    (You may check rarity in the Beastiary)
+    Points awarded will be added into biome which is where the player is
+
+    Point statistic at the top of screen and notice for getting points can be disabled in config
+
+    Bind a hotkey for Point Shop's panel in Controls

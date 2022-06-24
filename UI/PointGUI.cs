@@ -8,13 +8,13 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static PointShop.UI.ShopState;
+using static PointShop.UI.PointShopGUI;
 
 namespace PointShop.UI
 {
-    public class PointState : UIState
+    public class PointGUI : UIState
     {
-        public static bool Visible => !ShopState.Visible;
+        public static bool Visible => !PointShopGUI.Visible;
 
         public JuPanel panel;
         public UIImage logo;
@@ -68,7 +68,7 @@ namespace PointShop.UI
 
         private void Button_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            ShopState.Visible = true;
+            PointShopGUI.Visible = true;
         }
 
         private void Logo_OnUpdate(UIElement affectedElement)

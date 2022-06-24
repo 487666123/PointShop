@@ -5,17 +5,17 @@ using System.Text.Json.Nodes;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
-using static PointShop.UI.ShopState;
+using static PointShop.UI.PointShopGUI;
 
 namespace PointShop.UI.UIElements
 {
-    public class JuImageButton : UIImageButton
+    public class JuMeunButton : UIImageButton
     {
         public Terrain terrain;
         public int i;
 
-        public ShopState coinUI; // 记录
-        public JuImageButton(Asset<Texture2D> texture, int i, ref float offsetX, ShopState coinUI) : base(texture)
+        public PointShopGUI coinUI; // 记录
+        public JuMeunButton(Asset<Texture2D> texture, int i, ref float offsetX, PointShopGUI coinUI) : base(texture)
         {
             // 初始化数据
             this.coinUI = coinUI;
@@ -35,6 +35,7 @@ namespace PointShop.UI.UIElements
         public override void Click(UIMouseEvent evt)
         {
             coinUI.LogoImage.SetImage(PointShop.IconTextures[(int)terrain]);
+            coinUI.LogoImage.Left.Set(14 - coinUI.LogoImage.Width.Pixels / 2f, 0);
             coinUI.LogoImage.Recalculate();
             coinUI.terrain = terrain;
             JsonArray jsonArray = PointShop.ItemExchangeInfo[i].AsObject()["items"].AsArray();
@@ -42,10 +43,10 @@ namespace PointShop.UI.UIElements
             LoadItemConfig(coinUI, jsonArray, terrain);
         }
 
-        public static void LoadItemConfig(ShopState mainUI, JsonArray itemConfig, Terrain terrain)
+        public static void LoadItemConfig(PointShopGUI PSGUI, JsonArray itemConfig, Terrain terrain)
         {
             // 先清除数据
-            mainUI.ItemPanel.RemoveAllChildren();
+            PSGUI.ItemPanel.RemoveAllChildren();
             // 判断有没有数据
             if (itemConfig.Count > 0)
             {
@@ -53,17 +54,17 @@ namespace PointShop.UI.UIElements
                 float offsetY = 0;
                 for (int i = 0; i < itemConfig.Count; i++)
                 {
-                    JuItemSlot itemSlot = new((int)itemConfig[i]["id"], (int)itemConfig[i]["value"], terrain, (int)itemConfig[i]["mode"]);
-                    itemSlot.SetPos(offsetX, offsetY);
-                    mainUI.ItemPanel.Append(itemSlot);
+                    JuItemSlot ItemSlot = new((int)itemConfig[i]["id"], (int)itemConfig[i]["value"], terrain, (int)itemConfig[i]["mode"]);
+                    ItemSlot.SetPos(offsetX, offsetY);
+                    PSGUI.ItemPanel.Append(ItemSlot);
                     offsetX += JuItemSlot.Size + 8f;
-                    if (offsetX + JuItemSlot.Size > mainUI.MainPanel.Width.Pixels - 16f * 2f - 10 * 2)
+                    if (offsetX + JuItemSlot.Size > PSGUI.ItemPanel.Width())
                     {
                         offsetX = 0;
                         offsetY += JuItemSlot.Size + 8f;
                     }
                 }
-                mainUI.ItemPanel.Recalculate();
+                PSGUI.ItemPanel.Recalculate();
             }
         }
 
