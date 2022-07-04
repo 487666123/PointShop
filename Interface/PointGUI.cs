@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using PointShop.Common.Players;
 using PointShop.Common.Systems;
-using PointShop.Interface.UIElements;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -21,13 +20,8 @@ namespace PointShop.Interface
         public UIText tileText;
         public UIImageButton button;
 
-        public Asset<Texture2D> logoImage;
-
         public override void OnInitialize()
         {
-            // 加载Logo
-            logoImage = PointShop.icon[(int)InterfaceSystem.PointShopGUI.terrain];
-
             // 主面板
             MainPanel = new()
             {
@@ -41,11 +35,10 @@ namespace PointShop.Interface
             MainPanel.Width.Set(200f, 0f);
             MainPanel.Top.Set(20f, 0f);
 
-            logo = new(logoImage)
+            logo = new(InterfaceSystem.icon[0])
             {
                 VAlign = 0.5f
             };
-            logo.OnUpdate += Logo_OnUpdate;
 
             tileText = new("", 0.8f)
             {
@@ -71,11 +64,6 @@ namespace PointShop.Interface
             PointShopGUI.Visible = true;
         }
 
-        private void Logo_OnUpdate(UIElement affectedElement)
-        {
-            Main.NewText(100);
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (Main.myPlayer > -1 && Main.myPlayer < 255)
@@ -83,8 +71,7 @@ namespace PointShop.Interface
                 Player player = Main.LocalPlayer;
                 CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
                 Terrain huanJing = CoinPlayer.PlayerInWhere();
-                logoImage = PointShop.icon[(int)huanJing];
-                logo.SetImage(logoImage);
+                logo.SetImage(InterfaceSystem.icon[(int)huanJing]);
                 tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
                 tileText.SetText(MyUtils.GetText("HuanJingName." + huanJing) + MyUtils.GetText("Hint.Point") + " : " + coinPlayer.Point[(int)huanJing]);
             }

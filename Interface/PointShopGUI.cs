@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using PointShop.Common.Players;
+using PointShop.Common.Systems;
 using PointShop.Entitys;
 using PointShop.Interface.UIElements;
 using System.Collections.Generic;
-using System.Text.Json.Nodes;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -55,9 +55,9 @@ namespace PointShop.Interface
             MenuView.Top.Pixels += ImageButton.Height() + 5f;
             MainPanel.Append(MenuView);
             // 菜单按钮按钮
-            for (int i = 0; i < PointShop.TerrainDatas.Count; i++)
+            for (int i = 0; i < InterfaceSystem.TerrainDatas.Count; i++)
             {
-                Button button = new(PointShop.icon[i].Value, $"{PointShop.TerrainDatas[i].name}: {CoinPlayer.GetPoint(i)}");
+                Button button = new(InterfaceSystem.icon[i].Value, $"{InterfaceSystem.TerrainDatas[i].name}");
                 button.Width.Pixels = MenuView.ScrollList.WidthInside();
                 button.Height.Pixels = 50f;
                 button.data[0] = i;
@@ -69,7 +69,7 @@ namespace PointShop.Interface
                 button.OnUpdate += (uie) =>
                 {
                     int _terrain = (uie as Button).data[0];
-                    (uie as Button).SetText($"{PointShop.TerrainDatas[_terrain].name}: {CoinPlayer.GetPoint((Terrain)_terrain)}");
+                    (uie as Button).SetText($"{InterfaceSystem.TerrainDatas[_terrain].name}: {CoinPlayer.GetPoint((Terrain)_terrain)}");
                     uie.Recalculate();
                 };
                 MenuView.AppendElement(button);
@@ -92,7 +92,7 @@ namespace PointShop.Interface
         public void ModifyTerrain(Terrain terrain)
         {
             this.terrain = terrain;
-            List<ItemData> itemData = PointShop.TerrainDatas[(int)terrain].items;
+            List<ItemData> itemData = InterfaceSystem.TerrainDatas[(int)terrain].items;
             // 判断有没有数据
             if (itemData.Count > 0)
             {

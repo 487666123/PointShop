@@ -8,7 +8,7 @@ using Terraria.UI;
 
 namespace PointShop.Common.Systems
 {
-    public class JuDrawSystem : ModSystem
+    public class DrawSystem : ModSystem
     {
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {

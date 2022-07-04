@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PointShop.Common.Systems;
 using System;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -9,10 +8,13 @@ namespace PointShop.Interface.UIElements
 {
     public class FixedUIScrollbar : UIScrollbar
     {
+        public UserInterface Interface;
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            // 两端相同的代码，我还没搞清楚为什么要这么写
             UserInterface temp = UserInterface.ActiveInstance;
-            UserInterface.ActiveInstance = InterfaceSystem.PointShopInterface;
+            UserInterface.ActiveInstance = Interface;
             base.DrawSelf(spriteBatch);
             UserInterface.ActiveInstance = temp;
         }
@@ -20,12 +22,13 @@ namespace PointShop.Interface.UIElements
         public override void MouseDown(UIMouseEvent evt)
         {
             UserInterface temp = UserInterface.ActiveInstance;
-            UserInterface.ActiveInstance = InterfaceSystem.PointShopInterface;
+            UserInterface.ActiveInstance = Interface;
             base.MouseDown(evt);
             UserInterface.ActiveInstance = temp;
             ScrollWheelValue = 0;
         }
 
+        // 这是一个滚动动画
         private float ScrollWheelValue = 0;
         public void SetViewPosition(int ScrollWheelValue)
         {

@@ -42,14 +42,6 @@ namespace PointShop.Common.Players
             }
         }
 
-        public override void OnEnterWorld(Player player)
-        {
-            InterfaceSystem.PointGUI.Activate();
-            InterfaceSystem.PointInterface.SetState(InterfaceSystem.PointGUI);
-            InterfaceSystem.PointShopGUI.Activate();
-            InterfaceSystem.PointShopInterface.SetState(InterfaceSystem.PointShopGUI);
-        }
-
         public static Terrain PlayerInWhere()
         {
             Player player = Main.LocalPlayer;
