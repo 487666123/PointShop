@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,21 @@ namespace PointShop
 {
     public static class UIElementUtils
     {
+        public static void SetPos(this UIElement uie, Vector2 position, float precentX = 0, float precentY = 0)
+        {
+            uie.SetPos(position.X, position.Y, precentX, precentY);
+        }
+
         public static void SetPos(this UIElement uie, float x, float y, float precentX = 0, float precentY = 0)
         {
             uie.Left.Set(x, precentX);
             uie.Top.Set(y, precentY);
             uie.Recalculate();
+        }
+
+        public static Vector2 Size(this UIElement uie)
+        {
+            return new Vector2(uie.Width.Pixels, uie.Height.Pixels);
         }
 
         public static void SetSize(this UIElement uie, float width, float height, float precentWidth = 0, float precentHeight = 0)
@@ -43,22 +54,22 @@ namespace PointShop
             return uie.Height.Pixels;
         }
 
-        public static float WidthMinus(this UIElement uie)
+        public static float WidthInside(this UIElement uie)
         {
             return uie.Width.Pixels - uie.PaddingLeft - uie.PaddingRight;
         }
 
-        public static float HeightMinus(this UIElement uie)
+        public static float HeightInside(this UIElement uie)
         {
             return uie.Height.Pixels - uie.PaddingTop - uie.PaddingBottom;
         }
 
-        public static float WidthPadding(this UIElement uie)
+        public static float HPadding(this UIElement uie)
         {
             return uie.PaddingLeft + uie.PaddingRight;
         }
 
-        public static float HeightPadding(this UIElement uie)
+        public static float VPadding(this UIElement uie)
         {
             return uie.PaddingTop + uie.PaddingBottom;
         }

@@ -1,9 +1,9 @@
 ﻿using PointShop.Common.Systems;
-using PointShop.UI;
+using PointShop.Interface;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static PointShop.UI.PointShopGUI;
+using static PointShop.Interface.PointShopGUI;
 
 namespace PointShop.Common.Players
 {
@@ -12,6 +12,11 @@ namespace PointShop.Common.Players
     {
         // 环境得分
         public int[] Point = new int[(int)PointShopGUI.Terrain.Count];
+
+        public static int GetPoint(int huanJing)
+        {
+            return GetPoint((Terrain)huanJing);
+        }
 
         public static int GetPoint(Terrain huanJing)
         {
@@ -39,10 +44,10 @@ namespace PointShop.Common.Players
 
         public override void OnEnterWorld(Player player)
         {
-            CoinModSystem.switchUI.Activate();
-            CoinModSystem.switchUserInterface.SetState(CoinModSystem.switchUI);
-            CoinModSystem.coinUI.Activate();
-            CoinModSystem.coinUserInterface.SetState(CoinModSystem.coinUI);
+            InterfaceSystem.PointGUI.Activate();
+            InterfaceSystem.PointInterface.SetState(InterfaceSystem.PointGUI);
+            InterfaceSystem.PointShopGUI.Activate();
+            InterfaceSystem.PointShopInterface.SetState(InterfaceSystem.PointShopGUI);
         }
 
         public static Terrain PlayerInWhere()

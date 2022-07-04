@@ -1,5 +1,5 @@
 ﻿using PointShop.Common.Systems;
-using PointShop.UI;
+using PointShop.Interface;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 

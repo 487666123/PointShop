@@ -4,7 +4,7 @@ using PointShop.Common.GlobalNPCs;
 using PointShop.Common.Players;
 using System.IO;
 using Terraria;
-using static PointShop.UI.PointShopGUI;
+using static PointShop.Interface.PointShopGUI;
 using static Terraria.ID.ContentSamples;
 
 namespace PointShop

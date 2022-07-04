@@ -4,34 +4,34 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 using PointShop.Common.Configs;
-using PointShop.UI;
+using PointShop.Interface;
 
 namespace PointShop.Common.Systems
 {
-    public class CoinModSystem : ModSystem
+    public class InterfaceSystem : ModSystem
     {
-        public static PointGUI switchUI;
-        public static UserInterface switchUserInterface;
-        public static PointShopGUI coinUI;
-        public static UserInterface coinUserInterface;
+        public static UserInterface PointInterface;
+        public static PointGUI PointGUI;
+        public static UserInterface PointShopInterface;
+        public static PointShopGUI PointShopGUI;
 
         public override void Load()
         {
-            switchUI = new();
-            switchUserInterface = new();
-            coinUI = new();
-            coinUserInterface = new();
+            PointGUI = new();
+            PointInterface = new();
+            PointShopGUI = new();
+            PointShopInterface = new();
         }
 
         public override void UpdateUI(GameTime gameTime)
         {
             if (PointConfig.Get().HuanJingFenPanel)
             {
-                switchUserInterface?.Update(gameTime);
+                PointInterface?.Update(gameTime);
             }
             if (PointShopGUI.Visible)
             {
-                coinUserInterface?.Update(gameTime);
+                PointShopInterface?.Update(gameTime);
             }
         }
 
@@ -46,11 +46,11 @@ namespace PointShop.Common.Systems
                    {
                        if (PointShopGUI.Visible)
                        {
-                           coinUI.Draw(Main.spriteBatch);
+                           PointShopGUI.Draw(Main.spriteBatch);
                        }
                        if (PointConfig.Get().HuanJingFenPanel)
                        {
-                           switchUI.Draw(Main.spriteBatch);
+                           PointGUI.Draw(Main.spriteBatch);
                        }
                        return true;
                    },

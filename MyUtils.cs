@@ -3,14 +3,29 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Text.RegularExpressions;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace PointShop
 {
-    public class MyUtils
+    public static class MyUtils
     {
+        public static void DrawString(Vector2 position, string text, Color textColor, Color borderColor)
+        {
+            var sb = Main.spriteBatch;
+            var font = FontAssets.MouseText.Value;
+            Utils.DrawBorderStringFourWay(sb, font, text, position.X, position.Y, textColor, borderColor, Vector2.Zero, 1f);
+        }
+
+        public static void DrawString(Vector2 position, string text, Color textColor, Color borderColor, Vector2 origin, float scale)
+        {
+            var sb = Main.spriteBatch;
+            var font = FontAssets.MouseText.Value;
+            Utils.DrawBorderStringFourWay(sb, font, text, position.X, position.Y, textColor, borderColor, origin, scale);
+        }
 
         // 绘制面板
         public static void DrawPanel(SpriteBatch sb, CalculatedStyle dimensions, Texture2D texture, Color color)

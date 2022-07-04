@@ -1,4 +1,5 @@
 [
+    // 顺序是不可以动的，按顺序对应的环境
     {
         "name": "森林",
         "image": "Bestiary_Surface",

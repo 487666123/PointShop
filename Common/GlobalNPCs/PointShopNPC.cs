@@ -2,14 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using PointShop.Common.Configs;
 using PointShop.Common.Players;
-using PointShop.UI;
+using PointShop.Interface;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static PointShop.UI.PointShopGUI;
+using static PointShop.Interface.PointShopGUI;
 using static Terraria.ID.ContentSamples;
 
 namespace PointShop.Common.GlobalNPCs
@@ -118,10 +118,10 @@ namespace PointShop.Common.GlobalNPCs
         {
             if (SpawnMode == SpawnType.NotSpawn)
             {
-                if (npc.netID < 0)
+                if (npc.netID != 1)
+                {
                     return true;
-                if (npc.type == NPCID.IceSlime)
-                    return true;
+                }
             }
             if (SpawnMode == SpawnType.Parent)
             {
@@ -133,25 +133,35 @@ namespace PointShop.Common.GlobalNPCs
                 (SpawnMode == SpawnType.NatureSpawnNPC || SpawnMode == SpawnType.EntitySourceIsNull);
         }
 
-        /*public override void PostDraw(NPC npc, SpriteBatch sb, Vector2 screenPos, Color drawColor)
+        /*private static readonly Color borderColor = new(255, 0, 0);
+        public override void PostDraw(NPC npc, SpriteBatch sb, Vector2 screenPos, Color drawColor)
         {
             float textW = FontAssets.MouseText.Value.MeasureString(SpawnMode.ToString()).X;
             Vector2 position = npc.position - Main.screenPosition;
             position.X += npc.width / 2 - textW / 2;
             position.Y -= 40f;
-            Utils.DrawBorderString(sb, SpawnMode.ToString(), position, Color.White);
+            MyUtils.DrawString(position, SpawnMode.ToString(), Color.White, TerrainColor[(int)CoinPlayer.PlayerInWhere()]);
 
             textW = FontAssets.MouseText.Value.MeasureString(npc.netID.ToString()).X;
             position = npc.position - Main.screenPosition;
             position.X += npc.width / 2 - textW / 2;
             position.Y -= 60f;
-            Utils.DrawBorderString(sb, npc.netID.ToString(), position, Color.White);
+            MyUtils.DrawString(position, $"{npc.type}", Color.White, TerrainColor[(int)CoinPlayer.PlayerInWhere()]);
 
             textW = FontAssets.MouseText.Value.MeasureString($"{CanEarnPoint(npc)}").X;
             position = npc.position - Main.screenPosition;
             position.X += npc.width / 2 - textW / 2;
             position.Y -= 80f;
-            Utils.DrawBorderString(sb, $"{CanEarnPoint(npc)}", position, Color.White);
+            MyUtils.DrawString(position, $"{CanEarnPoint(npc)}", Color.White, TerrainColor[(int)CoinPlayer.PlayerInWhere()]);
         }*/
+
+        private static void DrawString(NPC npc, string text, float Y)
+        {
+            Vector2 textSize = FontAssets.MouseText.Value.MeasureString(text);
+            Vector2 position = npc.position - Main.screenPosition;
+            position.X += npc.width / 2 - textSize.X / 2;
+            position.Y += Y - textSize.Y;
+            MyUtils.DrawString(position, text, Color.White, TerrainColor[(int)CoinPlayer.PlayerInWhere()]);
+        }
     }
 }
