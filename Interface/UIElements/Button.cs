@@ -9,7 +9,7 @@ using Terraria.UI;
 
 namespace PointShop.Interface.UIElements
 {
-    public class IconTextButton : UIElement
+    public class Button : UIElement
     {
         private static Asset<Texture2D> Background;
         private static Asset<Texture2D> BackgroundBorder;
@@ -20,7 +20,7 @@ namespace PointShop.Interface.UIElements
         public UIImage UIImage;
         public UIText UIText;
 
-        public IconTextButton(Texture2D texture, string text)
+        public Button(Texture2D texture, string text)
         {
             _playSound = true;
             data ??= new int[5];

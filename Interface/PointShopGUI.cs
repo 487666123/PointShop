@@ -57,19 +57,19 @@ namespace PointShop.Interface
             // 菜单按钮按钮
             for (int i = 0; i < PointShop.TerrainDatas.Count; i++)
             {
-                IconTextButton button = new(PointShop.icon[i].Value, $"{PointShop.TerrainDatas[i].name}: {CoinPlayer.GetPoint(i)}");
+                Button button = new(PointShop.icon[i].Value, $"{PointShop.TerrainDatas[i].name}: {CoinPlayer.GetPoint(i)}");
                 button.Width.Pixels = MenuView.ScrollList.WidthInside();
                 button.Height.Pixels = 50f;
                 button.data[0] = i;
                 button.OnClick += (evt, uie) =>
                 {
-                    int _terrain = (uie as IconTextButton).data[0];
+                    int _terrain = (uie as Button).data[0];
                     ModifyTerrain((Terrain)_terrain);
                 };
                 button.OnUpdate += (uie) =>
                 {
-                    int _terrain = (uie as IconTextButton).data[0];
-                    (uie as IconTextButton).SetText($"{PointShop.TerrainDatas[_terrain].name}: {CoinPlayer.GetPoint((Terrain)_terrain)}");
+                    int _terrain = (uie as Button).data[0];
+                    (uie as Button).SetText($"{PointShop.TerrainDatas[_terrain].name}: {CoinPlayer.GetPoint((Terrain)_terrain)}");
                     uie.Recalculate();
                 };
                 MenuView.AppendElement(button);
