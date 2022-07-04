@@ -9,7 +9,7 @@ namespace PointShop.Interface.UIElements
     public class ScrollView : UIElement
     {
         public ScrollList ScrollList;
-        public JuFixedUIScrollbar Scrollbar;
+        public FixedUIScrollbar Scrollbar;
 
         public ScrollView(float Width, float Height, float Padding = 10f, float HSpacing = 10f, float VSpacing = 10f)
         {

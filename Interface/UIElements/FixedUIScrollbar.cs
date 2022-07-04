@@ -7,7 +7,7 @@ using Terraria.UI;
 
 namespace PointShop.Interface.UIElements
 {
-    public class JuFixedUIScrollbar : UIScrollbar
+    public class FixedUIScrollbar : UIScrollbar
     {
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
