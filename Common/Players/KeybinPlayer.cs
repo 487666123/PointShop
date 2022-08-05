@@ -1,7 +1,6 @@
 ﻿using PointShop.Common.Systems;
-using PointShop.Interface;
+using PointShop.Interface.GUI;
 using Terraria.GameInput;
-using Terraria.ModLoader;
 
 namespace PointShop.Common.Players
 {

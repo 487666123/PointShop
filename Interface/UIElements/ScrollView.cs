@@ -1,41 +1,35 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using Terraria;
-using Terraria.GameContent.UI.Elements;
-using Terraria.UI;
+﻿using PointShop.Interface.UIElements;
 
-namespace PointShop.Interface.UIElements
+namespace PointShop.ModUI.UIElements
 {
     public class ScrollView : UIElement
     {
         public ScrollList ScrollList;
-        public FixedUIScrollbar Scrollbar;
+        public ZeroScrollbar Scrollbar;
 
         public ScrollView(float Width, float Height, float Padding = 10f, float HSpacing = 10f, float VSpacing = 10f)
         {
-            this.Width.Pixels = Width + 30f;
-            this.Height.Pixels = Height;
+            this.Width.Pixels = Width + Padding * 2 + 0.5f;
+            this.Height.Pixels = Height + Padding * 2 + 0.5f;
             SetPadding(Padding);
 
             OverflowHidden = true;
 
-            Scrollbar = new()
-            {
-                VAlign = 0.5f
-            };
-            Scrollbar.Height.Pixels = this.HeightInside() - 12f;
-            Scrollbar.Left.Pixels = this.WidthInside() - 20f;
-            Append(Scrollbar);
+            Append(ScrollList = new(HSpacing, VSpacing));
+            ScrollList.Width.Pixels = Width - 30;
 
-            ScrollList = new(HSpacing, VSpacing);
-            ScrollList.Width.Pixels = Width - Padding * 2f;
-            Append(ScrollList);
+            Append(Scrollbar = new()
+            {
+                HAlign = 1f,
+                VAlign = 0.5f
+            });
+            Scrollbar.Height.Pixels = Height;
         }
 
         public override void ScrollWheel(UIScrollWheelEvent evt)
         {
             base.ScrollWheel(evt);
-            Scrollbar.SetViewPosition(evt.ScrollWheelValue);
+            Scrollbar.BufferViewPosition += evt.ScrollWheelValue;
         }
 
         public override void Update(GameTime gameTime)
@@ -49,12 +43,12 @@ namespace PointShop.Interface.UIElements
             ScrollList.Recalculate();
         }
 
-        public void RemoveAllElement()
+        public void Clear()
         {
             ScrollList.RemoveAllChildren();
         }
 
-        public void AppendElement(UIElement uie)
+        public void Append2List(UIElement uie)
         {
             ScrollList.AppendElement(uie);
             RefreshScrollbar();
@@ -71,7 +65,7 @@ namespace PointShop.Interface.UIElements
     {
         public float HSpacing;
         public float VSpacing;
-        public override bool ContainsPoint(Vector2 point) => Parent.IsMouseHovering;
+        public override bool ContainsPoint(Vector2 point) => true;
 
         public ScrollList(float HSpacing, float VSpacing)
         {
@@ -79,7 +73,6 @@ namespace PointShop.Interface.UIElements
             this.HSpacing = HSpacing;
             this.VSpacing = VSpacing;
         }
-
 
         public void AppendElement(UIElement uie)
         {

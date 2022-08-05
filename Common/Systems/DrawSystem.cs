@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PointShop.Helpers;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
@@ -27,7 +28,7 @@ namespace PointShop.Common.Systems
             }*/
         }
 
-        private static readonly Asset<Texture2D> ButtonClose = MyUtils.GetTexture("Button_Close");
+        private static readonly Asset<Texture2D> ButtonClose = ModHelper.GetTexture("Button_Close");
         private static float rotation = 0;
         public static void JuDrawTest(SpriteBatch sb)
         {

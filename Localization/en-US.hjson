@@ -1,12 +1,16 @@
 Mods: {
     PointShop: {
         Config:{
-            积分兑换: Point exchange
-            面板设置: Panel config
-            积分统计面板: Point statistic panel
-            是否显示屏幕上方的积分统计: Display points at the top of screen
-            是否显示加分统计: Notice for getting points
-            获取分时时候是否会被提示: The notice is displayed right above the player as texts
+            PointExchange: Point exchange
+            PanelConfig: Panel config
+            TerrainPanel: {
+                Label: "Point statistic panel"
+                Tooltip: "Display points at the top of screen"
+            }
+            TerrainCombat: {
+                Label: "Notice for getting points"
+                Tooltip: "The notice is displayed right above the player as texts"
+            }
         }
         Keybin: {
             ShopUISwitch: Toggle exchange panel

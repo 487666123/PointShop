@@ -1,29 +1,19 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using PointShop.Common.Animations;
 using PointShop.Common.Players;
 using PointShop.Common.Systems;
-using ReLogic.Content;
-using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
-using Terraria.UI;
-using static PointShop.Interface.PointShopGUI;
+using PointShop.Interface;
 
-namespace PointShop.Interface.UIElements
+namespace PointShop.ModUI.UIElements
 {
     public class SingleItemSlot : UIElement
     {
-        public readonly static Texture2D Locking = MyUtils.GetTexture("BossIcons/Lock").Value;
-        public readonly static Texture2D BossIcons1 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
-        public readonly static Texture2D BossIcons2 = MyUtils.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
-        public readonly static Texture2D BossIcons3 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron_Prime").Value;
-        public readonly static Texture2D BossIcons4 = MyUtils.GetTexture("BossIcons/Map_Icon_Plantera").Value;
-        public readonly static Texture2D InventoryHover = MyUtils.GetTexture("Inventory_Hover").Value;
-        public readonly static int Size = TextureAssets.InventoryBack.Width();
+        public readonly static Texture2D Locking = ModHelper.GetTexture("BossIcons/Lock").Value;
+        public readonly static Texture2D BossIcons1 = ModHelper.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
+        public readonly static Texture2D BossIcons2 = ModHelper.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
+        public readonly static Texture2D BossIcons3 = ModHelper.GetTexture("BossIcons/Map_Icon_Skeletron_Prime").Value;
+        public readonly static Texture2D BossIcons4 = ModHelper.GetTexture("BossIcons/Map_Icon_Plantera").Value;
+        public readonly static Texture2D InventoryHover = ModHelper.GetTexture("Inventory_Hover").Value;
 
-        private bool _playSound;
         public int value;
         public int mode;
         public Terrain terrain;
@@ -33,6 +23,8 @@ namespace PointShop.Interface.UIElements
         public Color backgroundColor = new Color(63, 82, 151) * 0.7f;
         public UIImage LockTexture;
         public UIImage BossTexture;
+
+        public AnimationTimer HoverTimer = new(3);
 
         private void SetItem(int itemType)
         {
@@ -44,26 +36,12 @@ namespace PointShop.Interface.UIElements
         public SingleItemSlot(int type, int value, Terrain terrain, int mode)
         {
             SetItem(type);
-            Width.Set(Size, 0f);
-            Height.Set(Size, 0f);
+            Width.Set(52, 0f);
+            Height.Set(52, 0f);
 
             this.value = value;
             this.terrain = terrain;
             this.mode = mode;
-
-            UIText PointText = new($"P: {value}", 0.6f)
-            {
-                VAlign = 0.8f,
-                HAlign = 0.5f,
-            };
-            PointText.OnUpdate += (uie) =>
-            {
-                if (UnlockItem())
-                    (uie as UIText).TextColor = Color.Transparent;
-                else
-                    (uie as UIText).TextColor = Color.White;
-            };
-            Append(PointText);
 
             LockTexture = new(Locking)
             {
@@ -84,46 +62,47 @@ namespace PointShop.Interface.UIElements
             Append(LockTexture);
         }
 
-        public override void Click(UIMouseEvent evt)
+        public void Play()
         {
-            bool locking = UnlockItem();
-
             // 不能兑换直接退出
-            if (locking)
+            if (UnlockItem())
             {
-                Main.NewText(MyUtils.GetText("Hint.Locked"), Color.Red);
+                Main.NewText(ModHelper.GetText("Hint.Locked"), Color.Red);
                 return;
             }
 
             CoinPlayer coinPlayer = Main.LocalPlayer.GetModPlayer<CoinPlayer>();
-            if (coinPlayer.Point[(int)InterfaceSystem.PointShopGUI.terrain] >= value)
+            if (coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] >= value)
             {
-                coinPlayer.Point[(int)InterfaceSystem.PointShopGUI.terrain] -= value;
-                Main.NewText(MyUtils.GetText("Hint.Success"), new Color(0x00, 0x99, 0xff));
+                coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] -= value;
+                Main.NewText(ModHelper.GetText("Hint.Success"), new Color(0x00, 0x99, 0xff));
                 Main.LocalPlayer.QuickSpawnItem(null, item.Clone());
             }
             else
             {
-                Main.NewText(MyUtils.GetText("Hint.NotPoint"), Color.Red);
+                Main.NewText(ModHelper.GetText("Hint.NotPoint"), Color.Red);
             }
         }
 
         public override void Update(GameTime gameTime)
         {
+            HoverTimer.Update();
             base.Update(gameTime);
-            if (IsMouseHovering)
-            {
-                if (_playSound)
-                {
-                    _playSound = false;
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-                }
-            }
-            else
-            {
-                _playSound = true;
-            }
         }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            HoverTimer.Open();
+            SoundEngine.PlaySound(SoundID.MenuTick);
+        }
+
+        public override void MouseOut(UIMouseEvent evt)
+        {
+            base.MouseOut(evt);
+            HoverTimer.Close();
+        }
+
 
         protected override void DrawSelf(SpriteBatch sb)
         {
@@ -137,18 +116,18 @@ namespace PointShop.Interface.UIElements
                 }
             }
 
-            sb.Draw(TextureAssets.InventoryBack.Value, GetDimensions().Position(), Color.White);
-            if (IsMouseHovering)
-            {
-                sb.Draw(InventoryHover, GetDimensions().Position(), Color.White);
-            }
+
+            CalculatedStyle dimensions = GetDimensions();
+            Vector2 position = dimensions.Position();
+            Vector2 size = dimensions.Size();
+
+            Color border = Color.Lerp(ModColor.ButtonBorder, ModColor.ButtonBorderHover, HoverTimer.Schedule);
+
+            PixelShader.DrawBox(Main.UIScaleMatrix, position, size, 10, 3, border, ModColor.ButtonBackground);
 
             bool locking = UnlockItem();
             // 绘制物品
-            Vector2 position = GetDimensions().Position();
-            LimitSize(ItemTexture, textureSize, out float scale);
-            sb.Draw(ItemTexture, position + (this.Size() - ItemTexture.Size() * scale) / 2f,
-                null, Color.White * (locking ? 0.5f : 1f), 0f, Vector2.Zero, scale, 0, 0f);
+            DrawItemInternal(sb, item, locking ? Color.White * 0.5f : Color.White, GetDimensions(), 30);
 
             // 绘制锁定标志
             if (locking)
@@ -161,6 +140,29 @@ namespace PointShop.Interface.UIElements
                 LockTexture.Color = Color.Transparent;
                 BossTexture.Color = Color.Transparent;
             }
+        }
+
+        public static void DrawItemInternal(SpriteBatch sb, Item Item, Color lightColor, CalculatedStyle dimensions, float ItemSize = 30f)
+        {
+            Main.instance.LoadItem(Item.type);
+            var ItemTexture2D = TextureAssets.Item[Item.type];
+
+            Rectangle rectangle;
+            if (Main.itemAnimations[Item.type] is null)
+                rectangle = ItemTexture2D.Frame(1, 1, 0, 0);
+            else
+                rectangle = Main.itemAnimations[Item.type].GetFrame(ItemTexture2D.Value);
+
+            float size = rectangle.Width > ItemSize || rectangle.Height > ItemSize ?
+                rectangle.Width > rectangle.Height ? ItemSize / rectangle.Width : ItemSize / rectangle.Height :
+                1f;
+
+            sb.Draw(ItemTexture2D.Value, dimensions.Center() - rectangle.Size() * size / 2f,
+                new Rectangle?(rectangle), Item.GetAlpha(lightColor), 0f, Vector2.Zero, size,
+                SpriteEffects.None, 0f);
+            sb.Draw(ItemTexture2D.Value, dimensions.Center() - rectangle.Size() * size / 2f,
+                new Rectangle?(rectangle), Item.GetColor(lightColor), 0f, Vector2.Zero, size,
+                SpriteEffects.None, 0f);
         }
 
         public static void LimitSize(Texture2D texture, float MaxSize, out float scale)
@@ -195,4 +197,5 @@ namespace PointShop.Interface.UIElements
             return false;
         }
     }
+
 }

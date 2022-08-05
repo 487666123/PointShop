@@ -2,14 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using PointShop.Common.Configs;
 using PointShop.Common.Players;
-using PointShop.Interface;
+using PointShop.Helpers;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static PointShop.Interface.PointShopGUI;
+using static PointShop.Interface.GUI.PointShopGUI;
 using static Terraria.ID.ContentSamples;
 
 namespace PointShop.Common.GlobalNPCs
@@ -93,16 +93,16 @@ namespace PointShop.Common.GlobalNPCs
                 else if (Main.netMode == NetmodeID.SinglePlayer)
                 {
                     int point = BestiaryHelper.GetBestiaryStarsPriority(npc);
-                    CoinPlayer.LocalPlayerAdd(point);
+                    CoinPlayer.BonusPoints(point);
                     // 积分提示
-                    if (PointConfig.Get().CombatJiaFen)
+                    if (ModHelper.Config.TerrainCombat)
                     {
-                        string text = $"{MyUtils.GetText("HuanJingName." + CoinPlayer.PlayerInWhere()) + MyUtils.GetText("Hint.Point")} +{point}";
+                        string text = $"{ModHelper.GetText("HuanJingName." + CoinPlayer.InWhatTerrain) + ModHelper.GetText("Hint.Point")} +{point}";
                         AdvancedPopupRequest request = default;
                         request.Text = text;
                         request.DurationInFrames = 120;
                         request.Velocity = new(0, -2);
-                        request.Color = TerrainColor[(int)CoinPlayer.PlayerInWhere()];
+                        request.Color = TerrainColor[CoinPlayer.InWhatTerrain2Int];
                         PopupText.NewText(request, Main.LocalPlayer.Top + new Vector2(0, -10));
                     }
                 }
@@ -161,7 +161,7 @@ namespace PointShop.Common.GlobalNPCs
             Vector2 position = npc.position - Main.screenPosition;
             position.X += npc.width / 2 - textSize.X / 2;
             position.Y += Y - textSize.Y;
-            MyUtils.DrawString(position, text, Color.White, TerrainColor[(int)CoinPlayer.PlayerInWhere()]);
+            ModHelper.DrawString(position, text, Color.White, TerrainColor[CoinPlayer.InWhatTerrain2Int]);
         }
     }
 }

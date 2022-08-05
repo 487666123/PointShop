@@ -1,29 +1,27 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using PointShop.Common.Players;
 using PointShop.Common.Systems;
-using ReLogic.Content;
-using Terraria;
+using PointShop.Helpers;
+using PointShop.Interface.UIElements;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
 using Terraria.UI;
-using static PointShop.Interface.PointShopGUI;
 
-namespace PointShop.Interface
+namespace PointShop.Interface.GUI
 {
     public class PointGUI : UIState
     {
-        public static bool Visible => !PointShopGUI.Visible;
+        public static bool Visible => ModHelper.Config.TerrainPanel && !PointShopGUI.Visible;
 
-        public UIPanel MainPanel;
+        public SUIPanel MainPanel;
         public UIImage logo;
         public UIText tileText;
         public UIImageButton button;
 
+        private readonly Color background = new(44, 57, 105, 160);
         public override void OnInitialize()
         {
             // 主面板
-            MainPanel = new()
+            MainPanel = new(Color.Black, background)
             {
                 PaddingTop = 0f,
                 PaddingBottom = 0f,
@@ -35,7 +33,7 @@ namespace PointShop.Interface
             MainPanel.Width.Set(200f, 0f);
             MainPanel.Top.Set(20f, 0f);
 
-            logo = new(InterfaceSystem.icon[0])
+            logo = new(UISystem.icon[0])
             {
                 VAlign = 0.5f
             };
@@ -70,10 +68,10 @@ namespace PointShop.Interface
             {
                 Player player = Main.LocalPlayer;
                 CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
-                Terrain huanJing = CoinPlayer.PlayerInWhere();
-                logo.SetImage(InterfaceSystem.icon[(int)huanJing]);
+                Terrain huanJing = CoinPlayer.InWhatTerrain;
+                logo.SetImage(UISystem.icon[(int)huanJing]);
                 tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
-                tileText.SetText(MyUtils.GetText("HuanJingName." + huanJing) + MyUtils.GetText("Hint.Point") + " : " + coinPlayer.Point[(int)huanJing]);
+                tileText.SetText(ModHelper.GetText("HuanJingName." + huanJing) + ModHelper.GetText("Hint.Point") + " : " + coinPlayer.Point[(int)huanJing]);
             }
             Recalculate();
         }

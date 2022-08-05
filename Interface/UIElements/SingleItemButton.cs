@@ -1,7 +1,7 @@
 ﻿using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
-namespace PointShop.Interface.UIElements
+namespace PointShop.ModUI.UIElements
 {
     public class SingleItemButton : UIElement
     {

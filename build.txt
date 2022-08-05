@@ -1,4 +1,4 @@
 displayName = 积分商店
 author = 局长
-version = 1.2.3
+version = 1.2.4
 hideCode = true
