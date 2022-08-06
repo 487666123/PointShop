@@ -9,21 +9,22 @@ namespace PointShop.ModUI.UIElements
 
         public ScrollView(float Width, float Height, float Padding = 10f, float HSpacing = 10f, float VSpacing = 10f)
         {
-            this.Width.Pixels = Width + Padding * 2 + 0.5f;
-            this.Height.Pixels = Height + Padding * 2 + 0.5f;
+            this.Width.Pixels = Width + Padding * 2;
+            this.Height.Pixels = Height + Padding * 2;
             SetPadding(Padding);
 
             OverflowHidden = true;
 
             Append(ScrollList = new(HSpacing, VSpacing));
-            ScrollList.Width.Pixels = Width - 30;
+            ScrollList.Width.Pixels = Width - 30f;
 
             Append(Scrollbar = new()
             {
-                HAlign = 1f,
+                HAlign = 1,
                 VAlign = 0.5f
             });
-            Scrollbar.Height.Pixels = Height;
+            Scrollbar.Left.Pixels = -1;
+            Scrollbar.Height.Pixels = Height - 0.5f;
         }
 
         public override void ScrollWheel(UIScrollWheelEvent evt)
@@ -94,7 +95,7 @@ namespace PointShop.ModUI.UIElements
             }
             uie.SetPos(x, y);
             Append(uie);
-            Height.Pixels = uie.Top() + uie.Height();
+            Height.Pixels = uie.Top() + uie.Height() + 0.5f;
         }
 
         public void SetWidth(float Width)

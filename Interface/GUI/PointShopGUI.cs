@@ -27,8 +27,10 @@ namespace PointShop.Interface.GUI
         public ScrollView ItemView;
 
         private readonly Color background = new(44, 57, 105, 160);
-        public PointShopGUI()
+
+        public override void OnInitialize()
         {
+            RemoveAllChildren();
             screenWidth = Main.screenWidth;
             screenHeight = Main.screenHeight;
 
@@ -57,7 +59,7 @@ namespace PointShop.Interface.GUI
             // 菜单按钮按钮
             for (int i = 0; i < UISystem.TerrainDatas.Count; i++)
             {
-                Button button = new(UISystem.icon[i].Value, $"{UISystem.TerrainDatas[i].name}");
+                Button button = new(UISystem.Icons[i].Value, $"{UISystem.TerrainDatas[i].name}");
                 button.Width.Pixels = MenuView.ScrollList.WidthInside();
                 button.Height.Pixels = 50f;
                 button.data[0] = i;
@@ -100,7 +102,7 @@ namespace PointShop.Interface.GUI
                 ItemView.Clear();
                 for (int i = 0; i < itemData.Count; i++)
                 {
-                    SingleItemSlot ItemSlot = new(itemData[i].id, itemData[i].value, terrain, itemData[i].mode);
+                    ItemSlotSingle ItemSlot = new(itemData[i].id, itemData[i].value, terrain, itemData[i].mode);
 
                     MiniButton button = new($"{itemData[i].value}");
                     button.data[0] = (int)terrain;

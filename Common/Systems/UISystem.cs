@@ -1,23 +1,21 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PointShop.Entitys;
 using PointShop.Interface.GUI;
 using System.Collections.Generic;
 using System.Text;
-using Terraria.UI;
 
 namespace PointShop.Common.Systems
 {
     public class UISystem : ModSystem
     {
-        public static List<TerrainData> TerrainDatas; // 积分商店得数据
-        public static List<Asset<Texture2D>> icon; // 环境图标
+        public static List<TerrainData> TerrainDatas { get; set; } // 积分商店得数据
+        public static List<Asset<Texture2D>> Icons { get; set; } // 环境图标
 
-        public static UserInterface PointInterface;
-        public static PointGUI PointGUI;
+        public static UserInterface PointInterface { get; set; }
+        public static PointGUI PointGUI { get; set; }
 
-        public static UserInterface PointShopInterface;
-        public static PointShopGUI PointShopGUI;
+        public static UserInterface PointShopInterface { get; set; }
+        public static PointShopGUI PointShopGUI { get; set; }
 
         public override void Unload()
         {
@@ -28,28 +26,24 @@ namespace PointShop.Common.Systems
             PointShopInterface = null;
 
             TerrainDatas = null;
-            icon = null;
+            Icons = null;
         }
 
         public override void Load()
         {
             TerrainDatas = JsonConvert.DeserializeObject<List<TerrainData>>(Encoding.UTF8.GetString(ModContent.GetFileBytes("PointShop/JSONs/ShopData.json")));
 
-            icon = new();
+            Icons = new();
             for (int i = 0; i < TerrainDatas.Count; i++)
             {
-                icon.Add(ModContent.Request<Texture2D>($"PointShop/Images/Icons/{TerrainDatas[i].image}", AssetRequestMode.ImmediateLoad));
+                Icons.Add(ModContent.Request<Texture2D>($"PointShop/Images/Icons/{TerrainDatas[i].image}", AssetRequestMode.ImmediateLoad));
             }
 
-            PointInterface = new();
-            PointGUI = new();
-            PointGUI.Activate();
-            PointInterface.SetState(PointGUI);
-
-            PointShopInterface = new();
-            PointShopGUI = new();
-            PointShopGUI.Activate();
-            PointShopInterface.SetState(PointShopGUI);
+            if (!Main.dedServ)
+            {
+                PointInterface = new();
+                PointShopInterface = new();
+            }
         }
 
         public override void UpdateUI(GameTime gameTime)

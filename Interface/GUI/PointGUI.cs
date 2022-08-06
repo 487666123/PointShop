@@ -20,6 +20,7 @@ namespace PointShop.Interface.GUI
         private readonly Color background = new(44, 57, 105, 160);
         public override void OnInitialize()
         {
+            RemoveAllChildren();
             // 主面板
             MainPanel = new(Color.Black, background)
             {
@@ -33,7 +34,7 @@ namespace PointShop.Interface.GUI
             MainPanel.Width.Set(200f, 0f);
             MainPanel.Top.Set(20f, 0f);
 
-            logo = new(UISystem.icon[0])
+            logo = new(UISystem.Icons[0])
             {
                 VAlign = 0.5f
             };
@@ -69,7 +70,7 @@ namespace PointShop.Interface.GUI
                 Player player = Main.LocalPlayer;
                 CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
                 Terrain huanJing = CoinPlayer.InWhatTerrain;
-                logo.SetImage(UISystem.icon[(int)huanJing]);
+                logo.SetImage(UISystem.Icons[(int)huanJing]);
                 tileText.Left.Set(logo.Width.Pixels + 10f, 0f);
                 tileText.SetText(ModHelper.GetText("HuanJingName." + huanJing) + ModHelper.GetText("Hint.Point") + " : " + coinPlayer.Point[(int)huanJing]);
             }

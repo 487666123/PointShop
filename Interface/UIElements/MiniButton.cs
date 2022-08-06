@@ -12,7 +12,6 @@ namespace PointShop.ModUI.UIElements
         public int[] data;
         public AnimationTimer HoverTimer = new(3);
 
-        private bool _canPlaySound;
         private string text;
         private Vector2 textOffset;
         public string Text { get => text; set => text = value; }

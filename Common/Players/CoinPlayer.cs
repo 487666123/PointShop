@@ -6,7 +6,6 @@ namespace PointShop.Common.Players
     public class CoinPlayer : ModPlayer
     {
         public int[] Point = new int[(int)Terrain.Count];
-
         public static int GetPoints(Terrain huanJing) => GetPlayer.Point[(int)huanJing];
 
         /// <summary>
