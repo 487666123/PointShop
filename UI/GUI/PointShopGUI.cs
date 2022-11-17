@@ -1,27 +1,27 @@
-﻿using PointShop.Common.Players;
+﻿using ImproveGame.Interface.UIElements_Shader;
+using PointShop.Common.Players;
 using PointShop.Common.Systems;
 using PointShop.Entitys;
 using PointShop.Interface.UIElements;
 using PointShop.ModUI.UIElements;
+using PointShop.Interface.Common;
 using System.Collections.Generic;
 using Terraria.GameInput;
+using PointShop.Common.Configs;
 
 namespace PointShop.Interface.GUI
 {
-    /// <summary>
-    /// 一共有三个面板，一个主面板，其他两个在主面板内，分别是菜单面板和物品展示面板
-    /// </summary>
     public class PointShopGUI : UIState
     {
-        // 是否显示它
         internal static bool Visible = false;
+        internal int OldPriceMultiplier = PointConfig.Instance.PointMultiplier;
 
         public Vector2 offset = Vector2.Zero;
         public bool dragging = false;
 
         public Terrain terrain;
-        public UIText UIText;
-        public UIImageButton ImageButton;
+        public UITitle title;
+        public UIFork Close;
         public SUIPanel MainPanel;
         public ScrollView MenuView;
         public ScrollView ItemView;
@@ -35,25 +35,23 @@ namespace PointShop.Interface.GUI
             screenHeight = Main.screenHeight;
 
             MainPanel = new(Color.Black, background);
-            MainPanel.SetPadding(14f);
-            MainPanel.SetPos((Main.ScreenSize.ToVector2() - MainPanel.Size()) / 2f);
+            MainPanel.SetPadding(12f);
+            MainPanel.SetPos(Main.LocalPlayer.GetModPlayer<UIPlayerData>().PointShopPos);
             Append(MainPanel);
 
-            UIText = new(ModHelper.GetText("Config.PointExchange"), 0.5f, true);
-            UIText.SetPos(10f, 10f);
-            MainPanel.Append(UIText);
+            MainPanel.Append(title = new(ModHelper.GetText("Config.PointExchange"), 0.5f));
 
-            ImageButton = new(ModHelper.GetTexture("Button_Close"))
+            Close = new(30)
             {
                 HAlign = 1f
             };
-            ImageButton.Left.Pixels = -10f;
-            ImageButton.OnClick += (evt, uie) => Visible = !Visible;
-            MainPanel.Append(ImageButton);
+            Close.Height.Pixels = title.Height.Pixels;
+            Close.OnClick += (evt, uie) => Visible = !Visible;
+            MainPanel.Append(Close);
 
             // 菜单面板
-            MenuView = new(190, 50 * 5 + 10 * 4 + 20);
-            MenuView.Top.Pixels += ImageButton.Height() + 15f;
+            MenuView = new(190, 340f);
+            MenuView.Top.Pixels += title.Bottom() + 15f;
             MainPanel.Append(MenuView);
 
             // 菜单按钮按钮
@@ -72,20 +70,19 @@ namespace PointShop.Interface.GUI
                 {
                     Button button = uie as Button;
                     int _terrain = button.data[0];
-                    button.SetText($"{UISystem.TerrainDatas[_terrain].name}: {CoinPlayer.GetPoints((Terrain)_terrain)}");
+                    button.Text = $"{ModHelper.GetText($"HuanJingName.{UISystem.TerrainDatas[_terrain].name}")}: {CoinPlayer.GetPoints((Terrain)_terrain)}";
                     button.Recalculate();
                 };
                 MenuView.Append2List(button);
             }
 
             // 物品面板
-            int num = 6;
-            ItemView = new(52 * num + 15 * (num - 1) + 30, MenuView.Height() - MenuView.HPadding(), 10, 15);
+            ItemView = new(224 * 2 + 15 + 30, MenuView.Height() - MenuView.HPadding());
             ItemView.Top.Pixels = MenuView.Top();
-            ItemView.Left.Pixels = MenuView.Width();
+            ItemView.Left.Pixels = MenuView.Width() + 10f;
             MainPanel.Append(ItemView);
 
-            MainPanel.Width.Pixels = MenuView.Width() + ItemView.Width() + MainPanel.HPadding();
+            MainPanel.Width.Pixels = ItemView.Right() + MainPanel.HPadding();
             MainPanel.Height.Pixels = MenuView.Top() + MenuView.Height() + MainPanel.VPadding();
 
             // 在UI里面添加 Item
@@ -102,21 +99,8 @@ namespace PointShop.Interface.GUI
                 ItemView.Clear();
                 for (int i = 0; i < itemData.Count; i++)
                 {
-                    ItemSlotSingle ItemSlot = new(itemData[i].id, itemData[i].value, terrain, itemData[i].mode);
-
-                    MiniButton button = new($"{itemData[i].value}");
-                    button.data[0] = (int)terrain;
-                    button.Width.Pixels = ItemSlot.Width();
-                    button.Top.Pixels = ItemSlot.Bottom() + 5f;
-                    button.OnClick += (_, _) => ItemSlot.Play();
-
-                    UIElement uie = new();
-                    uie.Width.Pixels = ItemSlot.Width();
-                    uie.Height.Pixels = button.Bottom();
-                    uie.Append(ItemSlot);
-                    uie.Append(button);
-
-                    ItemView.Append2List(uie);
+                    DisplaySlot displaySlot = new(new Item(itemData[i].id), itemData[i].value, itemData[i].mode, terrain);
+                    ItemView.Append2List(displaySlot);
                 }
                 ItemView.Recalculate();
             }
@@ -131,7 +115,7 @@ namespace PointShop.Interface.GUI
         public override void MouseDown(UIMouseEvent evt)
         {
             base.MouseDown(evt);
-            if (MainPanel.IsMouseHovering && !MenuView.IsMouseHovering && !ItemView.IsMouseHovering && !ImageButton.IsMouseHovering)
+            if (MainPanel.IsMouseHovering && !MenuView.IsMouseHovering && !ItemView.IsMouseHovering && !Close.IsMouseHovering)
             {
                 dragging = true;
                 offset = evt.MousePosition - MainPanel.GetDimensions().Position();
@@ -144,6 +128,13 @@ namespace PointShop.Interface.GUI
 
         public override void Update(GameTime gameTime)
         {
+            // 修改设置中的价格倍率刷新商店
+            if (PointConfig.Instance.PointMultiplier != OldPriceMultiplier)
+            {
+                OldPriceMultiplier = PointConfig.Instance.PointMultiplier;
+                ModifyTerrain(terrain);
+            }
+
             bool flag = false;
             base.Update(gameTime);
             if (dragging)

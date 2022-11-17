@@ -26,7 +26,7 @@ namespace PointShop.ModUI.UIElements
 
         public AnimationTimer HoverTimer;
 
-        public ItemSlotSingle(int itemType, int value, Terrain terrain, int mode)
+        public ItemSlotSingle(Item item, int value, Terrain terrain, int mode)
         {
             Width.Set(52, 0f);
             Height.Set(52, 0f);
@@ -37,9 +37,9 @@ namespace PointShop.ModUI.UIElements
 
             HoverTimer = new(3);
 
-            Item = new(itemType);
-            Main.instance.LoadItem(itemType);
-            ItemTexture = TextureAssets.Item[itemType].Value;
+            Item = item;
+            Main.instance.LoadItem(item.type);
+            ItemTexture = TextureAssets.Item[item.type].Value;
 
             LockTexture = ModHelper.GetTexture("BossIcons/Lock").Value;
             LockTextureSize = LockTexture.Size();
@@ -79,10 +79,10 @@ namespace PointShop.ModUI.UIElements
             Vector2 position = dimensions.Position();
             Vector2 size = dimensions.Size();
 
-            Color border = Color.Lerp(ModColor.BorderNotFavorited, ModColor.BorderFavorited, HoverTimer.Schedule);
-            Color background = Color.Lerp(ModColor.BackgroundNotFavorited, ModColor.BackgroundFavorited, HoverTimer.Schedule);
+            Color border = Color.Lerp(UIColor.BorderNotFavorited, UIColor.BorderFavorited, HoverTimer.Schedule);
+            Color background = Color.Lerp(UIColor.BackgroundNotFavorited, UIColor.BackgroundFavorited, HoverTimer.Schedule);
 
-            PixelShader.DrawBox(Main.UIScaleMatrix, position, size, 10, 3, border, background);
+            PixelShader.DrawBox(position, size, 10, 3, border, background);
 
             bool canPlay = CanPlay();
             // 绘制物品
@@ -126,7 +126,7 @@ namespace PointShop.ModUI.UIElements
                 MaxSize / texture.Width : MaxSize / texture.Height : 1f;
         }
 
-        public void Play()
+        public void Pay()
         {
             // 不能兑换直接退出
             if (!CanPlay())
@@ -139,12 +139,12 @@ namespace PointShop.ModUI.UIElements
             if (coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] >= value)
             {
                 coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] -= value;
-                Main.NewText(ModHelper.GetText("Hint.Success"), new Color(0x00, 0x99, 0xff));
+                Main.NewText($"\"{Item.Name}\" {ModHelper.GetText("Hint.Success")}", new Color(0x00, 0x99, 0xff));
                 Main.LocalPlayer.QuickSpawnItem(null, Item.Clone());
             }
             else
             {
-                Main.NewText(ModHelper.GetText("Hint.NotPoint"), Color.Red);
+                Main.NewText($"\"{Item.Name}\" {ModHelper.GetText("Hint.NotPoint")}", Color.Red);
             }
         }
 

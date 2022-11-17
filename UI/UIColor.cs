@@ -1,6 +1,6 @@
 ﻿namespace PointShop.Interface
 {
-    public class ModColor
+    public class UIColor
     {
         public static Color PanlBackground = new(44, 57, 105, 160);
 

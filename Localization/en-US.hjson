@@ -11,9 +11,21 @@ Mods: {
                 Label: "Notice for getting points"
                 Tooltip: "The notice is displayed right above the player as texts"
             }
+            UIYAxisOffset:{
+                Label: "Mod UI font Y-axis offset"
+                Tooltip: ""
+            }
+            PointMultiplier:{
+                Label: "Item price multiplier (%)"
+            }
         }
         Keybin: {
             ShopUISwitch: Toggle exchange panel
+        }
+        ShopUI: {
+            Pay: Pay
+            Close: Close
+            Price: Price
         }
         Hint: {
             Point: Points

@@ -11,9 +11,25 @@ Mods: {
                 Label: "积分获取提示"
                 Tooltip: "获取积分时在人物头顶以文本提示"
             }
+            UIYAxisOffset:{
+                Label: "ModUI 字体Y轴偏移"
+                Tooltip:
+                    '''
+                    由于泰拉原版字体的原因，在Y轴上会略微偏上固出此设置用来调整。
+                    大部分字体材质包无偏移可以设置为0
+                    '''
+            }
+            PointMultiplier:{
+                Label: "物品价格倍率 (%)"
+            }
         }
         Keybin: {
             ShopUISwitch: 兑换面板开关
+        }
+        ShopUI: {
+            Pay: 购买
+            Close: 关闭
+            Price: 价格
         }
         Hint: {
             Point: 积分

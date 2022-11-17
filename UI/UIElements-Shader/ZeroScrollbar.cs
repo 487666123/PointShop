@@ -105,7 +105,7 @@ namespace PointShop.Interface.UIElements
             Vector2 size = dimension.Size();
 
             // 滚动条背板
-            PixelShader.DrawBox(Main.UIScaleMatrix, position, size, size.X / 2, 3, Color.Black, background);
+            PixelShader.DrawBox(position, size, size.X / 2, 3, Color.Black, background);
 
             CalculatedStyle innerDimensions = GetInnerDimensions();
             Vector2 innerPosition = innerDimensions.Position();
@@ -115,7 +115,7 @@ namespace PointShop.Interface.UIElements
             innerSize.Y *= ViewScale;
 
             // 滚动条拖动块
-            PixelShader.DrawBox(Main.UIScaleMatrix, innerPosition, innerSize, innerSize.X / 2, 0, Color.White, Color.White);
+            PixelShader.DrawBox(innerPosition, innerSize, innerSize.X / 2, 0, Color.White, Color.White);
         }
 
         public void SetView(float viewSize, float maxViewSize)

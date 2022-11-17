@@ -1,30 +1,27 @@
 ﻿using PointShop.Common.Animations;
+using PointShop.Common.Configs;
 using PointShop.Interface;
 
 namespace PointShop.ModUI.UIElements
 {
     public class MiniButton : UIElement
     {
-        private readonly Asset<Texture2D> Background;
-        private readonly Asset<Texture2D> BackgroundBorder;
-        private readonly Asset<Texture2D> Point;
-
-        public int[] data;
         public AnimationTimer HoverTimer = new(3);
 
         private string text;
-        private Vector2 textOffset;
-        public string Text { get => text; set => text = value; }
+        public string Text
+        {
+            get => text;
+            set
+            {
+                text = value;
+                this.SetSize(ModHelper.GetTextSize(value) * Scale);
+            }
+        }
         public float Scale { get; set; }
 
         public MiniButton(string text, float scale = 0.8f)
         {
-            Background = Main.Assets.Request<Texture2D>("Images/UI/CharCreation/PanelGrayscale");
-            BackgroundBorder = Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelBorder");
-            Point = ModHelper.GetTexture("Point");
-            textOffset.X = Point.Value.Width;
-
-            data = new int[5];
             Scale = scale;
             Text = text;
 
@@ -53,17 +50,16 @@ namespace PointShop.ModUI.UIElements
 
         protected override void DrawSelf(SpriteBatch sb)
         {
-            CalculatedStyle dimensions = GetDimensions();
-            Vector2 position = dimensions.Position();
-            Vector2 size = dimensions.Size();
+            Vector2 position = GetDimensions().Position();
+            Vector2 size = GetDimensions().Size();
+            Color border = Color.Lerp(UIColor.ButtonBorder, UIColor.ButtonBorderHover, HoverTimer.Schedule);
+            PixelShader.DrawBox(position, size, 8, 3, border, UIColor.ButtonBackground);
 
-            Color border = Color.Lerp(ModColor.ButtonBorder, ModColor.ButtonBorderHover, HoverTimer.Schedule);
-
-            PixelShader.DrawBox(Main.UIScaleMatrix, position, size, 8, 3, border, ModColor.ButtonBackground);
-
+            position = GetInnerDimensions().Position();
+            size = GetInnerDimensions().Size();
             Vector2 textSize = ModHelper.GetTextSize(Text) * Scale;
             Vector2 textPosition = position + size / 2f - textSize / 2f;
-            textPosition.Y += 4 * Scale;
+            textPosition.Y += PointConfig.Instance.UIYAxisOffset * Scale;
             ModHelper.DrawString(textPosition, Text, Color.White, Color.Black, Vector2.Zero, Scale);
         }
     }

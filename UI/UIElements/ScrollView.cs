@@ -7,7 +7,7 @@ namespace PointShop.ModUI.UIElements
         public ScrollList ScrollList;
         public ZeroScrollbar Scrollbar;
 
-        public ScrollView(float Width, float Height, float Padding = 10f, float HSpacing = 10f, float VSpacing = 10f)
+        public ScrollView(float Width, float Height, float Padding = 0f, float HSpacing = 10f, float VSpacing = 10f)
         {
             this.Width.Pixels = Width + Padding * 2;
             this.Height.Pixels = Height + Padding * 2;

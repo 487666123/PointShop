@@ -34,7 +34,7 @@ namespace PointShop.Interface.UIElements
                 size += new Vector2(border * 2);
             }
 
-            PixelShader.DrawBox(Main.UIScaleMatrix, position, size, radius, border,
+            PixelShader.DrawBox(position, size, radius, border,
                 borderColor, backgroundColor);
         }
     }

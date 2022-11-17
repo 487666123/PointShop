@@ -1,7 +1,7 @@
 [
     // 顺序是不可以动的，按顺序对应的环境
     {
-        "name": "森林",
+        "name": "SenLin",
         "image": "Bestiary_Surface",
         "items": [
             {
@@ -322,7 +322,7 @@
         ]
     },
     {
-        "name": "太空",
+        "name": "TianKong",
         "image": "Bestiary_Sky",
         "items": [
             {
@@ -373,7 +373,7 @@
         ]
     },
     {
-        "name": "洞穴",
+        "name": "DongXue",
         "image": "Bestiary_Caverns",
         "items": [
             {
@@ -664,7 +664,7 @@
         ]
     },
     {
-        "name": "地狱",
+        "name": "DiYu",
         "image": "Bestiary_The_Underworld",
         "items": [
             {
@@ -673,8 +673,8 @@
                 "mode": 0
             },
             {
-                "id": 502,
-                "value": 10,
+                "id": 5097,
+                "value": 50,
                 "mode": 0
             },
             {
@@ -785,7 +785,7 @@
         ]
     },
     {
-        "name": "丛林",
+        "name": "CongLin",
         "image": "Bestiary_The_Jungle",
         "items": [
             {
@@ -936,7 +936,7 @@
         ]
     },
     {
-        "name": "海洋",
+        "name": "HaiYang",
         "image": "Bestiary_Ocean",
         "items": [
             {
@@ -1042,7 +1042,7 @@
         ]
     },
     {
-        "name": "雪地",
+        "name": "XueDi",
         "image": "Bestiary_Snow",
         "items": [
             {
@@ -1218,7 +1218,7 @@
         ]
     },
     {
-        "name": "沙漠",
+        "name": "ShaMo",
         "image": "Bestiary_Desert",
         "items": [
             {
@@ -1394,7 +1394,7 @@
         ]
     },
     {
-        "name": "腐化",
+        "name": "FuHua",
         "image": "Bestiary_The_Corruption",
         "items": [
             {
@@ -1535,7 +1535,7 @@
         ]
     },
     {
-        "name": "猩红",
+        "name": "XingHong",
         "image": "Bestiary_The_Crimson",
         "items": [
             {
@@ -1656,7 +1656,7 @@
         ]
     },
     {
-        "name": "神圣",
+        "name": "ShenSheng",
         "image": "Bestiary_The_Hallow",
         "items": [
             {
@@ -1675,9 +1675,14 @@
                 "mode": 0
             },
             {
-                "id": 5097,
+                "id": 502,
+                "value": 10,
+                "mode": 2
+            },
+            {
+                "id": 528,
                 "value": 50,
-                "mode": 0
+                "mode": 2
             },
             {
                 "id": 1309,
@@ -1702,11 +1707,6 @@
             {
                 "id": 893,
                 "value": 150,
-                "mode": 2
-            },
-            {
-                "id": 528,
-                "value": 50,
                 "mode": 2
             },
             {
@@ -1767,7 +1767,7 @@
         ]
     },
     {
-        "name": "地牢",
+        "name": "DiLao",
         "image": "Bestiary_The_Dungeon",
         "items": [
             {
