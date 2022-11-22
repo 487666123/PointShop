@@ -36,7 +36,7 @@ namespace PointShop.Common.Configs
         [Label("$Mods.PointShop.Config.UIYAxisOffset.Label")]
         [Tooltip("$Mods.PointShop.Config.UIYAxisOffset.Tooltip")]
         [DefaultValue(5f)]
-        [Range(0, 5)]
+        [Range(0, 5f)]
         [Slider]
         [Increment(0.5f)]
         public float UIYAxisOffset;

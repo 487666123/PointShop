@@ -1,5 +1,6 @@
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
+global using PointShop.Helpers;
 global using ReLogic.Content;
 global using System;
 global using System.IO;
@@ -12,7 +13,6 @@ global using Terraria.ID;
 global using Terraria.Localization;
 global using Terraria.ModLoader;
 global using Terraria.UI;
-global using PointShop.Helpers;
 global using static PointShop.Common.Data.TerrainInfo;
 using PointShop.Common.GlobalNPCs;
 using PointShop.Common.Players;

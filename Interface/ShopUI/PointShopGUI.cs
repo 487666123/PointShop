@@ -1,15 +1,16 @@
 ﻿using ImproveGame.Interface.UIElements_Shader;
+using PointShop.Common.Configs;
 using PointShop.Common.Players;
-using PointShop.Common.Systems;
 using PointShop.Entitys;
+using PointShop.Interface;
+using PointShop.Interface.Common;
 using PointShop.Interface.UIElements;
 using PointShop.ModUI.UIElements;
-using PointShop.Interface.Common;
+using PointShop.UI.Common;
 using System.Collections.Generic;
 using Terraria.GameInput;
-using PointShop.Common.Configs;
 
-namespace PointShop.Interface.GUI
+namespace PointShop.UI.ShopUI
 {
     public class PointShopGUI : UIState
     {
@@ -50,9 +51,8 @@ namespace PointShop.Interface.GUI
             MainPanel.Append(Close);
 
             // 菜单面板
-            MenuView = new(190, 340f);
+            MainPanel.Append(MenuView = new(150, 340f));
             MenuView.Top.Pixels += title.Bottom() + 15f;
-            MainPanel.Append(MenuView);
 
             // 菜单按钮按钮
             for (int i = 0; i < UISystem.TerrainDatas.Count; i++)
@@ -70,7 +70,7 @@ namespace PointShop.Interface.GUI
                 {
                     Button button = uie as Button;
                     int _terrain = button.data[0];
-                    button.Text = $"{ModHelper.GetText($"HuanJingName.{UISystem.TerrainDatas[_terrain].name}")}: {CoinPlayer.GetPoints((Terrain)_terrain)}";
+                    button.Text = $"{CoinPlayer.GetPoints((Terrain)_terrain)}";
                     button.Recalculate();
                 };
                 MenuView.Append2List(button);

@@ -9,7 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static PointShop.Interface.GUI.PointShopGUI;
+using static PointShop.UI.ShopUI.PointShopGUI;
 using static Terraria.ID.ContentSamples;
 
 namespace PointShop.Common.GlobalNPCs

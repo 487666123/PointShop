@@ -1,7 +1,7 @@
 ﻿using PointShop.Common.Animations;
 using PointShop.Common.Players;
-using PointShop.Common.Systems;
 using PointShop.Interface;
+using PointShop.UI.Common;
 
 namespace PointShop.ModUI.UIElements
 {

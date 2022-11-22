@@ -1,4 +1,4 @@
-﻿using PointShop.Common.Systems;
+﻿using PointShop.UI.Common;
 using Terraria.ModLoader.IO;
 
 namespace PointShop.Interface.Common
@@ -14,7 +14,8 @@ namespace PointShop.Interface.Common
 
         public override void SaveData(TagCompound tag)
         {
-            tag.Add(nameof(PointShopPos), UISystem.PointShopGUI.MainPanel.Pos());
+            if (UISystem.PointShopGUI != null)
+                tag.Add(nameof(PointShopPos), UISystem.PointShopGUI.MainPanel.Pos());
         }
     }
 }

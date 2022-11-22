@@ -6,8 +6,9 @@ namespace PointShop.Common.Animations
     {
         internal static Effect Fork;
         internal static Effect Box;
-        internal static Effect RoundRectangle;
-        internal static Texture2D Transparent;
+        internal static Effect RoundRect;
+        internal static Effect RoundRectNoBorder;
+        internal static Texture2D Transparent = new(Main.graphics.GraphicsDevice, 1, 1);
 
         public static void DrawFork(Vector2 position, float size, float radius, Color backgroundColor, float border, Color borderColor)
         {
@@ -27,11 +28,28 @@ namespace PointShop.Common.Animations
                 sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
         }
 
-        public static void DrawRoundRectangle(Vector2 position, Vector2 size, float round, Color backgroundColor, float border = 0, Color borderColor = new())
+        // DrawRoundRect 现在有两个 .fx 文件，一个带边框的，一个不带的，也许能节省性能？
+        public static void DrawRoundRect(Vector2 position, Vector2 size, float round, Color backgroundColor)
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            Effect effect = RoundRectangle;
+            Effect effect = RoundRectNoBorder;
+            effect.Parameters[nameof(size)].SetValue(size);
+            effect.Parameters[nameof(round)].SetValue(round);
+            effect.Parameters[nameof(backgroundColor)].SetValue(backgroundColor.ToVector4());
+            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
+                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, effect, Main.UIScaleMatrix);
+            sb.Draw(texture, position, null, Color.White, 0, new(0), size, 0, 1f);
+            sb.End();
+            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
+                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+        }
+
+        public static void DrawRoundRect(Vector2 position, Vector2 size, float round, Color backgroundColor, float border = 0, Color borderColor = new())
+        {
+            SpriteBatch sb = Main.spriteBatch;
+            sb.End();
+            Effect effect = RoundRect;
             effect.Parameters[nameof(size)].SetValue(size);
             effect.Parameters[nameof(round)].SetValue(round);
             effect.Parameters[nameof(border)].SetValue(border);
@@ -73,15 +91,16 @@ namespace PointShop.Common.Animations
         {
             Fork = ModHelper.GetEffect("Fork").Value;
             Box = ModHelper.GetEffect("Box").Value;
-            RoundRectangle = ModHelper.GetEffect(nameof(RoundRectangle)).Value;
-            Transparent = ModHelper.GetTexture("0").Value;
+            RoundRect = ModHelper.GetEffect(nameof(RoundRect)).Value;
+            RoundRectNoBorder = ModHelper.GetEffect(nameof(RoundRectNoBorder)).Value;
         }
 
         public override void Unload()
         {
             Fork = null;
             Box = null;
-            RoundRectangle = null;
+            RoundRect = null;
+            RoundRectNoBorder = null;
             Transparent = null;
         }
     }

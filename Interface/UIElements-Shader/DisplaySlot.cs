@@ -37,6 +37,8 @@ namespace PointShop.Interface.UIElements
             Append(title = new(item.Name, Color.White, 0.8f, () => ItemRarity.GetColor(item.rare)));
             title.Left.Pixels = itemSlotSingle.Right() + 8f;
             title.RefreshSize();
+            if (title.Width.Pixels + 1 > 140)
+                title.OverflowHidden = true;
             title.Width.Pixels = 140;
 
             Append(tips = new($"{ModHelper.GetText("ShopUI.Price")}: {value}", Color.White, 0.7f));
@@ -61,7 +63,7 @@ namespace PointShop.Interface.UIElements
             // 背景和边框
             Vector2 position = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
-            PixelShader.DrawRoundRectangle(position, size, 12, Common.UIColor.Default.PanelBackground, 3, Common.UIColor.Default.PanelBorder);
+            PixelShader.DrawRoundRect(position, size, 12, Common.UIColor.Default.PanelBackground, 3, Common.UIColor.Default.PanelBorder);
         }
     }
 }

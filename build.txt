@@ -1,4 +1,4 @@
 displayName = 积分商店
 author = 局长，天乐，Lacewing，世纪小花
-version = 1.3
+version = 1.3.0.2
 hideCode = true

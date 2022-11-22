@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using PointShop.Entitys;
-using PointShop.Interface.GUI;
+using PointShop.UI.ShopUI;
+using PointShop.UI.TipUI;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PointShop.Common.Systems
+namespace PointShop.UI.Common
 {
     public class UISystem : ModSystem
     {
@@ -49,13 +50,10 @@ namespace PointShop.Common.Systems
         public override void UpdateUI(GameTime gameTime)
         {
             if (PointGUI.Visible)
-            {
                 PointInterface?.Update(gameTime);
-            }
+
             if (PointShopGUI.Visible)
-            {
                 PointShopInterface?.Update(gameTime);
-            }
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

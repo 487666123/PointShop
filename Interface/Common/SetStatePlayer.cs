@@ -1,4 +1,4 @@
-﻿using PointShop.Common.Systems;
+﻿using PointShop.UI.Common;
 
 namespace PointShop.Interface.Common
 {

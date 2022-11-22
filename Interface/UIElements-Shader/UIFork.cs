@@ -45,7 +45,7 @@ namespace PointShop.Interface
 
             Vector2 pos = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
-            PixelShader.DrawRoundRectangle(pos, size, 8f, background, 0, Color.Transparent);
+            PixelShader.DrawRoundRect(pos, size, 8f, background, 0, Color.Transparent);
             PixelShader.DrawFork(pos + size / 2 - new Vector2(this.size / 2), this.size, radius,
                 fork, border, Common.UIColor.Default.CloseBorder);
         }
