@@ -5,7 +5,7 @@ using PointShop.UI.TipUI;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PointShop.UI.Common
+namespace PointShop.Interface
 {
     public class UISystem : ModSystem
     {
@@ -34,17 +34,17 @@ namespace PointShop.UI.Common
         {
             TerrainDatas = JsonConvert.DeserializeObject<List<TerrainData>>(Encoding.UTF8.GetString(ModContent.GetFileBytes("PointShop/JSONs/ShopData.json")));
 
+            if (Main.dedServ)
+                return;
+
             Icons = new();
             for (int i = 0; i < TerrainDatas.Count; i++)
             {
                 Icons.Add(ModContent.Request<Texture2D>($"PointShop/Images/Icons/{TerrainDatas[i].image}", AssetRequestMode.ImmediateLoad));
             }
 
-            if (!Main.dedServ)
-            {
-                PointInterface = new();
-                PointShopInterface = new();
-            }
+            PointInterface = new();
+            PointShopInterface = new();
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -62,20 +62,20 @@ namespace PointShop.UI.Common
             if (MouseTextIndex != -1)
             {
                 layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
-                   "PointShop: PointShopGUI",
-                   delegate
+                   "PointShop: PointShopGUI", () =>
                    {
                        if (PointShopGUI.Visible)
-                       {
                            PointShopGUI?.Draw(Main.spriteBatch);
-                       }
-                       if (PointGUI.Visible)
-                       {
-                           PointGUI?.Draw(Main.spriteBatch);
-                       }
                        return true;
-                   },
-                   InterfaceScaleType.UI));
+                   }, InterfaceScaleType.UI));
+
+                layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
+                   "PointShop: PointGUI", () =>
+                   {
+                       if (PointGUI.Visible)
+                           PointGUI?.Draw(Main.spriteBatch);
+                       return true;
+                   }, InterfaceScaleType.UI));
             }
         }
     }

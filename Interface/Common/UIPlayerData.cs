@@ -1,5 +1,4 @@
-﻿using PointShop.UI.Common;
-using Terraria.ModLoader.IO;
+﻿using Terraria.ModLoader.IO;
 
 namespace PointShop.Interface.Common
 {

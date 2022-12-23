@@ -1,8 +1,6 @@
-﻿using PointShop.UI.Common;
-
-namespace PointShop.Interface.Common
+﻿namespace PointShop.Interface.Common
 {
-    public class SetStatePlayer : ModPlayer
+    public class UIPlayer : ModPlayer
     {
         public override void OnEnterWorld(Player player)
         {

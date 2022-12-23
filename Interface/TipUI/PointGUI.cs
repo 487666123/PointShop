@@ -1,6 +1,6 @@
 ﻿using PointShop.Common.Players;
+using PointShop.Interface;
 using PointShop.Interface.UIElements;
-using PointShop.UI.Common;
 using PointShop.UI.ShopUI;
 
 namespace PointShop.UI.TipUI
@@ -15,12 +15,10 @@ namespace PointShop.UI.TipUI
         public ModUIText title;
         public UIImageButton button;
 
-        private readonly Color background = new(44, 57, 105, 160);
         public override void OnInitialize()
         {
-            RemoveAllChildren();
             // 主面板
-            Append(MainPanel = new(Color.Black, background)
+            Append(MainPanel = new(Interface.Common.UIColor.Default.PanelBorder, Interface.Common.UIColor.Default.PanelBackground)
             {
                 PaddingTop = 0f,
                 PaddingBottom = 0f,
@@ -39,13 +37,8 @@ namespace PointShop.UI.TipUI
             title.Left.Pixels = Logo.Right() + 10f;
 
             MainPanel.Append(button = new(PlayButton) { VAlign = 0.5f, HAlign = 1f });
-            button.OnClick += Button_OnClick;
+            button.OnClick += (_, _) => PointShopGUI.Visible = true;
 
-        }
-
-        private void Button_OnClick(UIMouseEvent evt, UIElement listeningElement)
-        {
-            PointShopGUI.Visible = true;
         }
 
         public override void Update(GameTime gameTime)

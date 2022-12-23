@@ -6,7 +6,6 @@ using PointShop.Interface;
 using PointShop.Interface.Common;
 using PointShop.Interface.UIElements;
 using PointShop.ModUI.UIElements;
-using PointShop.UI.Common;
 using System.Collections.Generic;
 using Terraria.GameInput;
 
@@ -21,38 +20,35 @@ namespace PointShop.UI.ShopUI
         public bool dragging = false;
 
         public Terrain terrain;
-        public UITitle title;
-        public UIFork Close;
+        public UITitle Title;
+        public UIFork Fork;
         public SUIPanel MainPanel;
         public ScrollView MenuView;
         public ScrollView ItemView;
 
-        private readonly Color background = new(44, 57, 105, 160);
-
         public override void OnInitialize()
         {
-            RemoveAllChildren();
             screenWidth = Main.screenWidth;
             screenHeight = Main.screenHeight;
 
-            MainPanel = new(Color.Black, background);
+            MainPanel = new(Color.Black, Interface.Common.UIColor.Default.PanelBackground);
             MainPanel.SetPadding(12f);
             MainPanel.SetPos(Main.LocalPlayer.GetModPlayer<UIPlayerData>().PointShopPos);
             Append(MainPanel);
 
-            MainPanel.Append(title = new(ModHelper.GetText("Config.PointExchange"), 0.5f));
+            MainPanel.Append(Title = new(ModHelper.GetText("Config.PointExchange"), 0.5f));
 
-            Close = new(30)
+            Fork = new(30)
             {
                 HAlign = 1f
             };
-            Close.Height.Pixels = title.Height.Pixels;
-            Close.OnClick += (evt, uie) => Visible = !Visible;
-            MainPanel.Append(Close);
+            Fork.Height.Pixels = Title.Height.Pixels;
+            Fork.OnClick += (evt, uie) => Visible = !Visible;
+            MainPanel.Append(Fork);
 
             // 菜单面板
             MainPanel.Append(MenuView = new(150, 340f));
-            MenuView.Top.Pixels += title.Bottom() + 15f;
+            MenuView.Top.Pixels += Title.Bottom() + 15f;
 
             // 菜单按钮按钮
             for (int i = 0; i < UISystem.TerrainDatas.Count; i++)
@@ -115,7 +111,7 @@ namespace PointShop.UI.ShopUI
         public override void MouseDown(UIMouseEvent evt)
         {
             base.MouseDown(evt);
-            if (MainPanel.IsMouseHovering && !MenuView.IsMouseHovering && !ItemView.IsMouseHovering && !Close.IsMouseHovering)
+            if (MainPanel.IsMouseHovering && !MenuView.IsMouseHovering && !ItemView.IsMouseHovering && !Fork.IsMouseHovering)
             {
                 dragging = true;
                 offset = evt.MousePosition - MainPanel.GetDimensions().Position();

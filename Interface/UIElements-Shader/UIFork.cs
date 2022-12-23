@@ -40,12 +40,12 @@ namespace PointShop.Interface
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Color background = Color.Lerp(Common.UIColor.Default.TitleBackground * 0.5f, Common.UIColor.Default.TitleBackground * 0.75f, hoverTimer.Schedule);
+            Color background = Color.Lerp(Common.UIColor.Default.TitleBackground * 0.25f, Common.UIColor.Default.TitleBackground * 0.75f, hoverTimer.Schedule);
             Color fork = Color.Lerp(Color.Transparent, Common.UIColor.Default.CloseBackground, hoverTimer.Schedule);
 
             Vector2 pos = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
-            PixelShader.DrawRoundRect(pos, size, 8f, background, 0, Color.Transparent);
+            PixelShader.DrawRoundRect(pos, size, 10f, background, 3, Common.UIColor.Default.CloseBorder);
             PixelShader.DrawFork(pos + size / 2 - new Vector2(this.size / 2), this.size, radius,
                 fork, border, Common.UIColor.Default.CloseBorder);
         }
