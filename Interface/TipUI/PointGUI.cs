@@ -37,8 +37,14 @@ namespace PointShop.UI.TipUI
             title.Left.Pixels = Logo.Right() + 10f;
 
             MainPanel.Append(button = new(PlayButton) { VAlign = 0.5f, HAlign = 1f });
-            button.OnClick += (_, _) => PointShopGUI.Visible = true;
+            button.OnClick += Button_OnClick;
 
+        }
+
+        private void Button_OnClick(UIMouseEvent evt, UIElement listeningElement)
+        {
+            // 控制开关，而不是只开
+            PointShopGUI.Visible = !PointShopGUI.Visible;
         }
 
         public override void Update(GameTime gameTime)
@@ -50,6 +56,12 @@ namespace PointShop.UI.TipUI
             title.Left.Set(Logo.Width.Pixels + 10f, 0f);
             title.text = ModHelper.GetText("HuanJingName." + huanJing) + ModHelper.GetText("Hint.Point") + ": " + coinPlayer.Point[(int)huanJing];
             Recalculate();
+            
+            // 防止点击按键时使用物品
+            if (button.IsMouseHovering)
+            {
+                player.mouseInterface = true;
+            }
         }
     }
 }
