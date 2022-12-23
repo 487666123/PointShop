@@ -45,7 +45,8 @@ namespace PointShop.UI.TipUI
 
         private void Button_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            PointShopGUI.Visible = true;
+            // 控制开关，而不是只开
+            PointShopGUI.Visible = !PointShopGUI.Visible;
         }
 
         public override void Update(GameTime gameTime)
@@ -57,6 +58,12 @@ namespace PointShop.UI.TipUI
             title.Left.Set(Logo.Width.Pixels + 10f, 0f);
             title.text = ModHelper.GetText("HuanJingName." + huanJing) + ModHelper.GetText("Hint.Point") + ": " + coinPlayer.Point[(int)huanJing];
             Recalculate();
+            
+            // 防止点击按键时使用物品
+            if (button.IsMouseHovering)
+            {
+                player.mouseInterface = true;
+            }
         }
     }
 }
