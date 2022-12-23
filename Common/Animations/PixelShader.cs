@@ -8,7 +8,7 @@ namespace PointShop.Common.Animations
         internal static Effect Box;
         internal static Effect RoundRect;
         internal static Effect RoundRectNoBorder;
-        internal static Texture2D Transparent = new(Main.graphics.GraphicsDevice, 1, 1);
+        internal static Texture2D Transparent;
 
         public static void DrawFork(Vector2 position, float size, float radius, Color backgroundColor, float border, Color borderColor)
         {
@@ -39,7 +39,7 @@ namespace PointShop.Common.Animations
             effect.Parameters[nameof(backgroundColor)].SetValue(backgroundColor.ToVector4());
             sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
                 sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, effect, Main.UIScaleMatrix);
-            sb.Draw(texture, position, null, Color.White, 0, new(0), size, 0, 1f);
+            sb.Draw(Transparent, position, null, Color.White, 0, new(0), size, 0, 1f);
             sb.End();
             sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
                 sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
@@ -93,6 +93,7 @@ namespace PointShop.Common.Animations
             Box = ModHelper.GetEffect("Box").Value;
             RoundRect = ModHelper.GetEffect(nameof(RoundRect)).Value;
             RoundRectNoBorder = ModHelper.GetEffect(nameof(RoundRectNoBorder)).Value;
+            Main.QueueMainThreadAction(() => Transparent = new Texture2D(Main.graphics.GraphicsDevice, 1, 1));
         }
 
         public override void Unload()
