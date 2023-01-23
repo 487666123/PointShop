@@ -1,15 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using PointShop.Common.Configs;
-using PointShop.Common.Players;
-using PointShop.Helpers;
-using System.Collections.Generic;
-using Terraria;
+﻿using PointShop.Common.Players;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
-using static PointShop.UI.ShopUI.PointShopGUI;
 using static Terraria.ID.ContentSamples;
 
 namespace PointShop.Common.GlobalNPCs
@@ -18,7 +8,7 @@ namespace PointShop.Common.GlobalNPCs
     {
         public override bool InstancePerEntity => true;
         public override GlobalNPC Clone(NPC npc, NPC npcClone) => base.Clone(npc, npcClone);
-        public bool HitByLocalPlayer = false;
+        public bool HitByLocalPlayer;
         private enum SpawnType
         {
             NotSpawn,
@@ -95,9 +85,9 @@ namespace PointShop.Common.GlobalNPCs
                     int point = BestiaryHelper.GetBestiaryStarsPriority(npc);
                     CoinPlayer.BonusPoints(point);
                     // 积分提示
-                    if (ModHelper.Config.TerrainCombat)
+                    if (MyUtils.Config.TerrainCombat)
                     {
-                        string text = $"{ModHelper.GetText("HuanJingName." + CoinPlayer.InWhatTerrain) + ModHelper.GetText("Hint.Point")} +{point}";
+                        string text = $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
                         AdvancedPopupRequest request = default;
                         request.Text = text;
                         request.DurationInFrames = 120;
@@ -161,7 +151,7 @@ namespace PointShop.Common.GlobalNPCs
             Vector2 position = npc.position - Main.screenPosition;
             position.X += npc.width / 2 - textSize.X / 2;
             position.Y += Y - textSize.Y;
-            ModHelper.DrawString(position, text, Color.White, TerrainColor[CoinPlayer.InWhatTerrain2Int]);
+            MyUtils.DrawText(position, text, Color.White, TerrainColor[CoinPlayer.InWhatTerrain2Int]);
         }
     }
 }

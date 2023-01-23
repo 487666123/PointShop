@@ -32,17 +32,17 @@ namespace PointShop
             MessageType msgType = (MessageType)reader.ReadByte();
             switch (msgType)
             {
-                case MessageType.EarnPoint: // 处理积分数据
+                case MessageType.EarnPoint: // 澶勭悊绉垎鏁版嵁
                     NPC npc = Main.npc[reader.ReadByte()];
-                    PointShopNPC sourceNPC = npc.GetGlobalNPC<PointShopNPC>();
-                    if (sourceNPC.HitByLocalPlayer)
+                    PointShopNPC shopNpc = npc.GetGlobalNPC<PointShopNPC>();
+                    if (shopNpc.HitByLocalPlayer)
                     {
                         int point = (byte)BestiaryHelper.GetBestiaryStarsPriority(npc);
                         CoinPlayer.BonusPoints(point);
-                        // 积分提示
-                        if (ModHelper.Config.TerrainCombat)
+                        // 绉垎鎻愮ず
+                        if (MyUtils.Config.TerrainCombat)
                         {
-                            string text = $"{ModHelper.GetText("HuanJingName." + CoinPlayer.InWhatTerrain) + ModHelper.GetText("Hint.Point")} +{point}";
+                            string text = $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
                             Color color = TerrainColor[CoinPlayer.InWhatTerrain2Int];
                             TipsHelper.NewTextDirect(Main.LocalPlayer.Center, new(0, -1), color, 90, text);
                         }

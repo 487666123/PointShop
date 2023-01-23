@@ -1,13 +1,4 @@
-﻿using PointShop.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.Localization;
-using Terraria.ModLoader;
-
-namespace PointShop.Common.Systems
+﻿namespace PointShop.Common.Systems
 {
     public class KeybinSystem : ModSystem
     {
@@ -15,7 +6,7 @@ namespace PointShop.Common.Systems
 
         public override void Load()
         {
-            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, ModHelper.GetText("Keybin.SuperVault"), "P");
+            RandomBuffKeybind = KeybindLoader.RegisterKeybind(Mod, MyUtils.GetText("Keybin.SuperVault"), "P");
         }
 
         public override void Unload()

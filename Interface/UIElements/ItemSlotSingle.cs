@@ -6,10 +6,10 @@ namespace PointShop.ModUI.UIElements
 {
     public class ItemSlotSingle : UIElement
     {
-        public readonly static Texture2D BossIcons1 = ModHelper.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
-        public readonly static Texture2D BossIcons2 = ModHelper.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
-        public readonly static Texture2D BossIcons3 = ModHelper.GetTexture("BossIcons/Map_Icon_Skeletron_Prime").Value;
-        public readonly static Texture2D BossIcons4 = ModHelper.GetTexture("BossIcons/Map_Icon_Plantera").Value;
+        public readonly static Texture2D BossIcons1 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
+        public readonly static Texture2D BossIcons2 = MyUtils.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
+        public readonly static Texture2D BossIcons3 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron_Prime").Value;
+        public readonly static Texture2D BossIcons4 = MyUtils.GetTexture("BossIcons/Map_Icon_Plantera").Value;
 
         public int value;
         public int mode;
@@ -40,7 +40,7 @@ namespace PointShop.ModUI.UIElements
             Main.instance.LoadItem(item.type);
             ItemTexture = TextureAssets.Item[item.type].Value;
 
-            LockTexture = ModHelper.GetTexture("BossIcons/Lock").Value;
+            LockTexture = MyUtils.GetTexture("BossIcons/Lock").Value;
             LockTextureSize = LockTexture.Size();
 
             BossTexture = GetTexture2D();
@@ -78,10 +78,10 @@ namespace PointShop.ModUI.UIElements
             Vector2 position = dimensions.Position();
             Vector2 size = dimensions.Size();
 
-            Color border = Color.Lerp(UIColor.BorderNotFavorited, UIColor.BorderFavorited, HoverTimer.Schedule);
-            Color background = Color.Lerp(UIColor.BackgroundNotFavorited, UIColor.BackgroundFavorited, HoverTimer.Schedule);
+            Color border = Color.Lerp(UIColor.ItemSlotBorder, UIColor.ItemSlotBorderFav, HoverTimer.Schedule);
+            Color background = Color.Lerp(UIColor.ItemSlotBg, UIColor.ItemSlotBgFav, HoverTimer.Schedule);
 
-            PixelShader.DrawBox(position, size, 10, 3, border, background);
+            PixelShader.RoundedRectangle(position, size, new Vector4(10f), background, 2, border);
 
             bool canPlay = CanPlay();
             // 绘制物品
@@ -95,7 +95,8 @@ namespace PointShop.ModUI.UIElements
             }
         }
 
-        public static void DrawItem(SpriteBatch sb, Item Item, Color lightColor, CalculatedStyle dimensions, float ItemSize = 30f)
+        public static void DrawItem(SpriteBatch sb, Item Item, Color lightColor, CalculatedStyle dimensions,
+            float ItemSize = 30f)
         {
             Main.instance.LoadItem(Item.type);
             var ItemTexture2D = TextureAssets.Item[Item.type];
@@ -106,9 +107,9 @@ namespace PointShop.ModUI.UIElements
             else
                 rectangle = Main.itemAnimations[Item.type].GetFrame(ItemTexture2D.Value);
 
-            float size = rectangle.Width > ItemSize || rectangle.Height > ItemSize ?
-                rectangle.Width > rectangle.Height ? ItemSize / rectangle.Width : ItemSize / rectangle.Height :
-                1f;
+            float size = rectangle.Width > ItemSize || rectangle.Height > ItemSize
+                ? rectangle.Width > rectangle.Height ? ItemSize / rectangle.Width : ItemSize / rectangle.Height
+                : 1f;
 
             sb.Draw(ItemTexture2D.Value, dimensions.Center() - rectangle.Size() * size / 2f,
                 new Rectangle?(rectangle), Item.GetAlpha(lightColor), 0f, Vector2.Zero, size,
@@ -120,9 +121,9 @@ namespace PointShop.ModUI.UIElements
 
         public static void LimitSize(Texture2D texture, float MaxSize, out float scale)
         {
-            scale = texture.Width > MaxSize || texture.Height > MaxSize ?
-                texture.Width > texture.Height ?
-                MaxSize / texture.Width : MaxSize / texture.Height : 1f;
+            scale = texture.Width > MaxSize || texture.Height > MaxSize
+                ? texture.Width > texture.Height ? MaxSize / texture.Width : MaxSize / texture.Height
+                : 1f;
         }
 
         public void Pay()
@@ -130,7 +131,7 @@ namespace PointShop.ModUI.UIElements
             // 不能兑换直接退出
             if (!CanPlay())
             {
-                Main.NewText(ModHelper.GetText("Hint.Locked"), Color.Red);
+                Main.NewText(MyUtils.GetText("Hint.Locked"), Color.Red);
                 return;
             }
 
@@ -138,12 +139,12 @@ namespace PointShop.ModUI.UIElements
             if (coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] >= value)
             {
                 coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] -= value;
-                Main.NewText($"\"{Item.Name}\" {ModHelper.GetText("Hint.Success")}", new Color(0x00, 0x99, 0xff));
+                Main.NewText($"\"{Item.Name}\" {MyUtils.GetText("Hint.Success")}", new Color(0x00, 0x99, 0xff));
                 Main.LocalPlayer.QuickSpawnItem(null, Item.Clone());
             }
             else
             {
-                Main.NewText($"\"{Item.Name}\" {ModHelper.GetText("Hint.NotPoint")}", Color.Red);
+                Main.NewText($"\"{Item.Name}\" {MyUtils.GetText("Hint.NotPoint")}", Color.Red);
             }
         }
 
@@ -165,6 +166,7 @@ namespace PointShop.ModUI.UIElements
             {
                 return NPC.downedPlantBoss;
             }
+
             return true;
         }
 
@@ -182,8 +184,8 @@ namespace PointShop.ModUI.UIElements
             {
                 return BossIcons4;
             }
+
             return BossIcons1;
         }
     }
-
 }

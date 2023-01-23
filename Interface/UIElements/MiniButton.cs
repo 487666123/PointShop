@@ -9,15 +9,17 @@ namespace PointShop.ModUI.UIElements
         public AnimationTimer HoverTimer = new(3);
 
         private string text;
+
         public string Text
         {
             get => text;
             set
             {
                 text = value;
-                this.SetSize(ModHelper.GetTextSize(value) * Scale);
+                this.SetSize(MyUtils.TextSize(value) * Scale);
             }
         }
+
         public float Scale { get; set; }
 
         public MiniButton(string text, float scale = 0.8f)
@@ -26,7 +28,7 @@ namespace PointShop.ModUI.UIElements
             Text = text;
 
             Height.Pixels = 36f * scale;
-            Width.Pixels = (ModHelper.GetTextSize(text).X + 30f) * scale;
+            Width.Pixels = (MyUtils.TextSize(text).X + 30f) * scale;
         }
 
         public override void Update(GameTime gameTime)
@@ -52,15 +54,16 @@ namespace PointShop.ModUI.UIElements
         {
             Vector2 position = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
+
             Color border = Color.Lerp(UIColor.ButtonBorder, UIColor.ButtonBorderHover, HoverTimer.Schedule);
-            PixelShader.DrawBox(position, size, 8, 3, border, UIColor.ButtonBackground);
+            PixelShader.RoundedRectangle(position, size, new Vector4(10f), UIColor.ButtonBackground, 2, border);
 
             position = GetInnerDimensions().Position();
             size = GetInnerDimensions().Size();
-            Vector2 textSize = ModHelper.GetTextSize(Text) * Scale;
+            Vector2 textSize = MyUtils.TextSize(Text) * Scale;
             Vector2 textPosition = position + size / 2f - textSize / 2f;
             textPosition.Y += PointConfig.Instance.UIYAxisOffset * Scale;
-            ModHelper.DrawString(textPosition, Text, Color.White, Color.Black, Vector2.Zero, Scale);
+            MyUtils.DrawText(textPosition, Text, Color.White, Color.Black, Vector2.Zero, Scale);
         }
     }
 }

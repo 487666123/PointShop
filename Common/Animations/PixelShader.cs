@@ -1,102 +1,123 @@
 ﻿namespace PointShop.Common.Animations
 {
-    public class PixelShader
+    public static class PixelShader
     {
-        internal static Effect Fork;
-        internal static Effect Box;
-        internal static Effect RoundRect;
-        internal static Effect RoundRectNoBorder;
-        internal static Texture2D Transparent;
-
-        public static void DrawFork(Vector2 position, float size, float radius, Color backgroundColor, float border, Color borderColor)
+        private struct VertexPos : IVertexType
         {
-            SpriteBatch sb = Main.spriteBatch;
-            sb.End();
-            Effect effect = ModAssets.Fork;
-            effect.Parameters[nameof(size)].SetValue(size);
-            effect.Parameters[nameof(border)].SetValue(border);
-            effect.Parameters[nameof(radius)].SetValue(radius);
-            effect.Parameters[nameof(borderColor)].SetValue(borderColor.ToVector4());
-            effect.Parameters[nameof(backgroundColor)].SetValue(backgroundColor.ToVector4());
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, effect, Main.UIScaleMatrix);
-            sb.Draw(texture, position, null, Color.White, 0, new(0), size, 0, 1f);
-            sb.End();
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+            private static readonly VertexDeclaration DefaultVertexDeclaration;
+
+            static VertexPos()
+            {
+                DefaultVertexDeclaration = new VertexDeclaration(
+                    new VertexElement(0, VertexElementFormat.Vector2, VertexElementUsage.Position, 0),
+                    new VertexElement(8, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0));
+            }
+
+            public Vector2 Position;
+            public Vector2 Coord;
+
+            public VertexPos(Vector2 position, Vector2 coord)
+            {
+                Position = position;
+                Coord = coord;
+            }
+
+            public VertexDeclaration VertexDeclaration => DefaultVertexDeclaration;
         }
 
-        // DrawRoundRect 现在有两个 .fx 文件，一个带边框的，一个不带的，也许能节省性能？
-        public static void DrawRoundRect(Vector2 position, Vector2 size, float round, Color backgroundColor)
+        private static VertexPos[] GetVertexPos(Vector2 pos, Vector2 size)
         {
-            SpriteBatch sb = Main.spriteBatch;
-            sb.End();
-            Effect effect = ModAssets.RoundRectNoBorder;
-            effect.Parameters[nameof(size)].SetValue(size);
-            effect.Parameters[nameof(round)].SetValue(round);
-            effect.Parameters[nameof(backgroundColor)].SetValue(backgroundColor.ToVector4());
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, effect, Main.UIScaleMatrix);
-            sb.Draw(Transparent, position, null, Color.White, 0, new(0), size, 0, 1f);
-            sb.End();
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+            return new VertexPos[]
+            {
+                new(pos, new Vector2(0, 0)),
+                new(pos + new Vector2(size.X, 0), new Vector2(1, 0)),
+                new(pos + new Vector2(0, size.Y), new Vector2(0, 1)),
+                new(pos + new Vector2(0, size.Y), new Vector2(0, 1)),
+                new(pos + new Vector2(size.X, 0), new Vector2(1, 0)),
+                new(pos + size, new Vector2(1, 1))
+            };
         }
 
-        public static void DrawRoundRect(Vector2 position, Vector2 size, float round, Color backgroundColor, float border, Color borderColor)
+        private static Matrix GetMatrix(bool ui)
         {
-            SpriteBatch sb = Main.spriteBatch;
-            sb.End();
-            Effect effect = ModAssets.RoundRect;
-            effect.Parameters[nameof(size)].SetValue(size);
-            effect.Parameters[nameof(round)].SetValue(round);
-            effect.Parameters[nameof(border)].SetValue(border);
-            effect.Parameters[nameof(backgroundColor)].SetValue(backgroundColor.ToVector4());
-            effect.Parameters[nameof(borderColor)].SetValue(borderColor.ToVector4());
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, effect, Main.UIScaleMatrix);
-            sb.Draw(texture, position, null, Color.White, 0, new(0), size, 0, 1f);
-            sb.End();
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+            if (ui)
+            {
+                return Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, 0, 1);
+            }
+
+            Vector2 screenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+            Vector2 offset = screenSize * (Vector2.One - Vector2.One / Main.GameViewMatrix.Zoom) / 2;
+            return Matrix.CreateOrthographicOffCenter(offset.X, Main.screenWidth - offset.X,
+                Main.screenHeight - offset.Y, offset.Y, 0, 1);
         }
 
-        public static void DrawBox(Vector2 position, Vector2 size, float radius, float border, Color borderColor, Color background)
+        private static void BaseDraw(Vector2 pos, Vector2 size, bool ui, Action<Matrix> action)
         {
-            SpriteBatch sb = Main.spriteBatch;
-            Effect effect = ModAssets.Box;
-            effect.Parameters["size"].SetValue(size);
-            effect.Parameters["radius"].SetValue(radius);
-            effect.Parameters["border"].SetValue(border);
-            effect.Parameters["borderColor1"].SetValue(borderColor.ToVector4());
-            effect.Parameters["borderColor2"].SetValue(borderColor.ToVector4());
-            effect.Parameters["background1"].SetValue(background.ToVector4());
-            effect.Parameters["background2"].SetValue(background.ToVector4());
-            sb.End();
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, effect, Main.UIScaleMatrix);
-            sb.Draw(texture, position, null, Color.White, 0, new(0), size, 0, 1f);
-            sb.End();
-            sb.Begin(0, sb.GraphicsDevice.BlendState, sb.GraphicsDevice.SamplerStates[0],
-                sb.GraphicsDevice.DepthStencilState, sb.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+            VertexPos[] triangles = GetVertexPos(pos, size);
+            action.Invoke(GetMatrix(ui));
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(0, triangles, 0, triangles.Length / 3);
         }
 
-        public override void Load()
+        public static void RoundedRectangle(Vector2 pos, Vector2 size, Vector4 round4, Color backgroundColor,
+            float border,
+            Color borderColor, bool ui = true)
         {
-            Fork = ModHelper.GetEffect("Fork").Value;
-            Box = ModHelper.GetEffect("Box").Value;
-            RoundRect = ModHelper.GetEffect(nameof(RoundRect)).Value;
-            RoundRectNoBorder = ModHelper.GetEffect(nameof(RoundRectNoBorder)).Value;
-            Main.QueueMainThreadAction(() => Transparent = new Texture2D(Main.graphics.GraphicsDevice, 1, 1));
+            const float innerShrinkage = 1;
+            pos -= new Vector2(innerShrinkage);
+            size += new Vector2(innerShrinkage * 2);
+            round4 += new Vector4(innerShrinkage);
+            BaseDraw(pos, size, ui, matrix =>
+            {
+                Effect effect = ShaderAssets.RoundedRectangle;
+                effect.Parameters["uTransform"].SetValue(matrix);
+                effect.Parameters["uSize"].SetValue(size);
+                effect.Parameters["uSizeOver2"].SetValue(size / 2);
+                effect.Parameters["uRounded"].SetValue(round4);
+                effect.Parameters["uBackgroundColor"].SetValue(backgroundColor.ToVector4());
+                effect.Parameters["uBorder"].SetValue(border);
+                effect.Parameters["uBorderColor"].SetValue(borderColor.ToVector4());
+                effect.Parameters["uInnerShrinkage"].SetValue(innerShrinkage);
+                effect.CurrentTechnique.Passes["HasBorder"].Apply();
+            });
         }
 
-        public override void Unload()
+        public static void RoundedRectangle(Vector2 pos, Vector2 size, Vector4 round4, Color backgroundColor,
+            bool ui = true)
         {
-            Fork = null;
-            Box = null;
-            RoundRect = null;
-            RoundRectNoBorder = null;
-            Transparent = null;
+            const float innerShrinkage = 1;
+            pos -= new Vector2(innerShrinkage);
+            size += new Vector2(innerShrinkage * 2);
+            round4 += new Vector4(innerShrinkage);
+            BaseDraw(pos, size, ui, matrix =>
+            {
+                Effect effect = ShaderAssets.RoundedRectangle;
+                effect.Parameters["uTransform"].SetValue(matrix);
+                effect.Parameters["uSize"].SetValue(size);
+                effect.Parameters["uSizeOver2"].SetValue(size / 2);
+                effect.Parameters["uRounded"].SetValue(round4);
+                effect.Parameters["uBackgroundColor"].SetValue(backgroundColor.ToVector4());
+                effect.Parameters["uInnerShrinkage"].SetValue(innerShrinkage);
+                effect.CurrentTechnique.Passes["NoBorder"].Apply();
+            });
+        }
+
+        /// <summary>
+        /// 绘制叉号
+        /// </summary>
+        public static void Cross(Vector2 pos, float size, float round, Color backgroundColor, float border,
+            Color borderColor, bool ui = true)
+        {
+            BaseDraw(pos, new Vector2(size), ui, matrix =>
+            {
+                Effect effect = ShaderAssets.Cross;
+                effect.Parameters["uTransform"].SetValue(matrix);
+                effect.Parameters["size"].SetValue(size);
+                effect.Parameters["border"].SetValue(border);
+                effect.Parameters["round"].SetValue(round);
+                effect.Parameters["borderColor"].SetValue(borderColor.ToVector4());
+                effect.Parameters["backgroundColor"].SetValue(backgroundColor.ToVector4());
+                effect.CurrentTechnique.Passes[0].Apply();
+            });
         }
     }
 }

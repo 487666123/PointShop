@@ -10,7 +10,7 @@ namespace PointShop.Common.Configs
         public override void OnLoaded()
         {
             Instance = this;
-            ModHelper.Config = this;
+            MyUtils.Config = this;
         }
 
         public override ConfigScope Mode => ConfigScope.ClientSide;

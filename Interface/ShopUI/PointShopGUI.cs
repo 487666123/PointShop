@@ -1,15 +1,14 @@
-﻿using ImproveGame.Interface.UIElements_Shader;
+﻿using System.Collections.Generic;
 using PointShop.Common.Configs;
 using PointShop.Common.Players;
 using PointShop.Entitys;
-using PointShop.Interface;
 using PointShop.Interface.Common;
+using PointShop.Interface.SUIElements;
 using PointShop.Interface.UIElements;
 using PointShop.ModUI.UIElements;
-using System.Collections.Generic;
 using Terraria.GameInput;
 
-namespace PointShop.UI.ShopUI
+namespace PointShop.Interface.ShopUI
 {
     public class PointShopGUI : UIState
     {
@@ -20,31 +19,31 @@ namespace PointShop.UI.ShopUI
         public bool dragging = false;
 
         public Terrain terrain;
-        public UITitle Title;
-        public UIFork Fork;
+        public SUITitle Title;
+        public SUICross Cross;
         public SUIPanel MainPanel;
         public ScrollView MenuView;
         public ScrollView ItemView;
 
         public override void OnInitialize()
         {
-            screenWidth = Main.screenWidth;
-            screenHeight = Main.screenHeight;
+            _screenWidth = Main.screenWidth;
+            _screenHeight = Main.screenHeight;
 
-            MainPanel = new(Color.Black, Interface.Common.UIColor.Default.PanelBackground);
+            MainPanel = new SUIPanel(Interface.Common.UIColor.Default.PanelBackground, Color.Black);
             MainPanel.SetPadding(12f);
             MainPanel.SetPos(Main.LocalPlayer.GetModPlayer<UIPlayerData>().PointShopPos);
             Append(MainPanel);
 
-            MainPanel.Append(Title = new(ModHelper.GetText("Config.PointExchange"), 0.5f));
+            MainPanel.Append(Title = new SUITitle(MyUtils.GetText("Config.PointExchange"), 0.5f));
 
-            Fork = new(30)
+            Cross = new SUICross(30)
             {
                 HAlign = 1f
             };
-            Fork.Height.Pixels = Title.Height.Pixels;
-            Fork.OnClick += (evt, uie) => Visible = !Visible;
-            MainPanel.Append(Fork);
+            Cross.Height.Pixels = Title.Height.Pixels;
+            Cross.OnClick += (evt, uie) => Visible = !Visible;
+            MainPanel.Append(Cross);
 
             // 菜单面板
             MainPanel.Append(MenuView = new(150, 340f));
@@ -53,18 +52,17 @@ namespace PointShop.UI.ShopUI
             // 菜单按钮按钮
             for (int i = 0; i < UISystem.TerrainDatas.Count; i++)
             {
-                Button button = new(UISystem.Icons[i].Value, $"{UISystem.TerrainDatas[i].name}");
+                Button button = new(UISystem.Icons[i], $"{UISystem.TerrainDatas[i].name}");
                 button.Width.Pixels = MenuView.ScrollList.WidthInside();
                 button.Height.Pixels = 50f;
                 button.data[0] = i;
-                button.OnClick += (evt, uie) =>
+                button.OnClick += (_, _) =>
                 {
-                    int _terrain = (uie as Button).data[0];
+                    int _terrain = button.data[0];
                     ModifyTerrain((Terrain)_terrain);
                 };
                 button.OnUpdate += (uie) =>
                 {
-                    Button button = uie as Button;
                     int _terrain = button.data[0];
                     button.Text = $"{CoinPlayer.GetPoints((Terrain)_terrain)}";
                     button.Recalculate();
@@ -89,17 +87,18 @@ namespace PointShop.UI.ShopUI
         {
             this.terrain = terrain;
             List<ItemData> itemData = UISystem.TerrainDatas[(int)terrain].items;
+
             // 判断有没有数据
-            if (itemData.Count > 0)
+            if (itemData.Count <= 0) return;
+
+            ItemView.Clear();
+
+            foreach (var displaySlot in itemData.Select(t => new DisplaySlot(new Item(t.id), t.value, t.mode, terrain)))
             {
-                ItemView.Clear();
-                for (int i = 0; i < itemData.Count; i++)
-                {
-                    DisplaySlot displaySlot = new(new Item(itemData[i].id), itemData[i].value, itemData[i].mode, terrain);
-                    ItemView.Append2List(displaySlot);
-                }
-                ItemView.Recalculate();
+                ItemView.Append2List(displaySlot);
             }
+
+            ItemView.Recalculate();
         }
 
         public override void MouseUp(UIMouseEvent evt)
@@ -111,16 +110,15 @@ namespace PointShop.UI.ShopUI
         public override void MouseDown(UIMouseEvent evt)
         {
             base.MouseDown(evt);
-            if (MainPanel.IsMouseHovering && !MenuView.IsMouseHovering && !ItemView.IsMouseHovering && !Fork.IsMouseHovering)
-            {
-                dragging = true;
-                offset = evt.MousePosition - MainPanel.GetDimensions().Position();
-            }
+            if (!MainPanel.IsMouseHovering || MenuView.IsMouseHovering || ItemView.IsMouseHovering ||
+                Cross.IsMouseHovering) return;
+            dragging = true;
+            offset = evt.MousePosition - MainPanel.GetDimensions().Position();
         }
 
         // 物品表结构
-        private int screenWidth = 0;
-        private int screenHeight = 0;
+        private int _screenWidth = 0;
+        private int _screenHeight = 0;
 
         public override void Update(GameTime gameTime)
         {
@@ -146,13 +144,15 @@ namespace PointShop.UI.ShopUI
             }
 
             // 当屏幕大小发生改变时候刷新面板
-            if (screenWidth != Main.screenWidth || screenHeight != Main.screenHeight)
+            if (_screenWidth != Main.screenWidth || _screenHeight != Main.screenHeight)
             {
-                screenWidth = Main.screenWidth;
-                screenHeight = Main.screenHeight;
-                MainPanel.SetPos(screenWidth / 2f - MainPanel.Width.Pixels / 2f, screenHeight / 2f - MainPanel.Height.Pixels / 2f);
+                _screenWidth = Main.screenWidth;
+                _screenHeight = Main.screenHeight;
+                MainPanel.SetPos(_screenWidth / 2f - MainPanel.Width.Pixels / 2f,
+                    _screenHeight / 2f - MainPanel.Height.Pixels / 2f);
                 flag = true;
             }
+
             if (flag)
                 MainPanel.Recalculate();
         }

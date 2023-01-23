@@ -22,19 +22,19 @@ namespace PointShop.Interface.UIElements
         {
             Vector2 pos = GetInnerDimensions().Position();
             Vector2 size = GetInnerDimensions().Size();
-            Vector2 textSize = ModHelper.GetTextSize(text) * textScale;
+            Vector2 textSize = MyUtils.TextSize(text) * textScale;
 
             if (GetColor != null)
                 textColor = GetColor();
 
             pos.X++;
-            ModHelper.DrawString(pos + new Vector2(0, PointConfig.Instance.UIYAxisOffset * textScale + size.Y / 2 - textSize.Y / 2), text, textColor, Color.Black, Vector2.Zero, textScale);
+            MyUtils.DrawText(pos + new Vector2(0, PointConfig.Instance.UIYAxisOffset * textScale + size.Y / 2 - textSize.Y / 2), text, textColor, Color.Black, Vector2.Zero, textScale);
             base.DrawChildren(spriteBatch);
         }
 
         public void RefreshSize()
         {
-            this.SetSize(ModHelper.GetTextSize(text) * textScale);
+            this.SetSize(MyUtils.TextSize(text) * textScale);
         }
     }
 }

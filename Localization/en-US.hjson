@@ -33,7 +33,7 @@ Mods: {
             Success: Exchange succeeded!
             NotPoint: Exchange failed, no enough points!
         }
-        HuanJingName:{
+        TerrainName:{
             TianKong: Sky
             SenLin: Forest
             DongXue: Cave

@@ -10,15 +10,17 @@ namespace PointShop.ModUI.UIElements
         public AnimationTimer HoverTimer = new(3);
 
         public Texture2D texture;
+
         public string Text
         {
             get => text;
             set
             {
                 text = value;
-                textSize = ModHelper.GetTextSize(value);
+                textSize = MyUtils.TextSize(value);
             }
         }
+
         public Vector2 TextSize => textSize;
         private string text;
         private Vector2 textSize;
@@ -55,12 +57,14 @@ namespace PointShop.ModUI.UIElements
             Vector2 position = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
             Color borderColor = Color.Lerp(UIColor.ButtonBorder, UIColor.ButtonBorderHover, HoverTimer.Schedule);
-            PixelShader.DrawBox(position, size, 10, 3, borderColor, UIColor.ButtonBackground);
+            PixelShader.RoundedRectangle(position, size, new Vector4(10), UIColor.ButtonBackground, 2, borderColor);
 
             position = GetInnerDimensions().Position();
             size = GetInnerDimensions().Size();
             sb.Draw(texture, position + new Vector2(15, size.Y / 2f) - texture.Size() / 2f, Color.White);
-            ModHelper.DrawString(position + new Vector2(40, size.Y / 2 - textSize.Y / 2f + PointConfig.Instance.UIYAxisOffset), text, Color.White, Color.Black);
+            MyUtils.DrawText(
+                position + new Vector2(40, size.Y / 2 - textSize.Y / 2f + PointConfig.Instance.UIYAxisOffset), text,
+                Color.White, Color.Black);
         }
     }
 }

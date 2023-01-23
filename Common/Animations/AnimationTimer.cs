@@ -8,6 +8,7 @@
         OpenComplete,
         CloseComplete
     }
+
     public enum AnimationMode
     {
         Linear, // 线性变化 (就一种类型, 还是一个大分类)
@@ -70,38 +71,36 @@
 
         private void Update_Open()
         {
-            if (Mode == AnimationMode.Linear)
+            if (Mode == AnimationMode.Nonlinear)
+            {
+                Timer += (TimerMax + 1 - Timer) / Speed;
+            }
+            else
             {
                 Timer += Speed;
             }
-            else if (Mode == AnimationMode.Nonlinear)
-            {
-                Timer += (TimerMax - Timer) / Speed;
-            }
-            if (TimerMax - Timer < 1f)
-            {
-                Timer = 100;
-                State = AnimationState.OpenComplete;
-                OnOpenComplete?.Invoke();
-            }
+
+            if (!(TimerMax - Timer < 0f)) return;
+            Timer = TimerMax;
+            State = AnimationState.OpenComplete;
+            OnOpenComplete?.Invoke();
         }
 
         private void Update_Close()
         {
-            if (Mode == AnimationMode.Linear)
+            if (Mode == AnimationMode.Nonlinear)
+            {
+                Timer -= (Timer + 1) / Speed;
+            }
+            else
             {
                 Timer -= Speed;
             }
-            else if (Mode == AnimationMode.Nonlinear)
-            {
-                Timer -= Timer / Speed;
-            }
-            if (Timer < 1f)
-            {
-                Timer = 0;
-                State = AnimationState.CloseComplete;
-                OnCloseComplete?.Invoke();
-            }
+
+            if (!(Timer < 0f)) return;
+            Timer = 0;
+            State = AnimationState.CloseComplete;
+            OnCloseComplete?.Invoke();
         }
     }
 }

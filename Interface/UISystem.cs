@@ -1,16 +1,16 @@
 ﻿using Newtonsoft.Json;
 using PointShop.Entitys;
-using PointShop.UI.ShopUI;
-using PointShop.UI.TipUI;
 using System.Collections.Generic;
 using System.Text;
+using PointShop.Interface.ShopUI;
+using PointShop.Interface.TipUI;
 
 namespace PointShop.Interface
 {
     public class UISystem : ModSystem
     {
         public static List<TerrainData> TerrainDatas { get; set; } // 积分商店得数据
-        public static List<Asset<Texture2D>> Icons { get; set; } // 环境图标
+        public static List<Texture2D> Icons { get; set; } // 环境图标
 
         public static UserInterface PointInterface { get; set; }
         public static PointGUI PointGUI { get; set; }
@@ -32,19 +32,21 @@ namespace PointShop.Interface
 
         public override void Load()
         {
-            TerrainDatas = JsonConvert.DeserializeObject<List<TerrainData>>(Encoding.UTF8.GetString(ModContent.GetFileBytes("PointShop/JSONs/ShopData.json")));
+            TerrainDatas =
+                JsonConvert.DeserializeObject<List<TerrainData>>(
+                    Encoding.UTF8.GetString(ModContent.GetFileBytes("PointShop/JSONs/ShopData.json")));
 
             if (Main.dedServ)
                 return;
 
-            Icons = new();
-            for (int i = 0; i < TerrainDatas.Count; i++)
+            Icons = new List<Texture2D>();
+            foreach (var t in TerrainDatas)
             {
-                Icons.Add(ModContent.Request<Texture2D>($"PointShop/Images/Icons/{TerrainDatas[i].image}", AssetRequestMode.ImmediateLoad));
+                Icons.Add(MyUtils.GetTexture($"Icons/{t.image}").Value);
             }
 
-            PointInterface = new();
-            PointShopInterface = new();
+            PointInterface = new UserInterface();
+            PointShopInterface = new UserInterface();
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -62,20 +64,20 @@ namespace PointShop.Interface
             if (MouseTextIndex != -1)
             {
                 layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
-                   "PointShop: PointShopGUI", () =>
-                   {
-                       if (PointShopGUI.Visible)
-                           PointShopGUI?.Draw(Main.spriteBatch);
-                       return true;
-                   }, InterfaceScaleType.UI));
+                    "PointShop: PointShopGUI", () =>
+                    {
+                        if (PointShopGUI.Visible)
+                            PointShopGUI?.Draw(Main.spriteBatch);
+                        return true;
+                    }, InterfaceScaleType.UI));
 
                 layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
-                   "PointShop: PointGUI", () =>
-                   {
-                       if (PointGUI.Visible)
-                           PointGUI?.Draw(Main.spriteBatch);
-                       return true;
-                   }, InterfaceScaleType.UI));
+                    "PointShop: PointGUI", () =>
+                    {
+                        if (PointGUI.Visible)
+                            PointGUI?.Draw(Main.spriteBatch);
+                        return true;
+                    }, InterfaceScaleType.UI));
             }
         }
     }

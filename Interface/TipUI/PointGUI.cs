@@ -1,64 +1,96 @@
-﻿using PointShop.Common.Players;
-using PointShop.Interface;
-using PointShop.Interface.UIElements;
-using PointShop.UI.ShopUI;
+﻿using PointShop.Common.Animations;
+using PointShop.Common.Players;
+using PointShop.Interface.Common;
+using PointShop.Interface.ShopUI;
+using PointShop.Interface.SUIElements;
 
-namespace PointShop.UI.TipUI
+namespace PointShop.Interface.TipUI
 {
     public class PointGUI : UIState
     {
-        internal static Asset<Texture2D> PlayButton = ModContent.Request<Texture2D>("PointShop/Images/ButtonPlay", AssetRequestMode.ImmediateLoad);
-        public static bool Visible => ModHelper.Config.TerrainPanel;
+        public static bool Visible => MyUtils.Config.TerrainPanel;
 
-        public SUIPanel MainPanel;
-        public UIImage Logo;
-        public ModUIText title;
-        public UIImageButton button;
+        private SUIPanel _mainPanel;
+        private SUIImage _terrainIcon;
+        private SUIText _tip;
+        private SUIImage _button;
+        private AnimationTimer _switchTimer;
 
         public override void OnInitialize()
         {
-            // 主面板
-            Append(MainPanel = new(Interface.Common.UIColor.Default.PanelBorder, Interface.Common.UIColor.Default.PanelBackground)
+            _switchTimer = new AnimationTimer();
+            _mainPanel = new SUIPanel(UIColor.PanelBg, UIColor.PanelBorder)
             {
-                PaddingTop = 0f,
-                PaddingBottom = 0f,
-                PaddingLeft = 16f,
-                PaddingRight = 16f,
-                HAlign = 0.5f
-            });
-            MainPanel.Height.Pixels = 45f;
-            MainPanel.Width.Pixels = 200f;
-            MainPanel.Top.Pixels = 20f;
+                HAlign = 0.5f, Top = 20f.Pixels()
+            };
+            _mainPanel.SetPadding(16f, 0f).SetSizePixels(200f, 50f);
+            _mainPanel.Join(this);
 
-            MainPanel.Append(Logo = new(UISystem.Icons[0]) { VAlign = 0.5f });
+            _terrainIcon = new SUIImage(UISystem.Icons[0])
+            {
+                VAlign = 0.5f
+            };
+            _terrainIcon.SetSizePixels(UISystem.Icons[0].Size());
+            _terrainIcon.Join(_mainPanel);
 
-            MainPanel.Append(title = new("中文:Chinese", Color.White, 0.8f) { VAlign = 0.5f });
-            title.Top.Pixels = 1;
-            title.Left.Pixels = Logo.Right() + 10f;
+            _tip = new SUIText("Chinese: 中文", 0.8f)
+            {
+                VAlign = 0.5f,
+                Relative = RelativeMode.Horizontal
+            };
+            _mainPanel.Append(_tip);
 
-            MainPanel.Append(button = new(PlayButton) { VAlign = 0.5f, HAlign = 1f });
-            button.OnClick += Button_OnClick;
-
-        }
-
-        private void Button_OnClick(UIMouseEvent evt, UIElement listeningElement)
-        {
-            // 控制开关，而不是只开
-            PointShopGUI.Visible = !PointShopGUI.Visible;
+            _button = new SUIImage(UIAssets.PlayButton)
+            {
+                VAlign = 0.5f,
+                ButtonMode = true,
+                Relative = RelativeMode.Horizontal,
+                Spacing = 15f.Xy()
+            };
+            _button.SetSizePixels(UIAssets.PlayButton.Size());
+            _button.OnClick += (_, _) => PointShopGUI.Visible = !PointShopGUI.Visible;
+            _button.Join(_mainPanel);
         }
 
         public override void Update(GameTime gameTime)
         {
+            bool recalculate = false;
+
             Player player = Main.LocalPlayer;
             CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
-            Terrain huanJing = CoinPlayer.InWhatTerrain;
-            Logo.SetImage(UISystem.Icons[(int)huanJing]);
-            title.Left.Set(Logo.Width.Pixels + 10f, 0f);
-            title.text = ModHelper.GetText("HuanJingName." + huanJing) + ModHelper.GetText("Hint.Point") + ": " + coinPlayer.Point[(int)huanJing];
-            Recalculate();
-            
+            Terrain terrain = CoinPlayer.InWhatTerrain;
+
+            string text =
+                $"{MyUtils.GetText($"TerrainName.{terrain}")}{MyUtils.GetText("Hint.Point")}: {coinPlayer.Point[(int)terrain]}";
+
+            if (_terrainIcon.Texture2D != UISystem.Icons[(int)terrain])
+            {
+                recalculate = true;
+                _terrainIcon.Texture2D = UISystem.Icons[(int)terrain];
+                _terrainIcon.SetSizePixels(_terrainIcon.Texture2D.Size());
+            }
+
+            if (_tip.Text != text)
+            {
+                recalculate = true;
+                _tip.SetText(text, out Vector2 textSize).SetSizePixels(textSize);
+            }
+
+            float right = _button.RightPixels();
+
+            if (Math.Abs(_mainPanel.GetInnerPixel().X - right) > 0.000000001)
+            {
+                recalculate = true;
+                _mainPanel.SetInnerPixels(right, _mainPanel.Height.Pixels);
+            }
+
+            if (recalculate)
+            {
+                _mainPanel.Recalculate();
+            }
+
             // 防止点击按键时使用物品
-            if (button.IsMouseHovering)
+            if (_button.IsMouseHovering)
             {
                 player.mouseInterface = true;
             }
