@@ -34,26 +34,18 @@ namespace PointShop.Interface
         public bool Wrap;
 
         /// <summary>
-        /// 设置 true 横向时不同步与前一个元素的 Top，纵向时不同步 Left<br/>
-        /// 在大背包中用于一排 Button 的时候，第一个 Button 前面有一个 Switch
-        /// </summary>
-        public bool First;
-
-        /// <summary>
         /// 拖动忽略，需要自己在 Panel 加判定
         /// </summary>
         public bool DragIgnore;
 
         public float Border;
         public Color BgColor, BorderColor;
-
-        public float RoundedOne
-        {
-            set => Rounded.X = Rounded.Y = Rounded.Z = Rounded.W = value;
-        }
-
         public Vector4 Rounded;
 
+        public View()
+        {
+            Border = -1;
+        }
 
         public override void Recalculate()
         {
@@ -63,32 +55,25 @@ namespace PointShop.Interface
                 // 判断前面有没有元素
                 if (index > 0 && views[index - 1] is View before)
                 {
-                    Vector2 beforeSize = before!.GetDimensions().Size();
                     Vector2 parentSize = parent.GetInnerDimensions().Size();
 
                     switch (Relative)
                     {
                         case RelativeMode.Horizontal:
-                            Left.Pixels = before.Left.Pixels + beforeSize.X + Spacing.X;
+                            Left.Pixels = before.RightPixels() + Spacing.X;
 
-                            Top.Pixels = First ? 0 : before.Top.Pixels;
-
-                            if (Wrap && Left.Pixels + Width.Pixels > parentSize.X)
+                            if (Wrap && RightPixels() > parentSize.X)
                             {
-                                Left.Pixels = 0;
-                                Top.Pixels = before.Top.Pixels + beforeSize.Y + Spacing.Y;
+                                SetPosPixels(0, before.BottomPixels() + Spacing.Y);
                             }
 
                             break;
                         case RelativeMode.Vertical:
-                            Top.Pixels = before.Top.Pixels + beforeSize.Y + Spacing.Y;
+                            Top.Pixels = before.BottomPixels() + Spacing.Y;
 
-                            Left.Pixels = First ? 0 : before.Left.Pixels;
-
-                            if (Wrap && Top.Pixels + Height.Pixels > parentSize.Y)
+                            if (Wrap && BottomPixels() > parentSize.Y)
                             {
-                                Top.Pixels = 0;
-                                Left.Pixels = before.Left.Pixels + beforeSize.X + Spacing.X;
+                                SetPosPixels(before.RightPixels() + Spacing.X, 0f);
                             }
 
                             break;
@@ -104,13 +89,13 @@ namespace PointShop.Interface
             Vector2 pos = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
 
-            if (Border <= 0 || BorderColor == Color.Transparent)
+            if (Border > 0 && (BgColor != Color.Transparent || BorderColor != Color.Transparent))
             {
-                PixelShader.RoundedRectangle(pos, size, Rounded, BgColor);
+                PixelShader.RoundedRectangle(pos, size, Rounded, BgColor, Border, BorderColor);
             }
             else if (BgColor != Color.Transparent)
             {
-                PixelShader.RoundedRectangle(pos, size, Rounded, BgColor, Border, BorderColor);
+                PixelShader.RoundedRectangle(pos, size, Rounded, BgColor);
             }
 
             base.DrawSelf(spriteBatch);

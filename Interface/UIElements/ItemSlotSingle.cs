@@ -1,191 +1,156 @@
 ﻿using PointShop.Common.Animations;
 using PointShop.Common.Players;
-using PointShop.Interface;
 
-namespace PointShop.ModUI.UIElements
+namespace PointShop.Interface.UIElements;
+
+public class ItemSlotSingle : View
 {
-    public class ItemSlotSingle : UIElement
+    private static readonly Texture2D BossIcons1 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
+    private static readonly Texture2D BossIcons2 = MyUtils.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
+    private static readonly Texture2D BossIcons3 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron_Prime").Value;
+    private static readonly Texture2D BossIcons4 = MyUtils.GetTexture("BossIcons/Map_Icon_Plantera").Value;
+
+    private readonly int _value;
+    private readonly int _mode;
+    private readonly Item _item;
+    private readonly Terrain _terrain;
+
+    private readonly Texture2D _lockTexture;
+    private readonly Vector2 _lockTextureSize;
+
+    private readonly Texture2D _bossTexture;
+    private readonly Vector2 _bossTextureSize;
+
+    private readonly AnimationTimer _hoverTimer;
+
+    public ItemSlotSingle(Item item, int value, int mode, Terrain terrain)
     {
-        public readonly static Texture2D BossIcons1 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
-        public readonly static Texture2D BossIcons2 = MyUtils.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
-        public readonly static Texture2D BossIcons3 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron_Prime").Value;
-        public readonly static Texture2D BossIcons4 = MyUtils.GetTexture("BossIcons/Map_Icon_Plantera").Value;
+        SetSizePixels(52f, 52f);
+        _hoverTimer = new AnimationTimer(3);
 
-        public int value;
-        public int mode;
-        public Item Item;
-        public Texture2D ItemTexture;
-        public Terrain terrain;
+        _item = item;
+        _value = value;
+        _mode = mode;
+        _terrain = terrain;
 
-        public Texture2D LockTexture;
-        public Vector2 LockTextureSize;
+        _lockTexture = MyUtils.GetTexture("BossIcons/Lock").Value;
+        _lockTextureSize = _lockTexture.Size();
 
-        public Texture2D BossTexture;
-        public Vector2 BossTextureSize;
+        _bossTexture = GetBossIcon();
+        _bossTextureSize = _bossTexture.Size();
 
-        public AnimationTimer HoverTimer;
+        Border = 2f;
+        Rounded = new Vector4(10f);
+    }
 
-        public ItemSlotSingle(Item item, int value, Terrain terrain, int mode)
+    public override void Update(GameTime gameTime)
+    {
+        _hoverTimer.Update();
+        base.Update(gameTime);
+    }
+
+    public override void MouseOver(UIMouseEvent evt)
+    {
+        base.MouseOver(evt);
+        _hoverTimer.Open();
+        SoundEngine.PlaySound(SoundID.MenuTick);
+    }
+
+    public override void MouseOut(UIMouseEvent evt)
+    {
+        base.MouseOut(evt);
+        _hoverTimer.Close();
+    }
+
+    protected override void DrawSelf(SpriteBatch sb)
+    {
+        BorderColor = Color.Lerp(UIColor.ItemSlotBorder, UIColor.ItemSlotBorderFav, _hoverTimer.Schedule);
+        BgColor = Color.Lerp(UIColor.ItemSlotBg, UIColor.ItemSlotBgFav, _hoverTimer.Schedule);
+
+        base.DrawSelf(sb);
+
+        if (IsMouseHovering && !_item.IsAir)
         {
-            Width.Set(52, 0f);
-            Height.Set(52, 0f);
-
-            this.value = value;
-            this.terrain = terrain;
-            this.mode = mode;
-
-            HoverTimer = new(3);
-
-            Item = item;
-            Main.instance.LoadItem(item.type);
-            ItemTexture = TextureAssets.Item[item.type].Value;
-
-            LockTexture = MyUtils.GetTexture("BossIcons/Lock").Value;
-            LockTextureSize = LockTexture.Size();
-
-            BossTexture = GetTexture2D();
-            BossTextureSize = BossTexture.Size();
+            Main.hoverItemName = _item.Name;
+            Main.HoverItem = _item.Clone();
         }
 
-        public override void Update(GameTime gameTime)
+        Vector2 pos = GetDimensions().Position();
+        Vector2 size = GetDimensions().Size();
+
+        bool canBuyItem = CanBuyItem();
+        DrawItem(sb, _item, canBuyItem ? Color.White : Color.White * 0.5f, GetInnerDimensions());
+
+        if (canBuyItem)
         {
-            HoverTimer.Update();
-            base.Update(gameTime);
+            return;
         }
 
-        public override void MouseOver(UIMouseEvent evt)
+        sb.Draw(_lockTexture, pos + size * 0.3f, null, Color.White, 0, _lockTextureSize / 2, 0.7f, 0, 0);
+        sb.Draw(_bossTexture, pos + size * 0.6f, null, Color.White, 0, _bossTextureSize / 2, 0.65f, 0, 0);
+    }
+
+    private static void DrawItem(SpriteBatch sb, Item item, Color lightColor, CalculatedStyle dimensions,
+        float itemSize = 32f)
+    {
+        Main.instance.LoadItem(item.type);
+        Texture2D itemTexture2D = TextureAssets.Item[item.type].Value;
+
+        Rectangle frame = Main.itemAnimations[item.type]?.GetFrame(itemTexture2D) ?? itemTexture2D.Frame();
+
+        float size = frame.Width > itemSize || frame.Height > itemSize
+            ? frame.Width > frame.Height ? itemSize / frame.Width : itemSize / frame.Height
+            : 1f;
+
+        sb.Draw(itemTexture2D, dimensions.Center() - frame.Size() * size / 2f,
+            frame, item.GetAlpha(lightColor), 0f, Vector2.Zero, size,
+            SpriteEffects.None, 0f);
+        sb.Draw(itemTexture2D, dimensions.Center() - frame.Size() * size / 2f,
+            frame, item.GetColor(lightColor), 0f, Vector2.Zero, size,
+            SpriteEffects.None, 0f);
+    }
+
+    public void BuyItem()
+    {
+        if (!CanBuyItem())
         {
-            base.MouseOver(evt);
-            HoverTimer.Open();
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            Main.NewText(MyUtils.GetText("Hint.Locked"), Color.Red);
+            return;
         }
 
-        public override void MouseOut(UIMouseEvent evt)
+        CoinPlayer coinPlayer = Main.LocalPlayer.GetModPlayer<CoinPlayer>();
+        if (coinPlayer.Point[(int)_terrain] >= _value)
         {
-            base.MouseOut(evt);
-            HoverTimer.Close();
+            coinPlayer.Point[(int)_terrain] -= _value;
+            Main.NewText($"\"{_item.Name}\" {MyUtils.GetText("Hint.Success")}", new Color(0x00, 0x99, 0xff));
+            Main.LocalPlayer.QuickSpawnItem(null, _item.Clone());
         }
-
-        protected override void DrawSelf(SpriteBatch sb)
+        else
         {
-            if (IsMouseHovering && !Item.IsAir)
-            {
-                Main.hoverItemName = Item.Name;
-                Main.HoverItem = Item.Clone();
-            }
-
-            CalculatedStyle dimensions = GetDimensions();
-            Vector2 position = dimensions.Position();
-            Vector2 size = dimensions.Size();
-
-            Color border = Color.Lerp(UIColor.ItemSlotBorder, UIColor.ItemSlotBorderFav, HoverTimer.Schedule);
-            Color background = Color.Lerp(UIColor.ItemSlotBg, UIColor.ItemSlotBgFav, HoverTimer.Schedule);
-
-            PixelShader.RoundedRectangle(position, size, new Vector4(10f), background, 2, border);
-
-            bool canPlay = CanPlay();
-            // 绘制物品
-            DrawItem(sb, Item, canPlay ? Color.White : Color.White * 0.5f, GetDimensions(), 30);
-
-            // 绘制锁定标志
-            if (!canPlay)
-            {
-                sb.Draw(LockTexture, position + size * 0.3f, null, Color.White, 0, LockTextureSize / 2, 0.7f, 0, 0);
-                sb.Draw(BossTexture, position + size * 0.6f, null, Color.White, 0, BossTextureSize / 2, 0.65f, 0, 0);
-            }
+            Main.NewText($"\"{_item.Name}\" {MyUtils.GetText("Hint.NotPoint")}", Color.Red);
         }
+    }
 
-        public static void DrawItem(SpriteBatch sb, Item Item, Color lightColor, CalculatedStyle dimensions,
-            float ItemSize = 30f)
+    private bool CanBuyItem()
+    {
+        return _mode switch
         {
-            Main.instance.LoadItem(Item.type);
-            var ItemTexture2D = TextureAssets.Item[Item.type];
+            1 => NPC.downedBoss3,
+            2 => Main.hardMode,
+            3 => NPC.downedMechBossAny,
+            4 => NPC.downedPlantBoss,
+            _ => true
+        };
+    }
 
-            Rectangle rectangle;
-            if (Main.itemAnimations[Item.type] is null)
-                rectangle = ItemTexture2D.Frame(1, 1, 0, 0);
-            else
-                rectangle = Main.itemAnimations[Item.type].GetFrame(ItemTexture2D.Value);
-
-            float size = rectangle.Width > ItemSize || rectangle.Height > ItemSize
-                ? rectangle.Width > rectangle.Height ? ItemSize / rectangle.Width : ItemSize / rectangle.Height
-                : 1f;
-
-            sb.Draw(ItemTexture2D.Value, dimensions.Center() - rectangle.Size() * size / 2f,
-                new Rectangle?(rectangle), Item.GetAlpha(lightColor), 0f, Vector2.Zero, size,
-                SpriteEffects.None, 0f);
-            sb.Draw(ItemTexture2D.Value, dimensions.Center() - rectangle.Size() * size / 2f,
-                new Rectangle?(rectangle), Item.GetColor(lightColor), 0f, Vector2.Zero, size,
-                SpriteEffects.None, 0f);
-        }
-
-        public static void LimitSize(Texture2D texture, float MaxSize, out float scale)
+    private Texture2D GetBossIcon()
+    {
+        return _mode switch
         {
-            scale = texture.Width > MaxSize || texture.Height > MaxSize
-                ? texture.Width > texture.Height ? MaxSize / texture.Width : MaxSize / texture.Height
-                : 1f;
-        }
-
-        public void Pay()
-        {
-            // 不能兑换直接退出
-            if (!CanPlay())
-            {
-                Main.NewText(MyUtils.GetText("Hint.Locked"), Color.Red);
-                return;
-            }
-
-            CoinPlayer coinPlayer = Main.LocalPlayer.GetModPlayer<CoinPlayer>();
-            if (coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] >= value)
-            {
-                coinPlayer.Point[(int)UISystem.PointShopGUI.terrain] -= value;
-                Main.NewText($"\"{Item.Name}\" {MyUtils.GetText("Hint.Success")}", new Color(0x00, 0x99, 0xff));
-                Main.LocalPlayer.QuickSpawnItem(null, Item.Clone());
-            }
-            else
-            {
-                Main.NewText($"\"{Item.Name}\" {MyUtils.GetText("Hint.NotPoint")}", Color.Red);
-            }
-        }
-
-        private bool CanPlay()
-        {
-            if (mode == 1)
-            {
-                return NPC.downedBoss3;
-            }
-            else if (mode == 2)
-            {
-                return Main.hardMode;
-            }
-            else if (mode == 3)
-            {
-                return NPC.downedMechBossAny;
-            }
-            else if (mode == 4)
-            {
-                return NPC.downedPlantBoss;
-            }
-
-            return true;
-        }
-
-        private Texture2D GetTexture2D()
-        {
-            if (mode == 2)
-            {
-                return BossIcons2;
-            }
-            else if (mode == 3)
-            {
-                return BossIcons3;
-            }
-            else if (mode == 4)
-            {
-                return BossIcons4;
-            }
-
-            return BossIcons1;
-        }
+            2 => BossIcons2,
+            3 => BossIcons3,
+            4 => BossIcons4,
+            _ => BossIcons1
+        };
     }
 }

@@ -12,10 +12,10 @@ namespace PointShop.Helpers
         {
             if (big)
             {
-                return FontAssets.DeathText.Value.MeasureString(text) + new Vector2(4);
+                return FontAssets.DeathText.Value.MeasureString(text);
             }
 
-            return FontAssets.MouseText.Value.MeasureString(text) + new Vector2(4);
+            return FontAssets.MouseText.Value.MeasureString(text);
         }
 
         // 绘制文字

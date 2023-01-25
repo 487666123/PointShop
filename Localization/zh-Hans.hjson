@@ -1,7 +1,7 @@
 Mods: {
     PointShop: {
         Config:{
-            PointExchange: 积分兑换
+            PointExchange: 积分商店
             PanelConfig: 面板设置
             TerrainPanel: {
                 Label: "积分统计面板"
@@ -11,12 +11,20 @@ Mods: {
                 Label: "积分获取提示"
                 Tooltip: "获取积分时在人物头顶以文本提示"
             }
-            UIYAxisOffset:{
-                Label: "ModUI 字体Y轴偏移"
+            TextOffset:{
+                Label: "普通字体 Y 轴绘制偏移"
                 Tooltip:
                     '''
-                    由于泰拉原版字体的原因，在Y轴上会略微偏上固出此设置用来调整。
-                    大部分字体材质包无偏移可以设置为0
+                    泰拉原版字体素材不居中。
+                    字体材质包偏移也都不相同，请自行调节此项。
+                    '''
+            }
+            BigTextOffset:{
+                Label: "大型字体 Y 轴绘制偏移"
+                Tooltip:
+                    '''
+                    泰拉原版字体素材不居中。
+                    字体材质包偏移也都不相同，请自行调节此项。
                     '''
             }
             PointMultiplier:{

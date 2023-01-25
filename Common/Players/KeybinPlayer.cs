@@ -1,5 +1,5 @@
 ﻿using PointShop.Common.Systems;
-using PointShop.Interface.ShopUI;
+using PointShop.Interface.GUI;
 using Terraria.GameInput;
 
 namespace PointShop.Common.Players

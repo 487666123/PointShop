@@ -4,41 +4,51 @@ namespace PointShop.Interface.SUIElements;
 
 public class SUIText : View
 {
-    public Color TextColor, TextBorderColor;
+    public Func<Color> TextColor;
+    private Color _textColor, _textBorderColor;
+
+    // 用不到先注释掉
+    /*public void SetColor(Color textColor, Color textBorderColor)
+    {
+        _textColor = textColor;
+        _textBorderColor = textBorderColor;
+    }*/
 
     private readonly bool _big;
-    private readonly float _scale;
+    private readonly float _textScale;
     private string _text;
-    private Vector2 _textSize;
+    protected Vector2 TextSize;
 
     public string Text => _text;
+
     public SUIText SetText(string text, out Vector2 textSize)
     {
         _text = text;
 
         if (_big)
         {
-            _textSize = MyUtils.TextSize(text, true) * _scale;
+            TextSize = MyUtils.TextSize(text, true) * _textScale;
         }
         else
         {
-            _textSize = MyUtils.TextSize(text) * _scale;
+            TextSize = MyUtils.TextSize(text) * _textScale;
         }
 
-        textSize = _textSize;
+        textSize = TextSize;
         return this;
     }
 
-    public SUIText(string text, float scale, bool big = false)
+    public SUIText(string text, float textScale, bool big = false)
     {
         _big = big;
-        _scale = scale;
+        _textScale = textScale;
         SetText(text, out _);
 
-        TextColor = Color.White;
-        TextBorderColor = Color.Black;
+        _textColor = Color.White;
+        _textBorderColor = Color.Black;
 
-        SetInnerPixels(_textSize);
+        SetPadding(2f * textScale);
+        SetInnerPixels(TextSize);
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -46,17 +56,18 @@ public class SUIText : View
         base.DrawSelf(spriteBatch);
         Vector2 innerPos = GetInnerDimensions().Position();
         Vector2 innerSize = GetInnerDimensions().Size();
+        _textColor = TextColor?.Invoke() ?? _textColor;
         if (_big)
         {
-            Vector2 offset = (PointConfig.Instance.UIYAxisOffset * 3 * _scale).Y();
-            Vector2 textPos = innerPos + innerSize / 2 + offset;
-            MyUtils.DrawBigText(textPos, _text, TextColor, TextBorderColor, _textSize / 2, _scale);
+            Vector2 offset = (UIConfig.Instance.BigTextOffset * _textScale).Y() * _textScale;
+            Vector2 textPos = innerPos + (innerSize - TextSize) / 2 + offset;
+            MyUtils.DrawBigText(textPos, _text, _textColor, _textBorderColor, Vector2.Zero, _textScale);
         }
         else
         {
-            Vector2 offset = (PointConfig.Instance.UIYAxisOffset * _scale).Y();
-            Vector2 textPos = innerPos + innerSize / 2 + offset;
-            MyUtils.DrawText(textPos, _text, TextColor, TextBorderColor, _textSize / 2, _scale);
+            Vector2 offset = (UIConfig.Instance.TextOffset * _textScale).Y() * _textScale;
+            Vector2 textPos = innerPos + (innerSize - TextSize) / 2 + offset;
+            MyUtils.DrawText(textPos, _text, _textColor, _textBorderColor, Vector2.Zero, _textScale);
         }
     }
 }

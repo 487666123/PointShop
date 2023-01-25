@@ -1,69 +1,47 @@
 ﻿using PointShop.Common.Animations;
-using PointShop.Common.Configs;
-using PointShop.Interface;
+using PointShop.Interface.SUIElements;
 
-namespace PointShop.ModUI.UIElements
+namespace PointShop.Interface.UIElements;
+
+public class MiniButton : SUIText
 {
-    public class MiniButton : UIElement
+    private readonly AnimationTimer _hoverTimer;
+
+    public MiniButton(string text, float textScale = 0.8f) : base(text, textScale)
     {
-        public AnimationTimer HoverTimer = new(3);
+        _hoverTimer = new AnimationTimer(3);
+        this.SetSize(TextSize);
 
-        private string text;
+        Height.Pixels = 36f * textScale;
+        Width.Pixels = (MyUtils.TextSize(text).X + 30f) * textScale;
 
-        public string Text
-        {
-            get => text;
-            set
-            {
-                text = value;
-                this.SetSize(MyUtils.TextSize(value) * Scale);
-            }
-        }
+        BgColor = UIColor.ButtonBg;
+        Border = 2f;
+        Rounded = new Vector4(10f);
+    }
 
-        public float Scale { get; set; }
+    public override void Update(GameTime gameTime)
+    {
+        _hoverTimer.Update();
+        base.Update(gameTime);
+    }
 
-        public MiniButton(string text, float scale = 0.8f)
-        {
-            Scale = scale;
-            Text = text;
+    public override void MouseOver(UIMouseEvent evt)
+    {
+        _hoverTimer.Open();
+        base.MouseOver(evt);
+        SoundEngine.PlaySound(SoundID.MenuTick);
+    }
 
-            Height.Pixels = 36f * scale;
-            Width.Pixels = (MyUtils.TextSize(text).X + 30f) * scale;
-        }
+    public override void MouseOut(UIMouseEvent evt)
+    {
+        _hoverTimer.Close();
+        base.MouseOut(evt);
+    }
 
-        public override void Update(GameTime gameTime)
-        {
-            HoverTimer.Update();
-            base.Update(gameTime);
-        }
-
-        public override void MouseOver(UIMouseEvent evt)
-        {
-            base.MouseOver(evt);
-            HoverTimer.Open();
-            SoundEngine.PlaySound(SoundID.MenuTick);
-        }
-
-        public override void MouseOut(UIMouseEvent evt)
-        {
-            base.MouseOut(evt);
-            HoverTimer.Close();
-        }
-
-        protected override void DrawSelf(SpriteBatch sb)
-        {
-            Vector2 position = GetDimensions().Position();
-            Vector2 size = GetDimensions().Size();
-
-            Color border = Color.Lerp(UIColor.ButtonBorder, UIColor.ButtonBorderHover, HoverTimer.Schedule);
-            PixelShader.RoundedRectangle(position, size, new Vector4(10f), UIColor.ButtonBackground, 2, border);
-
-            position = GetInnerDimensions().Position();
-            size = GetInnerDimensions().Size();
-            Vector2 textSize = MyUtils.TextSize(Text) * Scale;
-            Vector2 textPosition = position + size / 2f - textSize / 2f;
-            textPosition.Y += PointConfig.Instance.UIYAxisOffset * Scale;
-            MyUtils.DrawText(textPosition, Text, Color.White, Color.Black, Vector2.Zero, Scale);
-        }
+    protected override void DrawSelf(SpriteBatch sb)
+    {
+        BorderColor = Color.Lerp(UIColor.ButtonBorder, UIColor.ButtonBorderHover, _hoverTimer.Schedule);
+        base.DrawSelf(sb);
     }
 }

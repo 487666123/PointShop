@@ -2,25 +2,24 @@
 using PointShop.Entitys;
 using System.Collections.Generic;
 using System.Text;
-using PointShop.Interface.ShopUI;
-using PointShop.Interface.TipUI;
+using PointShop.Interface.GUI;
 
 namespace PointShop.Interface
 {
-    public class UISystem : ModSystem
+    internal class UISystem : ModSystem
     {
-        public static List<TerrainData> TerrainDatas { get; set; } // 积分商店得数据
-        public static List<Texture2D> Icons { get; set; } // 环境图标
+        public static List<TerrainData> TerrainDatas;
+        public static List<Texture2D> Icons;
 
-        public static UserInterface PointInterface { get; set; }
-        public static PointGUI PointGUI { get; set; }
+        public static UserInterface PointInterface;
+        public static TerrainGUI TerrainGUI;
 
-        public static UserInterface PointShopInterface { get; set; }
-        public static PointShopGUI PointShopGUI { get; set; }
+        public static UserInterface PointShopInterface;
+        public static PointShopGUI PointShopGUI;
 
         public override void Unload()
         {
-            PointGUI = null;
+            TerrainGUI = null;
             PointInterface = null;
 
             PointShopGUI = null;
@@ -42,7 +41,7 @@ namespace PointShop.Interface
             Icons = new List<Texture2D>();
             foreach (var t in TerrainDatas)
             {
-                Icons.Add(MyUtils.GetTexture($"Icons/{t.image}").Value);
+                Icons.Add(MyUtils.GetTexture($"Icons/{t.Image}").Value);
             }
 
             PointInterface = new UserInterface();
@@ -51,7 +50,7 @@ namespace PointShop.Interface
 
         public override void UpdateUI(GameTime gameTime)
         {
-            if (PointGUI.Visible)
+            if (TerrainGUI.Visible)
                 PointInterface?.Update(gameTime);
 
             if (PointShopGUI.Visible)
@@ -60,25 +59,28 @@ namespace PointShop.Interface
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-            if (MouseTextIndex != -1)
-            {
-                layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
-                    "PointShop: PointShopGUI", () =>
-                    {
-                        if (PointShopGUI.Visible)
-                            PointShopGUI?.Draw(Main.spriteBatch);
-                        return true;
-                    }, InterfaceScaleType.UI));
+            int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 
-                layers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
-                    "PointShop: PointGUI", () =>
-                    {
-                        if (PointGUI.Visible)
-                            PointGUI?.Draw(Main.spriteBatch);
-                        return true;
-                    }, InterfaceScaleType.UI));
+            if (index == -1)
+            {
+                return;
             }
+
+            layers.Insert(index, new LegacyGameInterfaceLayer(
+                "PointShop: PointShopGUI", () =>
+                {
+                    if (PointShopGUI.Visible)
+                        PointShopGUI?.Draw(Main.spriteBatch);
+                    return true;
+                }, InterfaceScaleType.UI));
+
+            layers.Insert(index, new LegacyGameInterfaceLayer(
+                "PointShop: PointGUI", () =>
+                {
+                    if (TerrainGUI.Visible)
+                        TerrainGUI?.Draw(Main.spriteBatch);
+                    return true;
+                }, InterfaceScaleType.UI));
         }
     }
 }

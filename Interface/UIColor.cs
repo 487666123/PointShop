@@ -14,6 +14,10 @@
             ItemSlotBg = new(63, 65, 151, 200),
             ButtonBorder = new(18, 18, 38),
             ButtonBorderHover = new(233, 176, 0),
-            ButtonBackground = new(54, 56, 130);
+            ButtonBg = new(54, 56, 130),
+            ScrollBarBorder = new(20, 25, 60),
+            ScrollBarBg = new(44, 57, 105),
+            ScrollBarInnerBg = Color.White,
+            ScrollBarInnerBgHover = new(220, 220, 220);
     }
 }
