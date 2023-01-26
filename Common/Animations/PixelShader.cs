@@ -101,6 +101,20 @@
             });
         }
 
+        public static void DrawShadow(Vector2 pos, Vector2 size, Vector4 round, Color backgroundColor, float shadow, bool ui = true)
+        {
+            BaseDraw(pos, size, ui, matrix =>
+            {
+                Effect effect = ShaderAssets.RoundedRectangle;
+                effect.Parameters["uSize"].SetValue(size);
+                effect.Parameters["uSizeOver2"].SetValue(size / 2);
+                effect.Parameters["uRounded"].SetValue(round);
+                effect.Parameters["uBackgroundColor"].SetValue(backgroundColor.ToVector4());
+                effect.Parameters["uShadowSize"].SetValue(shadow);
+                effect.CurrentTechnique.Passes["Shadow"].Apply();
+            });
+        }
+
         /// <summary>
         /// 绘制叉号
         /// </summary>

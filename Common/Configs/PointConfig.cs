@@ -4,28 +4,19 @@ using Terraria.ModLoader.Config;
 namespace PointShop.Common.Configs
 {
     [Label("$Mods.PointShop.Config.PointExchange")]
-    public class PointConfig : ModConfig
+    internal class PointConfig : ModConfig
     {
-        internal static PointConfig Instance;
+        public static PointConfig Instance;
+
         public override void OnLoaded()
         {
             Instance = this;
             MyUtils.Config = this;
         }
 
-        public override ConfigScope Mode => ConfigScope.ClientSide;
+        public override ConfigScope Mode => ConfigScope.ServerSide;
 
-        [Header("$Mods.PointShop.Config.PanelConfig")]
-        [Label("$Mods.PointShop.Config.TerrainPanel.Label")]
-        [Tooltip("$Mods.PointShop.Config.TerrainPanel.Tooltip")]
-        [DefaultValue(true)]
-        public bool TerrainPanel;
-
-        [Label("$Mods.PointShop.Config.TerrainCombat.Label")]
-        [Tooltip("$Mods.PointShop.Config.TerrainCombat.Tooltip")]
-        [DefaultValue(true)]
-        public bool TerrainCombat;
-
+        [ReloadRequired]
         [Label("$Mods.PointShop.Config.PointMultiplier.Label")]
         [DefaultValue(100)]
         [Range(0, 800)]

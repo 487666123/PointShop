@@ -1,7 +1,7 @@
 ﻿using PointShop.Common.Animations;
 using PointShop.Interface.SUIElements;
 
-namespace PointShop.Interface.UIElements;
+namespace PointShop.Interface.GUI.PointShopViews;
 
 public class MiniButton : SUIText
 {

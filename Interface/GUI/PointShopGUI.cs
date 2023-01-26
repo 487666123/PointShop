@@ -36,7 +36,9 @@ namespace PointShop.Interface.GUI
         {
             MainPanel = new SUIPanel(UIColor.PanelBg, UIColor.PanelBorder)
             {
-                Draggable = true
+                Draggable = true,
+                Shadow = 40f,
+                ShadowColor = UIColor.PanelBorder * 0.5f
             };
             MainPanel.SetPadding(0f);
             MainPanel.SetPosPixels(Main.LocalPlayer.GetModPlayer<UIPlayerData>().PointShopPos);

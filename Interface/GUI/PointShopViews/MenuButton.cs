@@ -1,7 +1,7 @@
 ﻿using PointShop.Common.Animations;
 using PointShop.Common.Configs;
 
-namespace PointShop.Interface.UIElements
+namespace PointShop.Interface.GUI.PointShopViews
 {
     public class MenuButton : View
     {
@@ -36,6 +36,7 @@ namespace PointShop.Interface.UIElements
             Rounded = new Vector4(10f);
             Border = 2;
             BgColor = UIColor.ButtonBg;
+            Shadow = 6f;
         }
 
         public override void Update(GameTime gameTime)

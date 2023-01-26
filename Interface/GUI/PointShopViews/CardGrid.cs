@@ -43,29 +43,26 @@ public class CardGrid : ScrollView
     {
         List<ItemData> itemData = UISystem.TerrainDatas[(int)terrain].Items;
 
-        ListView.SetSizePixels(TotalSize(CardSize, CardSpacing, 2,
-            itemData.Count % 2 > 0 ? itemData.Count + 1 : itemData.Count));
-        SetSizePixels(ListView.Width.Pixels + 24f, 350f);
-        ScrollBar.SetView(Height.Pixels, ListView.Height.Pixels);
-
         // 判断有没有数据
-        if (itemData.Count <= 0)
+        if (itemData.Count < 1)
         {
             return;
         }
 
         ListView.RemoveAllChildren();
 
-        foreach (var card in itemData.Select(data => new ShopCard(new Item(data.Id), data.Value, data.Mode, terrain)
-                 {
-                     Relative = RelativeMode.Horizontal,
-                     Spacing = CardSpacing,
-                     Wrap = true
-                 }))
+        ShopCard card = null;
+        foreach (ItemData data in itemData)
         {
+            card = new ShopCard(new Item(data.Id), data.Value, data.Mode, terrain);
             card.Join(ListView);
         }
 
-        ListView.Recalculate();
+        ListView.SetSizePixels(TotalSize(card!.GetSizePixel(), card!.Spacing, 2,
+            itemData.Count % 2 > 0 ? itemData.Count / 2 + 1 : itemData.Count / 2));
+        SetSizePixels(ListView.Width.Pixels + 24f, 350f);
+        ScrollBar.SetView(Height.Pixels, ListView.Height.Pixels);
+
+        Recalculate();
     }
 }

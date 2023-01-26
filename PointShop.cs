@@ -14,6 +14,7 @@ global using Terraria.Localization;
 global using Terraria.ModLoader;
 global using Terraria.UI;
 global using static PointShop.Common.Data.TerrainInfo;
+using PointShop.Common.Configs;
 using PointShop.Common.GlobalNPCs;
 using PointShop.Common.Players;
 using static Terraria.ID.ContentSamples;
@@ -40,13 +41,15 @@ namespace PointShop
                         int point = (byte)BestiaryHelper.GetBestiaryStarsPriority(npc);
                         CoinPlayer.BonusPoints(point);
                         // 积分提示
-                        if (MyUtils.Config.TerrainCombat)
+                        if (UIConfig.Instance.TerrainCombat)
                         {
-                            string text = $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
+                            string text =
+                                $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
                             Color color = TerrainColor[CoinPlayer.InWhatTerrain2Int];
                             TipsHelper.NewTextDirect(Main.LocalPlayer.Center, new(0, -1), color, 90, text);
                         }
                     }
+
                     break;
                 default:
                     Logger.WarnFormat($"PointShop: Unknown Message type: {msgType}");

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PointShop.Common.Animations;
+using PointShop.Interface.SUIElements;
 
 namespace PointShop.Interface
 {
@@ -42,6 +43,9 @@ namespace PointShop.Interface
         public Color BgColor, BorderColor;
         public Vector4 Rounded;
 
+        public float Shadow;
+        public Color ShadowColor;
+
         public View()
         {
             Border = -1;
@@ -49,18 +53,18 @@ namespace PointShop.Interface
 
         public override void Recalculate()
         {
-            if (Relative != RelativeMode.Disabled && Parent is View { Children: List<UIElement> views } parent)
+            if (Relative != RelativeMode.Disabled && Parent is View { Children: List<UIElement> uies } parent)
             {
-                int index = views!.IndexOf(this);
+                int index = uies!.IndexOf(this);
                 // 判断前面有没有元素
-                if (index > 0 && views[index - 1] is View before)
+                if (index > 0 && uies[index - 1] is View before)
                 {
                     Vector2 parentSize = parent.GetInnerDimensions().Size();
 
                     switch (Relative)
                     {
                         case RelativeMode.Horizontal:
-                            Left.Pixels = before.RightPixels() + Spacing.X;
+                            SetPosPixels(before.RightPixels() + Spacing.X, before.Top.Pixels);
 
                             if (Wrap && RightPixels() > parentSize.X)
                             {
@@ -69,7 +73,7 @@ namespace PointShop.Interface
 
                             break;
                         case RelativeMode.Vertical:
-                            Top.Pixels = before.BottomPixels() + Spacing.Y;
+                            SetPosPixels(before.Left.Pixels, before.BottomPixels() + Spacing.Y);
 
                             if (Wrap && BottomPixels() > parentSize.Y)
                             {
@@ -88,6 +92,14 @@ namespace PointShop.Interface
         {
             Vector2 pos = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
+
+            if (ShadowColor != Color.Transparent)
+            {
+                Vector2 shadow = new Vector2(Shadow);
+                Vector2 shadowPos = pos - shadow;
+                Vector2 shadowSize = size + shadow * 2;
+                PixelShader.DrawShadow(shadowPos, shadowSize, Rounded, ShadowColor, Shadow);
+            }
 
             if (Border > 0 && (BgColor != Color.Transparent || BorderColor != Color.Transparent))
             {

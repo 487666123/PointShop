@@ -1,4 +1,5 @@
-﻿using PointShop.Common.Players;
+﻿using PointShop.Common.Configs;
+using PointShop.Common.Players;
 using PointShop.Interface.Common;
 using PointShop.Interface.SUIElements;
 
@@ -6,7 +7,7 @@ namespace PointShop.Interface.GUI
 {
     public class TerrainGUI : UIState
     {
-        public static bool Visible => MyUtils.Config.TerrainPanel;
+        public static bool Visible => UIConfig.Instance.TerrainPanel;
 
         private SUIPanel _mainPanel;
         private SUIImage _icon;
@@ -17,7 +18,9 @@ namespace PointShop.Interface.GUI
         {
             _mainPanel = new SUIPanel(UIColor.PanelBg, UIColor.PanelBorder)
             {
-                HAlign = 0.5f, Top = 20f.Pixels()
+                HAlign = 0.5f, Top = 20f.Pixels(),
+                Shadow = 10f,
+                ShadowColor = UIColor.PanelBg * 0.5f
             };
             _mainPanel.SetPadding(16f, 0f).SetSizePixels(200f, 46f);
             _mainPanel.Join(this);

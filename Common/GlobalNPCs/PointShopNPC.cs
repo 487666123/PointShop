@@ -1,4 +1,5 @@
-﻿using PointShop.Common.Players;
+﻿using PointShop.Common.Configs;
+using PointShop.Common.Players;
 using Terraria.DataStructures;
 using static Terraria.ID.ContentSamples;
 
@@ -9,6 +10,7 @@ namespace PointShop.Common.GlobalNPCs
         public override bool InstancePerEntity => true;
         public override GlobalNPC Clone(NPC npc, NPC npcClone) => base.Clone(npc, npcClone);
         public bool HitByLocalPlayer;
+
         private enum SpawnType
         {
             NotSpawn,
@@ -19,7 +21,9 @@ namespace PointShop.Common.GlobalNPCs
         }
 
         private SpawnType SpawnMode = SpawnType.NotSpawn;
+
         private int EntitySoureType = -1;
+
         // 在NPC生成时候
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
@@ -33,7 +37,9 @@ namespace PointShop.Common.GlobalNPCs
                 if ((source as EntitySource_Parent).Entity is NPC)
                 {
                     EntitySoureType = ((source as EntitySource_Parent).Entity as NPC).type;
-                };
+                }
+
+                ;
             }
             else if (source is null)
             {
@@ -85,9 +91,10 @@ namespace PointShop.Common.GlobalNPCs
                     int point = BestiaryHelper.GetBestiaryStarsPriority(npc);
                     CoinPlayer.BonusPoints(point);
                     // 积分提示
-                    if (MyUtils.Config.TerrainCombat)
+                    if (UIConfig.Instance.TerrainCombat)
                     {
-                        string text = $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
+                        string text =
+                            $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
                         AdvancedPopupRequest request = default;
                         request.Text = text;
                         request.DurationInFrames = 120;
@@ -113,6 +120,7 @@ namespace PointShop.Common.GlobalNPCs
                     return true;
                 }
             }
+
             if (SpawnMode == SpawnType.Parent)
             {
                 if (EntitySoureType == 594)
@@ -120,7 +128,7 @@ namespace PointShop.Common.GlobalNPCs
             }
 
             return npc.damage > 0 && !npc.friendly && npc.lifeMax > 0 &&
-                (SpawnMode == SpawnType.NatureSpawnNPC || SpawnMode == SpawnType.EntitySourceIsNull);
+                   (SpawnMode == SpawnType.NatureSpawnNPC || SpawnMode == SpawnType.EntitySourceIsNull);
         }
 
         /*private static readonly Color borderColor = new(255, 0, 0);

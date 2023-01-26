@@ -1,11 +1,32 @@
-﻿using PointShop.Common.Configs;
+﻿using System.Text;
+using PointShop.Common.Configs;
 
 namespace PointShop.Helpers
 {
-    public static class MyUtils
+    internal static class MyUtils
     {
         // 获取 Mod 配置信息
         public static PointConfig Config { get; set; }
+
+        public static string CutText(string str, float textScale, float length)
+        {
+            StringBuilder text = new StringBuilder();
+
+            foreach (char c in str)
+            {
+                text.Append(c);
+                if (!(TextSize(text.ToString()).X * textScale > length))
+                {
+                    continue;
+                }
+
+                text.Remove(text.Length - 1, 1);
+                text.Append("...");
+                break;
+            }
+
+            return text.ToString();
+        }
 
         // 获取文字大小，正常文字
         public static Vector2 TextSize(string text, bool big = false)
