@@ -1,5 +1,6 @@
 ﻿using PointShop.Common.Animations;
 using PointShop.Common.Configs;
+using PointShop.Helpers.Extensions;
 
 namespace PointShop.Interface.GUI.PointShopViews
 {
@@ -35,8 +36,6 @@ namespace PointShop.Interface.GUI.PointShopViews
             SetPadding(10f);
             Rounded = new Vector4(10f);
             Border = 2;
-            BgColor = UIColor.ButtonBg;
-            Shadow = 6f;
         }
 
         public override void Update(GameTime gameTime)
@@ -60,6 +59,7 @@ namespace PointShop.Interface.GUI.PointShopViews
 
         protected override void DrawSelf(SpriteBatch sb)
         {
+            BgColor = Color.Lerp(UIColor.ButtonBg, UIColor.ButtonBgHover, _hoverTimer.Schedule);
             BorderColor = Color.Lerp(UIColor.ButtonBorder, UIColor.ButtonBorderHover, _hoverTimer.Schedule);
             base.DrawSelf(sb);
 
