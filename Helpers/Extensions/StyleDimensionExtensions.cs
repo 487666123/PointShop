@@ -1,4 +1,4 @@
-﻿namespace PointShop.Helpers;
+﻿namespace PointShop.Helpers.Extensions;
 
 public static class StyleDimensionExtensions
 {

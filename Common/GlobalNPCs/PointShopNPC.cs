@@ -1,5 +1,7 @@
 ﻿using PointShop.Common.Configs;
 using PointShop.Common.Players;
+using PointShop.Helpers.Extensions;
+using PointShop.Server;
 using Terraria.DataStructures;
 using static Terraria.ID.ContentSamples;
 
@@ -77,31 +79,37 @@ namespace PointShop.Common.GlobalNPCs
 
         public override void OnKill(NPC npc)
         {
-            if (CanEarnPoint(npc))
+            if (!CanEarnPoint(npc))
             {
-                if (Main.netMode == NetmodeID.Server)
+                return;
+            }
+
+            switch (Main.netMode)
+            {
+                case NetmodeID.Server:
                 {
                     ModPacket packet = Mod.GetPacket();
                     packet.Write((byte)PointShop.MessageType.EarnPoint);
                     packet.Write((byte)npc.whoAmI);
                     packet.Send();
+                    break;
                 }
-                else if (Main.netMode == NetmodeID.SinglePlayer)
+                case NetmodeID.SinglePlayer:
                 {
                     int point = BestiaryHelper.GetBestiaryStarsPriority(npc);
                     CoinPlayer.BonusPoints(point);
-                    // 积分提示
+
                     if (UIConfig.Instance.TerrainCombat)
                     {
-                        string text =
-                            $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
-                        AdvancedPopupRequest request = default;
-                        request.Text = text;
-                        request.DurationInFrames = 120;
-                        request.Velocity = new(0, -2);
-                        request.Color = TerrainColor[CoinPlayer.InWhatTerrain2Int];
-                        PopupText.NewText(request, Main.LocalPlayer.Top + new Vector2(0, -10));
+                        string terrainName = MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) +
+                                             MyUtils.GetText("Hint.Point");
+                        Color color = TerrainColor[CoinPlayer.InWhatTerrain2Int];
+                        Vector2 pos = Main.LocalPlayer.position;
+                        pos.X += Main.LocalPlayer.Size.X / 2f;
+                        PointUtils.PointTip(terrainName, point, pos, color, 90);
                     }
+
+                    break;
                 }
             }
         }

@@ -3,7 +3,7 @@ using Terraria.ModLoader.Config;
 
 namespace PointShop.Common.Configs
 {
-    [Label("$Mods.PointShop.Config.PointExchange")]
+    [Label("$Mods.PointShop.Config.PanelConfig")]
     internal class PointConfig : ModConfig
     {
         public static PointConfig Instance;

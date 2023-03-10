@@ -1,28 +1,22 @@
 ﻿using System.Collections.Generic;
 using PointShop.Common.Animations;
-using PointShop.Interface.SUIElements;
+using PointShop.Helpers.Extensions;
 
 namespace PointShop.Interface
 {
-    /// <summary>
-    /// 排列模式，横向排列或者纵向排列。
-    /// </summary>
-    public enum RelativeMode
+    public enum LayoutMode
     {
         Disabled,
         Horizontal,
         Vertical
     };
 
-    /// <summary>
-    /// 相对定位，用于可变大小的 UI 更方便计算位置。
-    /// </summary>
     public class View : UIElement
     {
         /// <summary>
-        /// 相对的模式，横向填充或者纵向填充
+        /// 布局模式
         /// </summary>
-        public RelativeMode Relative;
+        public LayoutMode LayoutMode;
 
         /// <summary>
         /// 间距
@@ -39,21 +33,29 @@ namespace PointShop.Interface
         /// </summary>
         public bool DragIgnore;
 
+        public Func<Vector2> InnerPixel;
+
         public float Border;
         public Color BgColor, BorderColor;
         public Vector4 Rounded;
 
-        public float Shadow;
+        public float Shadow, ShadowExtraSize;
         public Color ShadowColor;
 
-        public View()
+        public override void Update(GameTime gameTime)
         {
-            Border = -1;
+            base.Update(gameTime);
+            if (InnerPixel?.Invoke() is not Vector2 pixelSize || pixelSize == GetInnerPixel())
+            {
+                return;
+            }
+
+            SetInnerPixels(pixelSize).Recalculate();
         }
 
         public override void Recalculate()
         {
-            if (Relative != RelativeMode.Disabled && Parent is View { Children: List<UIElement> uies } parent)
+            if (LayoutMode != LayoutMode.Disabled && Parent is View { Children: List<UIElement> uies } parent)
             {
                 int index = uies!.IndexOf(this);
                 // 判断前面有没有元素
@@ -61,9 +63,9 @@ namespace PointShop.Interface
                 {
                     Vector2 parentSize = parent.GetInnerDimensions().Size();
 
-                    switch (Relative)
+                    switch (LayoutMode)
                     {
-                        case RelativeMode.Horizontal:
+                        case LayoutMode.Horizontal:
                             SetPosPixels(before.RightPixels() + Spacing.X, before.Top.Pixels);
 
                             if (Wrap && RightPixels() > parentSize.X)
@@ -72,7 +74,7 @@ namespace PointShop.Interface
                             }
 
                             break;
-                        case RelativeMode.Vertical:
+                        case LayoutMode.Vertical:
                             SetPosPixels(before.Left.Pixels, before.BottomPixels() + Spacing.Y);
 
                             if (Wrap && BottomPixels() > parentSize.Y)
@@ -95,10 +97,11 @@ namespace PointShop.Interface
 
             if (ShadowColor != Color.Transparent)
             {
-                Vector2 shadow = new Vector2(Shadow);
-                Vector2 shadowPos = pos - shadow;
-                Vector2 shadowSize = size + shadow * 2;
-                PixelShader.DrawShadow(shadowPos, shadowSize, Rounded, ShadowColor, Shadow);
+                Vector2 shadowExtraSize = new Vector2(ShadowExtraSize);
+                Vector2 shadowPos = pos - shadowExtraSize;
+                Vector2 shadowSize = size + shadowExtraSize * 2;
+                PixelShader.DrawShadow(shadowPos, shadowSize, Rounded + new Vector4(ShadowExtraSize), ShadowColor,
+                    Shadow);
             }
 
             if (Border > 0 && (BgColor != Color.Transparent || BorderColor != Color.Transparent))
@@ -113,9 +116,6 @@ namespace PointShop.Interface
             base.DrawSelf(spriteBatch);
         }
 
-        /// <summary>
-        /// 加入我们吧！！！
-        /// </summary>
         public void Join(UIElement parent)
         {
             parent.Append(this);

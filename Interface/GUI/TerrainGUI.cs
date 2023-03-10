@@ -1,60 +1,67 @@
 ﻿using PointShop.Common.Configs;
 using PointShop.Common.Players;
+using PointShop.Helpers.Extensions;
 using PointShop.Interface.Common;
 using PointShop.Interface.SUIElements;
 
 namespace PointShop.Interface.GUI
 {
-    public class TerrainGUI : UIState
+    internal class TerrainGUI : UIState
     {
         public static bool Visible => UIConfig.Instance.TerrainPanel;
 
-        private SUIPanel _mainPanel;
+        public SUIPanel MainPanel;
         private SUIImage _icon;
         private SUIText _pointInfo;
         private SUIImage _switch;
 
         public override void OnInitialize()
         {
-            _mainPanel = new SUIPanel(UIColor.PanelBg, UIColor.PanelBorder)
+            MainPanel = new SUIPanel(UIColor.PanelBg, UIColor.PanelBorder)
             {
-                HAlign = 0.5f, Top = 20f.Pixels(),
+                DraggableX = true,
+                HAlign = 0.5f,
+                Top = 20f.Pixels(),
                 Shadow = 10f,
-                ShadowColor = UIColor.PanelBg * 0.5f
+                ShadowExtraSize = 10f,
+                ShadowColor = UIColor.PanelBorder * 0.5f
             };
-            _mainPanel.SetPadding(16f, 0f).SetSizePixels(200f, 46f);
-            _mainPanel.Join(this);
+            MainPanel.SetPadding(16f, 0f).SetSizePixels(200f, 46f);
+            MainPanel.SetPosPixels(UIPlayerData.Local.TerrainPosX, 20f);
+            MainPanel.Join(this);
 
             _icon = new SUIImage(UISystem.Icons[0])
             {
+                DragIgnore = true,
                 VAlign = 0.5f
             };
             _icon.SetSizePixels(UISystem.Icons[0].Size());
-            _icon.Join(_mainPanel);
+            _icon.Join(MainPanel);
 
-            _pointInfo = new SUIText("Chinese: 中文", 0.8f)
+            _pointInfo = new SUIText("Chinese: 中文", 0.85f)
             {
+                DragIgnore = true,
                 VAlign = 0.5f,
-                Relative = RelativeMode.Horizontal,
-                Spacing = 10f.Xy()
+                LayoutMode = LayoutMode.Horizontal,
+                Spacing = 12f.Xy()
             };
-            _mainPanel.Append(_pointInfo);
+            MainPanel.Append(_pointInfo);
 
             _switch = new SUIImage(UIAssets.PlayButton)
             {
                 VAlign = 0.5f,
                 ButtonMode = true,
-                Relative = RelativeMode.Horizontal,
+                LayoutMode = LayoutMode.Horizontal,
                 Spacing = 15f.Xy()
             };
             _switch.SetSizePixels(UIAssets.PlayButton.Size());
-            _switch.OnClick += (_, _) => PointShopGUI.Visible = !PointShopGUI.Visible;
-            _switch.Join(_mainPanel);
+            _switch.OnLeftClick += (_, _) => PointShopGUI.Visible = !PointShopGUI.Visible;
+            _switch.Join(MainPanel);
         }
 
         public override void Update(GameTime gameTime)
         {
-            bool recalculate = false;
+            bool recalculate = GetDimensions().Size() != new Vector2(Main.screenWidth, Main.screenHeight);
 
             Player player = Main.LocalPlayer;
             CoinPlayer coinPlayer = player.GetModPlayer<CoinPlayer>();
@@ -68,7 +75,7 @@ namespace PointShop.Interface.GUI
             }
 
             string text =
-                $"{MyUtils.GetText($"TerrainName.{terrain}")}{MyUtils.GetText("Hint.Point")}: {coinPlayer.Point[(int)terrain]}";
+                $"{MyUtils.GetText($"TerrainName.{terrain}")}: {coinPlayer.Point[(int)terrain]}";
 
             if (_pointInfo.Text != text)
             {
@@ -78,15 +85,15 @@ namespace PointShop.Interface.GUI
 
             float right = _switch.RightPixels();
 
-            if (Math.Abs(_mainPanel.GetInnerPixel().X - right) > 0.000000001)
+            if (Math.Abs(MainPanel.GetInnerPixel().X - right) > 0.000000001)
             {
                 recalculate = true;
-                _mainPanel.SetInnerPixels(right, 46f);
+                MainPanel.SetInnerPixels(right, 46f);
             }
 
             if (recalculate)
             {
-                _mainPanel.Recalculate();
+                Recalculate();
             }
 
             // 防止点击按键时使用物品

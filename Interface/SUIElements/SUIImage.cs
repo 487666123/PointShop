@@ -1,4 +1,6 @@
-﻿namespace PointShop.Interface.SUIElements;
+﻿using PointShop.Helpers.Extensions;
+
+namespace PointShop.Interface.SUIElements;
 
 public class SUIImage : View
 {

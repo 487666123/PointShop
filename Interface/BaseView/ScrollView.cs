@@ -16,8 +16,26 @@ namespace PointShop.Interface.BaseView
             ListView = new ListView();
             ListView.Join(this);
 
-            ScrollBar = new SUIScrollBar();
+            ScrollBar = new SUIScrollBar
+            {
+                HAlign = 1f,
+                Height = new StyleDimension(-2f, 1f)
+            };
+            ScrollBar.Left.Pixels = -2;
             ScrollBar.Join(this);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            base.DrawSelf(spriteBatch);
+
+            if (!(Math.Abs(-ScrollBar.ViewPosition - ListView.Top.Pixels) > 0.000000001f))
+            {
+                return;
+            }
+
+            ListView.Top.Pixels = -ScrollBar.ViewPosition;
+            ListView.Recalculate();
         }
 
         public override void ScrollWheel(UIScrollWheelEvent evt)
@@ -29,16 +47,6 @@ namespace PointShop.Interface.BaseView
         public static Vector2 TotalSize(Vector2 size, Vector2 spacing, int h, int v)
         {
             return (size + spacing) * new Vector2(h, v) - spacing;
-        }
-
-        public static Vector2 TotalSize(float size, float spacing, int h, int v)
-        {
-            return TotalSize(new Vector2(size), new Vector2(spacing), h, v);
-        }
-
-        public static float TotalSize(float size, float spacing, int hv)
-        {
-            return (size + spacing) * hv - spacing;
         }
     }
 }

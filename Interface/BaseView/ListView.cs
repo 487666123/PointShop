@@ -1,4 +1,6 @@
-﻿namespace PointShop.Interface.BaseView
+﻿using PointShop.Helpers.Extensions;
+
+namespace PointShop.Interface.BaseView
 {
     public class ListView : View
     {

@@ -4,9 +4,9 @@ using PointShop.Interface.BaseView;
 
 namespace PointShop.Interface.GUI.PointShopViews;
 
-public class ShopCardGrid : ScrollView
+public class ProductCardGrid : ScrollView
 {
-    public ShopCardGrid()
+    public ProductCardGrid()
     {
         ScrollBar.SetPadding(4f);
         ScrollBar.Width.Pixels = 16f;
@@ -25,7 +25,7 @@ public class ShopCardGrid : ScrollView
         ListView.RemoveAllChildren();
 
         ProductCard card = null;
-        foreach (ItemData data in itemData)
+        foreach (var data in itemData)
         {
             card = new ProductCard(new Item(data.Id), data.Value, data.Mode, terrain);
             card.Join(ListView);

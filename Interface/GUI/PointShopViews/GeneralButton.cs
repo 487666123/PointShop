@@ -4,14 +4,18 @@ using PointShop.Helpers.Extensions;
 
 namespace PointShop.Interface.GUI.PointShopViews
 {
-    public class MenuButton : View
+    public class GeneralButton : View
     {
         private static float _iconMaxWidth;
 
         private readonly AnimationTimer _hoverTimer;
         private readonly Texture2D _texture;
 
+        private string _text;
+        private Vector2 _textSize;
+
         public Func<string> RealTimeText;
+        public bool IconMode;
 
         private void SetText(string value)
         {
@@ -19,10 +23,7 @@ namespace PointShop.Interface.GUI.PointShopViews
             _textSize = MyUtils.TextSize(value);
         }
 
-        private string _text;
-        private Vector2 _textSize;
-
-        public MenuButton(Texture2D texture, string text)
+        public GeneralButton(Texture2D texture, string text)
         {
             _hoverTimer = new AnimationTimer(3);
             _texture = texture;

@@ -2,9 +2,9 @@
 using PointShop.Common.Players;
 using PointShop.Helpers.Extensions;
 
-namespace PointShop.Interface.UIElements;
+namespace PointShop.Interface.SUIElements;
 
-public class ItemSlotSingle : View
+public class SUIItemSlot : View
 {
     private static readonly Texture2D BossIcons1 = MyUtils.GetTexture("BossIcons/Map_Icon_Skeletron").Value;
     private static readonly Texture2D BossIcons2 = MyUtils.GetTexture("BossIcons/Map_Icon_Wall_of_Flesh").Value;
@@ -24,7 +24,7 @@ public class ItemSlotSingle : View
 
     private readonly AnimationTimer _hoverTimer;
 
-    public ItemSlotSingle(Item item, int value, int mode, Terrain terrain)
+    public SUIItemSlot(Item item, int value, int mode, Terrain terrain)
     {
         SetSizePixels(52f, 52f);
         _hoverTimer = new AnimationTimer(3);
@@ -80,7 +80,7 @@ public class ItemSlotSingle : View
         Vector2 size = GetDimensions().Size();
 
         bool canBuyItem = CanBuyItem();
-        DrawItem(sb, _item, canBuyItem ? Color.White : Color.White * 0.5f, GetInnerDimensions());
+        DrawItem(sb, _item, canBuyItem ? Color.White : Color.White * 0.5f, GetInnerDimensions(), 32);
 
         if (canBuyItem)
         {

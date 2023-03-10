@@ -1,51 +1,65 @@
+
 Mods: {
-    PointShop: {
-        Config:{
-            PointExchange: Point exchange
-            PanelConfig: Panel config
-            TerrainPanel: {
-                Label: "Point statistic panel"
-                Tooltip: "Display points at the top of screen"
-            }
-            TerrainCombat: {
-                Label: "Notice for getting points"
-                Tooltip: "The notice is displayed right above the player as texts"
-            }
-            UIYAxisOffset:{
-                Label: "Mod UI font Y-axis offset"
-                Tooltip: ""
-            }
-            PointMultiplier:{
-                Label: "Item price multiplier (%)"
-            }
-        }
-        Keybin: {
-            ShopUISwitch: Toggle exchange panel
-        }
-        ShopUI: {
-            Pay: Pay
-            Close: Close
-            Price: Price
-        }
-        Hint: {
-            Point: Points
-            Locked: You haven't unlocked this item!
-            Success: Exchange succeeded!
-            NotPoint: Exchange failed, no enough points!
-        }
-        TerrainName:{
-            TianKong: Sky
-            SenLin: Forest
-            DongXue: Cave
-            DiYu: Hell
-            CongLin: Jungle
-            HaiYang: Ocean
-            XueDi: Snow
-            ShaMo: Desert
-            FuHua: Corruption
-            XingHong: Crimson
-            ShenSheng: Hallow
-            DiLao: Dungeon
-        }
-    }
+	PointShop: {
+		Config: {
+			PointsStore: Point Store
+			PanelConfig: Panel config
+
+			TerrainPanel: {
+				Label: Point statistic panel
+				Tooltip: Display points at the top of screen
+			}
+
+			TerrainCombat: {
+				Label: Notice for getting points
+				Tooltip: The notice is displayed right above the player as texts
+			}
+
+			PointTipMode: {
+				Label: 获取积分提示方式
+				Tooltip: 获取积分时在人物头顶以文本提示
+				NoStack: 数字不叠加
+				Stack: 数字叠加
+				NoDisplay: 不显示
+				WhatIsThis: "[c/ff0000:???]"
+			}
+
+			TextOffset.Label: Mod UI font Y-axis offset
+			BigTextOffset.Label: Mod UI big font Y-axis offset
+			PointMultiplier.Label: Item price multiplier (%)
+		}
+
+		Keybin.ShopUISwitch: Toggle exchange panel
+
+		ShopUI: {
+			Buy: Buy
+			Close: Close
+			Price: Price
+		}
+
+		Hint: {
+			Merit: Merit
+			Point: Points
+			Locked: You haven't unlocked this item!
+			Success: Exchange succeeded!
+			NotPoint: Exchange failed, no enough points!
+		}
+
+		TerrainName: {
+			TianKong: Sky
+			SenLin: Forest
+			DongXue: Cave
+			DiYu: Hell
+			CongLin: Jungle
+			HaiYang: Ocean
+			XueDi: Snow
+			ShaMo: Desert
+			FuHua: Corruption
+			XingHong: Crimson
+			ShenSheng: Hallow
+			DiLao: Dungeon
+		}
+
+		Keybinds.Mods.PointShop.Keybin.SuperVault.DisplayName: Mods.PointShop.Keybinds.Mods.PointShop.Keybin.SuperVault.DisplayName
+	}
 }

@@ -8,16 +8,12 @@ global using System.Linq;
 global using Terraria;
 global using Terraria.Audio;
 global using Terraria.GameContent;
-global using Terraria.GameContent.UI.Elements;
 global using Terraria.ID;
 global using Terraria.Localization;
 global using Terraria.ModLoader;
 global using Terraria.UI;
 global using static PointShop.Common.Data.TerrainInfo;
-using PointShop.Common.Configs;
-using PointShop.Common.GlobalNPCs;
-using PointShop.Common.Players;
-using static Terraria.ID.ContentSamples;
+using PointShop.Server;
 
 namespace PointShop
 {
@@ -33,23 +29,8 @@ namespace PointShop
             MessageType msgType = (MessageType)reader.ReadByte();
             switch (msgType)
             {
-                case MessageType.EarnPoint: // 处理积分数据
-                    NPC npc = Main.npc[reader.ReadByte()];
-                    PointShopNPC shopNpc = npc.GetGlobalNPC<PointShopNPC>();
-                    if (shopNpc.HitByLocalPlayer)
-                    {
-                        int point = (byte)BestiaryHelper.GetBestiaryStarsPriority(npc);
-                        CoinPlayer.BonusPoints(point);
-                        // 积分提示
-                        if (UIConfig.Instance.TerrainCombat)
-                        {
-                            string text =
-                                $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
-                            Color color = TerrainColor[CoinPlayer.InWhatTerrain2Int];
-                            TipsHelper.NewTextDirect(Main.LocalPlayer.Center, new(0, -1), color, 90, text);
-                        }
-                    }
-
+                case MessageType.EarnPoint:
+                    PointUtils.BonusPoints(reader.ReadByte());
                     break;
                 default:
                     Logger.WarnFormat($"PointShop: Unknown Message type: {msgType}");

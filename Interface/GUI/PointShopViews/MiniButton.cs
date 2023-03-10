@@ -15,7 +15,6 @@ public class MiniButton : SUIText
         Height.Pixels = 36f * textScale;
         Width.Pixels = (MyUtils.TextSize(text).X + 30f) * textScale;
 
-        BgColor = UIColor.ButtonBg;
         Border = 2f;
         Rounded = new Vector4(10f);
     }
@@ -41,6 +40,7 @@ public class MiniButton : SUIText
 
     protected override void DrawSelf(SpriteBatch sb)
     {
+        BgColor = Color.Lerp(UIColor.ButtonBg, UIColor.ButtonBgHover, _hoverTimer.Schedule);
         BorderColor = Color.Lerp(UIColor.ButtonBorder, UIColor.ButtonBorderHover, _hoverTimer.Schedule);
         base.DrawSelf(sb);
     }

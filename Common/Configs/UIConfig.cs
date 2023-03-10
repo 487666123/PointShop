@@ -26,6 +26,10 @@ internal class UIConfig : ModConfig
     [DefaultValue(true)]
     public bool TerrainCombat;
 
+    [Label("$Mods.PointShop.Config.PointTipMode.Label")]
+    [DefaultValue(true)]
+    public PointTipMod PointTipMode;
+
     [Label("$Mods.PointShop.Config.TextOffset.Label")]
     [Tooltip("$Mods.PointShop.Config.TextOffset.Tooltip")]
     [DefaultValue(7f)]
@@ -41,4 +45,19 @@ internal class UIConfig : ModConfig
     [Slider]
     [Increment(0.5f)]
     public float BigTextOffset;
+}
+
+public enum PointTipMod
+{
+    [Label("$Mods.PointShop.Config.PointTipMode.NoStack")]
+    NoStack,
+
+    [Label("$Mods.PointShop.Config.PointTipMode.Stack")]
+    Stack,
+
+    [Label("$Mods.PointShop.Config.PointTipMode.NoDisplay")]
+    NoDisplay,
+
+    [Label("$Mods.PointShop.Config.PointTipMode.WhatIsThis")]
+    WhatIsThis
 }

@@ -85,8 +85,10 @@ namespace PointShop.Common.Players
 
         public override void LoadData(TagCompound tag)
         {
-            if (!tag.TryGet("HuanJingFen", out Point))
-                Point = new int[(int)Terrain.Count];
+            if (tag.TryGet("HuanJingFen", out int[] point))
+            {
+                Point = point;
+            }
         }
     }
 }

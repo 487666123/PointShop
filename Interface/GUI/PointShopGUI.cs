@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using PointShop.Common.Players;
 using PointShop.Entitys;
+using PointShop.Helpers.Extensions;
 using PointShop.Interface.BaseView;
 using PointShop.Interface.Common;
 using PointShop.Interface.GUI.PointShopViews;
 using PointShop.Interface.SUIElements;
-using PointShop.Interface.UIElements;
 using Terraria.GameInput;
 
 namespace PointShop.Interface.GUI
@@ -30,7 +30,7 @@ namespace PointShop.Interface.GUI
         private SUITitle _title;
         private SUICross _cross;
         private MenuGrid _menuGrid;
-        private CardGrid _cardGrid;
+        private ProductCardGrid _productCardGrid;
 
         public override void OnInitialize()
         {
@@ -38,16 +38,17 @@ namespace PointShop.Interface.GUI
             {
                 Draggable = true,
                 Shadow = 40f,
+                ShadowExtraSize = 40f,
                 ShadowColor = UIColor.PanelBorder * 0.5f
             };
             MainPanel.SetPadding(0f);
-            MainPanel.SetPosPixels(Main.LocalPlayer.GetModPlayer<UIPlayerData>().PointShopPos);
+            MainPanel.SetPosPixels(UIPlayerData.Local.PointShopPos);
             MainPanel.Join(this);
 
             _titlePanel = new View()
             {
                 DragIgnore = true,
-                BgColor = UIColor.TitleBg2,
+                BgColor = UIColor.TitleBg,
                 Border = 2f,
                 BorderColor = UIColor.PanelBorder,
                 Rounded = new Vector4(10f, 10f, 0f, 0f),
@@ -57,7 +58,7 @@ namespace PointShop.Interface.GUI
             _titlePanel.SetPadding(0f);
             _titlePanel.Join(MainPanel);
 
-            _title = new SUITitle(MyUtils.GetText("Config.PointExchange"), 0.5f)
+            _title = new SUITitle(MyUtils.GetText("Config.PointsStore"), 0.5f)
             {
                 VAlign = 0.5f
             };
@@ -69,15 +70,15 @@ namespace PointShop.Interface.GUI
                 VAlign = 0.5f,
                 Rounded = new Vector4(0f, 10f, 0f, 0f),
                 BorderColor = UIColor.PanelBorder,
-                BgColor = UIColor.TitleBg2
+                BgColor = UIColor.TitleBg
             };
-            _cross.OnClick += (_, _) => Visible = !Visible;
+            _cross.OnLeftClick += (_, _) => Visible = !Visible;
             _cross.Join(_titlePanel);
 
             _contentPanel = new View
             {
                 BorderColor = UIColor.PanelBorder,
-                Relative = RelativeMode.Vertical
+                LayoutMode = LayoutMode.Vertical
             };
             _contentPanel.SetPadding(10f);
             _contentPanel.Join(MainPanel);
@@ -87,14 +88,19 @@ namespace PointShop.Interface.GUI
             _menuGrid.Join(_contentPanel);
 
             // 物品面板
-            _cardGrid = new CardGrid
+            _productCardGrid = new ProductCardGrid
             {
-                Relative = RelativeMode.Horizontal,
+                LayoutMode = LayoutMode.Horizontal,
                 Spacing = 10f.Xy()
             };
-            _menuGrid.SetMenu(_cardGrid.SetItems);
-            _cardGrid.SetItems(default);
-            _cardGrid.Join(_contentPanel);
+            _menuGrid.SetMenu(_productCardGrid.SetItems);
+            _productCardGrid.SetItems(default);
+            _productCardGrid.Join(_contentPanel);
+
+            // 一下是设置自动技术大小属性。设置了就意味着大小不会再改变了。
+            _contentPanel.InnerPixel =
+                () => new Vector2(_productCardGrid.RightPixels(), _productCardGrid.BottomPixels());
+            MainPanel.InnerPixel = () => new Vector2(_contentPanel.RightPixels(), _contentPanel.BottomPixels());
         }
 
         public override void Update(GameTime gameTime)
@@ -105,25 +111,6 @@ namespace PointShop.Interface.GUI
             {
                 PlayerInput.LockVanillaMouseScroll("PointShop: PointShop GUI");
             }
-
-            bool recalculate = false;
-
-            Vector2 contentSize = new Vector2(_cardGrid.RightPixels(), _cardGrid.BottomPixels());
-            if (_contentPanel.GetInnerPixel() != contentSize)
-            {
-                recalculate = true;
-                _contentPanel.SetInnerPixels(contentSize);
-            }
-
-            Vector2 panelSize = new Vector2(_contentPanel.RightPixels(), _contentPanel.BottomPixels());
-            if (MainPanel.GetInnerPixel() != panelSize)
-            {
-                recalculate = true;
-                MainPanel.SetInnerPixels(panelSize);
-            }
-
-            if (recalculate)
-                MainPanel.Recalculate();
         }
     }
 }

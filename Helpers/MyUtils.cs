@@ -15,14 +15,12 @@ namespace PointShop.Helpers
             foreach (char c in str)
             {
                 text.Append(c);
-                if (!(TextSize(text.ToString()).X * textScale > length))
+                if ((TextSize(text.ToString() + "...").X * textScale > length))
                 {
-                    continue;
+                    text.Remove(text.Length - 1, 1);
+                    text.Append("...");
+                    break;
                 }
-
-                text.Remove(text.Length - 1, 1);
-                text.Append("...");
-                break;
             }
 
             return text.ToString();

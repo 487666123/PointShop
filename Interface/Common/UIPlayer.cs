@@ -4,7 +4,7 @@ namespace PointShop.Interface.Common
 {
     public class UIPlayer : ModPlayer
     {
-        public override void OnEnterWorld(Player player)
+        public override void OnEnterWorld()
         {
             UISystem.TerrainGUI = new TerrainGUI();
             UISystem.PointInterface.SetState(UISystem.TerrainGUI);

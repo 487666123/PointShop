@@ -1,12 +1,14 @@
-﻿using PointShop.Common.Configs;
+﻿using System.Collections.Generic;
+using PointShop.Common.Configs;
 using PointShop.Common.GlobalNPCs;
 using PointShop.Common.Players;
+using PointShop.Helpers.Extensions;
 
 namespace PointShop.Server;
 
-public static class ServerSystem
+public static class PointUtils
 {
-    public static void EarnPoint(int npcIndex)
+    public static void BonusPoints(int npcIndex)
     {
         NPC npc = Main.npc[npcIndex];
         PointShopNPC shopNpc = npc.GetGlobalNPC<PointShopNPC>();
@@ -16,17 +18,61 @@ public static class ServerSystem
             return;
         }
 
-        int point = (byte)ContentSamples.BestiaryHelper.GetBestiaryStarsPriority(npc);
+        int point = ContentSamples.BestiaryHelper.GetBestiaryStarsPriority(npc);
         CoinPlayer.BonusPoints(point);
-        // 积分提示
+
         if (!UIConfig.Instance.TerrainCombat)
         {
             return;
         }
 
-        string text =
-            $"{MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) + MyUtils.GetText("Hint.Point")} +{point}";
+        string terrainName = MyUtils.GetText("TerrainName." + CoinPlayer.InWhatTerrain) +
+                             MyUtils.GetText("Hint.Point");
         Color color = TerrainColor[CoinPlayer.InWhatTerrain2Int];
-        TipsHelper.NewText(Main.LocalPlayer.Center, new Vector2(0, -1), color, 90, text);
+        PointTip(terrainName, point, Main.LocalPlayer.Center, color, 90);
+    }
+
+    public static void PointTip(string terrainName, int point, Vector2 center, Color color,
+        int duration)
+    {
+        switch (UIConfig.Instance.PointTipMode)
+        {
+            case PointTipMod.NoDisplay:
+                return;
+            case PointTipMod.Stack:
+            {
+                IEnumerable<PopupText> popupTexts = Main.popupText.Where(popupText => popupText is { active: true });
+                foreach (PopupText popupText in popupTexts)
+                {
+                    if (!popupText.name?.StartsWith(terrainName) ?? true)
+                    {
+                        continue;
+                    }
+
+                    point += (int)popupText.coinValue;
+                    popupText.active = false;
+                }
+
+                break;
+            }
+        }
+
+        string text = $"{terrainName} +{point}";
+        if (UIConfig.Instance.PointTipMode == PointTipMod.WhatIsThis)
+        {
+            text = $"{MyUtils.GetText("Hint.Merit")} -{point * 100}";
+            color = Color.Red;
+        }
+
+        var request = new AdvancedPopupRequest
+        {
+            Text = text,
+            Color = color,
+            Velocity = -3f.Y(),
+            DurationInFrames = duration,
+        };
+
+        int index = PopupText.NewText(request, center);
+        Main.popupText[index].coinValue = point;
     }
 }
