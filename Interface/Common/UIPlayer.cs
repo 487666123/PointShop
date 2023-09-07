@@ -9,8 +9,8 @@ namespace PointShop.Interface.Common
             UISystem.TerrainGUI = new TerrainGUI();
             UISystem.PointInterface.SetState(UISystem.TerrainGUI);
 
-            PointShopGUI.PointMultiplier = MyUtils.Config.PointMultiplier;
-            UISystem.PointShopGUI = new PointShopGUI();
+            ShopGUI.PointMultiplier = MyUtils.Config.PointMultiplier;
+            UISystem.PointShopGUI = new ShopGUI();
             UISystem.PointShopInterface.SetState(UISystem.PointShopGUI);
         }
     }

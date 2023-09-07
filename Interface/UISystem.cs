@@ -15,7 +15,7 @@ namespace PointShop.Interface
         public static TerrainGUI TerrainGUI;
 
         public static UserInterface PointShopInterface;
-        public static PointShopGUI PointShopGUI;
+        public static ShopGUI PointShopGUI;
 
         public override void Unload()
         {
@@ -53,7 +53,7 @@ namespace PointShop.Interface
             if (TerrainGUI.Visible)
                 PointInterface?.Update(gameTime);
 
-            if (PointShopGUI.Visible)
+            if (ShopGUI.Visible)
                 PointShopInterface?.Update(gameTime);
         }
 
@@ -69,7 +69,7 @@ namespace PointShop.Interface
             layers.Insert(index, new LegacyGameInterfaceLayer(
                 "PointShop: PointShopGUI", () =>
                 {
-                    if (PointShopGUI.Visible)
+                    if (ShopGUI.Visible)
                         PointShopGUI?.Draw(Main.spriteBatch);
                     return true;
                 }, InterfaceScaleType.UI));

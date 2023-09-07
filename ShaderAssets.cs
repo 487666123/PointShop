@@ -4,7 +4,7 @@ namespace PointShop
 {
     public class ShaderAssets : ModSystem
     {
-        public static Effect Cross { get; private set; }
+        public static Effect SDFGraphic { get; private set; }
         public static Effect RoundedRectangle { get; private set; }
 
         public override void Load()
@@ -12,7 +12,7 @@ namespace PointShop
             if (Main.dedServ)
                 return;
 
-            Cross = MyUtils.GetEffect("Cross").Value;
+            SDFGraphic = MyUtils.GetEffect("SDFGraphic").Value;
             RoundedRectangle = MyUtils.GetEffect("RoundedRectangle").Value;
         }
 
@@ -21,7 +21,7 @@ namespace PointShop
             if (Main.dedServ)
                 return;
             
-            Cross = RoundedRectangle = null;
+            SDFGraphic = RoundedRectangle = null;
         }
     }
 }

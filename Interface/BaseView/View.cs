@@ -100,17 +100,17 @@ namespace PointShop.Interface
                 Vector2 shadowExtraSize = new Vector2(ShadowExtraSize);
                 Vector2 shadowPos = pos - shadowExtraSize;
                 Vector2 shadowSize = size + shadowExtraSize * 2;
-                PixelShader.DrawShadow(shadowPos, shadowSize, Rounded + new Vector4(ShadowExtraSize), ShadowColor,
+                SDFRectangle.Shadow(shadowPos, shadowSize, Rounded + new Vector4(ShadowExtraSize), ShadowColor,
                     Shadow);
             }
 
             if (Border > 0 && (BgColor != Color.Transparent || BorderColor != Color.Transparent))
             {
-                PixelShader.RoundedRectangle(pos, size, Rounded, BgColor, Border, BorderColor);
+                SDFRectangle.HasBorder(pos, size, Rounded, BgColor, Border, BorderColor);
             }
             else if (BgColor != Color.Transparent)
             {
-                PixelShader.RoundedRectangle(pos, size, Rounded, BgColor);
+                SDFRectangle.NoBorder(pos, size, Rounded, BgColor);
             }
 
             base.DrawSelf(spriteBatch);

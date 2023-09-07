@@ -1,4 +1,3 @@
-
 Mods: {
 	PointShop: {
 		Config: {
@@ -61,5 +60,53 @@ Mods: {
 		}
 
 		// Keybinds.Mods.PointShop.Keybin.SuperVault.DisplayName: Mods.PointShop.Keybinds.Mods.PointShop.Keybin.SuperVault.DisplayName
+
+		Configs: {
+			PointConfig: {
+				// DisplayName: "{$Mods.PointShop.Config.PanelConfig}"
+
+				PointMultiplier: {
+					// Label: "{$Mods.PointShop.Config.PointMultiplier.Label}"
+					// Tooltip: ""
+				}
+			}
+
+			UIConfig: {
+				// DisplayName: U I Config
+
+				TerrainPanel: {
+					// Label: "{$Mods.PointShop.Config.TerrainPanel.Label}"
+					// Tooltip: "{$Mods.PointShop.Config.TerrainPanel.Tooltip}"
+				}
+
+				TerrainCombat: {
+					// Label: "{$Mods.PointShop.Config.TerrainCombat.Label}"
+					// Tooltip: "{$Mods.PointShop.Config.TerrainCombat.Tooltip}"
+				}
+
+				PointTipMode: {
+					// Label: "{$Mods.PointShop.Config.PointTipMode.Label}"
+					// Tooltip: ""
+				}
+
+				TextOffset: {
+					// Label: "{$Mods.PointShop.Config.TextOffset.Label}"
+					// Tooltip: "{$Mods.PointShop.Config.TextOffset.Tooltip}"
+				}
+
+				BigTextOffset: {
+					// Label: "{$Mods.PointShop.Config.BigTextOffset.Label}"
+					// Tooltip: "{$Mods.PointShop.Config.BigTextOffset.Tooltip}"
+				}
+			}
+
+			PointTipMod: {
+				// Tooltip: ""
+				// NoStack.Label: "{$Mods.PointShop.Config.PointTipMode.NoStack}"
+				// Stack.Label: "{$Mods.PointShop.Config.PointTipMode.Stack}"
+				// NoDisplay.Label: "{$Mods.PointShop.Config.PointTipMode.NoDisplay}"
+				// WhatIsThis.Label: "{$Mods.PointShop.Config.PointTipMode.WhatIsThis}"
+			}
+		}
 	}
 }

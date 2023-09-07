@@ -1,6 +1,7 @@
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using PointShop.Helpers;
+global using PointShop.VertexTypes;
 global using ReLogic.Content;
 global using System;
 global using System.IO;

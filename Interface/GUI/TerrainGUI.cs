@@ -21,13 +21,12 @@ namespace PointShop.Interface.GUI
             {
                 DraggableX = true,
                 HAlign = 0.5f,
-                Top = 20f.Pixels(),
                 Shadow = 10f,
                 ShadowExtraSize = 10f,
                 ShadowColor = UIColor.PanelBorder * 0.5f
             };
             MainPanel.SetPadding(16f, 0f).SetSizePixels(200f, 46f);
-            MainPanel.SetPosPixels(UIPlayerData.Local.TerrainPosX, 20f);
+            MainPanel.SetPosPixels(UIPlayerData.Local.TerrainPosX, 25f);
             MainPanel.Join(this);
 
             _icon = new SUIImage(UISystem.Icons[0])
@@ -55,7 +54,7 @@ namespace PointShop.Interface.GUI
                 Spacing = 15f.Xy()
             };
             _switch.SetSizePixels(UIAssets.PlayButton.Size());
-            _switch.OnLeftClick += (_, _) => PointShopGUI.Visible = !PointShopGUI.Visible;
+            _switch.OnLeftClick += (_, _) => ShopGUI.Visible = !ShopGUI.Visible;
             _switch.Join(MainPanel);
         }
 
@@ -75,7 +74,7 @@ namespace PointShop.Interface.GUI
             }
 
             string text =
-                $"{MyUtils.GetText($"TerrainName.{terrain}")}: {coinPlayer.Point[(int)terrain]}";
+                $"{coinPlayer.Point[(int)terrain]}";
 
             if (_pointInfo.Text != text)
             {

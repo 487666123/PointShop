@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using PointShop.Common.Players;
-using PointShop.Entitys;
-using PointShop.Helpers.Extensions;
-using PointShop.Interface.BaseView;
+﻿using PointShop.Helpers.Extensions;
 using PointShop.Interface.Common;
 using PointShop.Interface.GUI.PointShopViews;
 using PointShop.Interface.SUIElements;
@@ -10,7 +6,7 @@ using Terraria.GameInput;
 
 namespace PointShop.Interface.GUI
 {
-    internal class PointShopGUI : UIState
+    internal class ShopGUI : UIState
     {
         public static bool Visible;
         public static float PointMultiplier;
@@ -18,7 +14,7 @@ namespace PointShop.Interface.GUI
         private static readonly Vector2 GeneralSpacing;
         private static readonly Vector2 CardSize;
 
-        static PointShopGUI()
+        static ShopGUI()
         {
             GeneralSpacing = new Vector2(8f);
             CardSize = new Vector2(216f, 68f);

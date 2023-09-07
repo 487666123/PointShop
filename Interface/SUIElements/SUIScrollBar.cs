@@ -174,7 +174,7 @@ namespace PointShop.Interface.SUIElements
                 dragging ? 1 : HoverTimer.Schedule);
 
             // 滚动条拖动块
-            PixelShader.RoundedRectangle(innerPos, innerSize, new Vector4(innerSize.X / 2), hoverColor);
+            SDFRectangle.NoBorder(innerPos, innerSize, new Vector4(innerSize.X / 2), hoverColor);
         }
 
         /// <summary>

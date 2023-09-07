@@ -2,6 +2,7 @@
 using PointShop.Common.Players;
 using PointShop.Helpers.Extensions;
 using PointShop.Server;
+using Terraria;
 using Terraria.DataStructures;
 using static Terraria.ID.ContentSamples;
 
@@ -53,7 +54,7 @@ namespace PointShop.Common.GlobalNPCs
             }
         }
 
-        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (npc.realLife == -1)
             {
@@ -65,7 +66,7 @@ namespace PointShop.Common.GlobalNPCs
             }
         }
 
-        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (npc.realLife == -1)
             {

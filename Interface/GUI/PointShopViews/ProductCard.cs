@@ -7,7 +7,7 @@ namespace PointShop.Interface.GUI.PointShopViews
     {
         public ProductCard(Item item, int value, int timing, Terrain terrain)
         {
-            value = (int)Math.Round(value * (PointShopGUI.PointMultiplier / 100f));
+            value = (int)Math.Round(value * (ShopGUI.PointMultiplier / 100f));
 
             Rounded = new Vector4(14f);
             BgColor = UIColor.PanelBg;

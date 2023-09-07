@@ -23,6 +23,7 @@ namespace PointShop.Interface.SUIElements
         private readonly float
             _forkSize, _crossRound, _crossBorder;
 
+        private Color _crossBorderColor;
         private readonly Color _crossBeginColor;
         private readonly Color _crossEndColor;
 
@@ -65,14 +66,14 @@ namespace PointShop.Interface.SUIElements
 
         protected override void DrawSelf(SpriteBatch sb)
         {
-            BorderColor = Color.Lerp(UIColor.PanelBorder, UIColor.ItemSlotBorderFav, _hoverTimer.Schedule);
             base.DrawSelf(sb);
+            _crossBorderColor = Color.Lerp(UIColor.PanelBorder, UIColor.ItemSlotBorderFav, _hoverTimer.Schedule);
             Vector2 pos = GetDimensions().Position();
             Vector2 size = GetDimensions().Size();
 
             Vector2 forkPos = pos + size / 2 - new Vector2(_forkSize / 2);
             Color cross = Color.Lerp(_crossBeginColor, _crossEndColor, _hoverTimer.Schedule);
-            PixelShader.Cross(forkPos, _forkSize, _crossRound, cross, _crossBorder, BorderColor);
+            SDFGraphic.HasBorderCross(forkPos, _forkSize, _crossRound, cross, _crossBorder, _crossBorderColor);
         }
     }
 }
