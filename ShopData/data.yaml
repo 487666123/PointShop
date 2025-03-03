@@ -3,18 +3,14 @@ CommonItems: # 通用物品 (这会把物品添加到每个环境中)
   - Type: 29
     Quantity: 1
     Prices: 10000
-    UnlockCondition: Fuck
   # 生命果
   - Type: 1291
     Quantity: 1
     Prices: 10000
-    UnlockCondition: Fuck
+    UnlockCondition: DownedMechBossAny
   - Type: PointShop/PointCoin
     Quantity: 10
     Prices: 5000
-  - Type: PointShop/PointCoin
-    Quantity: 100
-    Prices: 45000
 
 # 配置每个环境商店的物品
 EnvironmentShopItems:

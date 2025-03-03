@@ -23,6 +23,8 @@ public partial class PointShopUI : BasicBody
 
     public string CurrentEnvironmentName { get; set; } = "Forest";
 
+    public override bool UnableToSelect => SwitchTimer.IsReverse;
+
     public SUIDraggableView MainPanel { get; private set; }
     public SUIScrollView MenuList { get; private set; }
     public View Header { get; private set; }

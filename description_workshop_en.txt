@@ -1,2 +1,2 @@
-﻿
-If you want to report a problem, please describe it in detail and take a break for two days before resuming the update.
+﻿If you want to report a problem,
+please describe it in detail and take a break for two days before resuming the update.
