@@ -1,15 +1,2 @@
-﻿The latest version supports online
----------------------------
-A shop to exchange rare items
-
-    - 1.3.1
-    - 地狱战利品添加：四职业徽章，肉三后解锁。
-    - 火羽，三叉戟修正到机械 Boss 后。
-    
-    Players get bonus points upon defeating enemies, depend on the enemies's rarity
-    (You may check rarity in the Beastiary)
-    Points awarded will be added into biome which is where the player is
-
-    Point statistic at the top of screen and notice for getting points can be disabled in config
-
-    Bind a hotkey for Point Shop's panel in Controls
+﻿
+If you want to report a problem, please describe it in detail and take a break for two days before resuming the update.

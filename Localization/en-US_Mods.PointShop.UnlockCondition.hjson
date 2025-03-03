@@ -1,0 +1,22 @@
+{
+    Hardmode:
+    {
+        DisplayName: Hardmode
+        Description: Unlocked by Hardmode
+    }
+    DownedSkeletron:
+    {
+        DisplayName: Skeletron
+        Description: Unlocked by defeating Skeletron
+    }
+    DownedMechBossAny:
+    {
+        DisplayName: Any Mechanical Boss
+        Description: Unlocked by defeating any Mechanical Boss
+    }
+    DownedPlantera:
+    {
+        DisplayName: Plantera
+        Description: Unlocked by defeating Plantera
+    }
+}

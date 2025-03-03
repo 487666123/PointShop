@@ -1,0 +1,1635 @@
+CommonItems: # 通用物品 (这会把物品添加到每个环境中)
+  # 生命水晶
+  - Type: 29
+    Quantity: 1
+    Prices: 10000
+    UnlockCondition: Fuck
+  # 生命果
+  - Type: 1291
+    Quantity: 1
+    Prices: 10000
+    UnlockCondition: Fuck
+  - Type: PointShop/PointCoin
+    Quantity: 10
+    Prices: 5000
+  - Type: PointShop/PointCoin
+    Quantity: 100
+    Prices: 45000
+
+# 配置每个环境商店的物品
+EnvironmentShopItems:
+  Void:
+    - Type: 5380
+      Quantity: 50
+      Prices: 8888
+  # 森林
+  Forest:
+    - Type: 4009 # 苹果
+      Quantity: 1
+      Prices: 1000
+    - Type: 4293 # 桃子
+      Quantity: 1
+      Prices: 1000
+    - Type: 4282 # 杏
+      Quantity: 1
+      Prices: 1000
+    - Type: 4290 # 葡萄柚
+      Quantity: 1
+      Prices: 1000
+    - Type: 4291 # 柠檬
+      Quantity: 1
+      Prices: 1000
+    - Type: 285 # 金属带扣
+      Quantity: 1
+      Prices: 5000
+    - Type: 953 # 攀爬爪
+      Quantity: 1
+      Prices: 5000
+    - Type: 3084
+      Quantity: 1
+      Prices: 5000
+    - Type: 3068
+      Quantity: 1
+      Prices: 5000
+    - Type: 216
+      Quantity: 1
+      Prices: 5000
+    - Type: 362 # 破布
+      Quantity: 1
+      Prices: 1000
+    - Type: 38 # 晶状体
+      Quantity: 1
+      Prices: 1000
+    - Type: 236 # 黑色晶状体
+      Quantity: 1
+      Prices: 10000
+    - Type: 832
+      Quantity: 1
+      Prices: 5000
+    - Type: 933
+      Quantity: 1
+      Prices: 5000
+    - Type: 1304
+      Quantity: 1
+      Prices: 5000
+    - Type: 1309
+      Quantity: 1
+      Prices: 7500
+    - Type: 4683 # 眼球风筝
+      Quantity: 1
+      Prices: 2500
+    # 月光护身符
+    - Type: 485
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 快走时钟
+    - Type: 889
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    - Type: 2019 # 兔兔
+      Quantity: 1
+      Prices: 1000
+    - Type: 2890 # 金色兔兔
+      Quantity: 1
+      Prices: 10000
+    - Type: 2018 # 松鼠
+      Quantity: 1
+      Prices: 1000
+    - Type: 3564 # 金色松鼠
+      Quantity: 1
+      Prices: 10000
+    - Type: 3563 # 红松鼠
+      Quantity: 1
+      Prices: 1000
+    - Type: 2015 # 小鸟
+      Quantity: 1
+      Prices: 1000
+    - Type: 2889 # 金色小鸟
+      Quantity: 1
+      Prices: 10000
+    - Type: 2016 # 冠蓝鸦
+      Quantity: 1
+      Prices: 1000
+    - Type: 2017 # 红雀
+      Quantity: 1
+      Prices: 1000
+    - Type: 2122 # 鸭子
+      Quantity: 1
+      Prices: 1000
+    - Type: 2123 # 野鸭
+      Quantity: 1
+      Prices: 1000
+    - Type: 261 # 金鱼
+      Quantity: 1
+      Prices: 1000
+    - Type: 4274 # 金色金鱼
+      Quantity: 1
+      Prices: 10000
+    - Type: 2001 # 茱莉娅蝶
+      Quantity: 1
+      Prices: 2500
+    - Type: 1994 # 帝王蝶
+      Quantity: 1
+      Prices: 500
+    - Type: 1995 # 紫君王蝶
+      Quantity: 1
+      Prices: 3500
+    - Type: 1996 # 红纹蝶
+      Quantity: 1
+      Prices: 3000
+    - Type: 1997 # 尤利西斯蝶
+      Quantity: 1
+      Prices: 2000
+    - Type: 1998 # 硫磺蝶
+      Quantity: 1
+      Prices: 1000
+    - Type: 1999 # 树若虫蝶
+      Quantity: 1
+      Prices: 5000
+    - Type: 2891 # 金色蝴蝶
+      Quantity: 1
+      Prices: 10000
+    - Type: 2000 # 斑纹燕尾蝶
+      Quantity: 1
+      Prices: 1500
+    - Type: 4335 # 蓝蜻蜓
+      Quantity: 1
+      Prices: 2000
+    - Type: 4336 # 绿蜻蜓
+      Quantity: 1
+      Prices: 2000
+    - Type: 4338 # 红蜻蜓
+      Quantity: 1
+      Prices: 2000
+    - Type: 4340 # 金色蜻蜓
+      Quantity: 1
+      Prices: 10000
+    - Type: 4418 # 水黾
+      Quantity: 1
+      Prices: 1700
+    - Type: 4419 # 金色水黾
+      Quantity: 1
+      Prices: 10000
+    - Type: 4464 # 龟龟
+      Quantity: 1
+      Prices: 1000
+    - Type: 1992 # 萤火虫
+      Quantity: 1
+      Prices: 2000
+    - Type: 2740 # 蚱蜢
+      Quantity: 1
+      Prices: 1000
+    - Type: 2893 # 金色蚱蜢
+      Quantity: 1
+      Prices: 10000
+    - Type: 4361 # 瓢虫
+      Quantity: 1
+      Prices: 1700
+    - Type: 4362 # 金色瓢虫
+      Quantity: 1
+      Prices: 10000
+    - Type: 2002 # 蠕虫
+      Quantity: 1
+      Prices: 2500
+    - Type: 2895 # 金色蠕虫
+      Quantity: 1
+      Prices: 10000
+    - Type: 3191 # 附魔夜行者
+      Quantity: 1
+      Prices: 3500
+    - Type: 4395 # 猫头鹰
+      Quantity: 1
+      Prices: 1000
+    - Type: 4068 # 粉仙灵
+      Quantity: 1
+      Prices: 2500
+    - Type: 4070 # 蓝仙灵
+      Quantity: 1
+      Prices: 2500
+    - Type: 4069 # 绿仙灵
+      Quantity: 1
+      Prices: 2500
+    - Type: 4363 # 蝇蛆
+      Quantity: 1
+      Prices: 2200
+    - Type: 4375 # 大鼠鼠
+      Quantity: 1
+      Prices: 1000
+  # 天空
+  Sky:
+    - Type: 4016
+      Quantity: 1
+      Prices: 2000
+    - Type: 320
+      Quantity: 1
+      Prices: 1000
+    - Type: 65
+      Quantity: 1
+      Prices: 10000
+    - Type: 159
+      Quantity: 1
+      Prices: 10000
+    - Type: 4978
+      Quantity: 1
+      Prices: 10000
+    - Type: 2197
+      Quantity: 1
+      Prices: 10000
+    - Type: 4379
+      Quantity: 1
+      Prices: 2500
+    # 巨型鸟妖之羽
+    - Type: 1516
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    # 飞翔之魂
+    - Type: 575
+      Quantity: 1
+      Prices: 1000
+      UnlockCondition: Hardmode
+  # 洞穴
+  Caverns:
+    # 薯片
+    - Type: 4030
+      Quantity: 1
+      Prices: 1000
+    # 牛奶
+    - Type: 5041
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 1274
+      Quantity: 1
+      Prices: 2500
+    # 生命水晶
+    - Type: 29
+      Quantity: 1
+      Prices: 5000
+    # 靴子
+    - Type: 54
+      Quantity: 1
+      Prices: 10000
+    # 云朵瓶
+    - Type: 53
+      Quantity: 1
+      Prices: 10000
+    # 再生手环
+    - Type: 49
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 989
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 4144
+      Quantity: 1
+      Prices: 15000
+    # 深度计
+    - Type: 18
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 3102
+      Quantity: 1
+      Prices: 10000
+    # 魔镜
+    - Type: 50
+      Quantity: 1
+      Prices: 10000
+    # 抓钩
+    - Type: 118
+      Quantity: 1
+      Prices: 2500
+    # 马蹄铁
+    - Type: 158
+      Quantity: 1
+      Prices: 5000
+    # 皮垫
+    - Type: 215
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 285
+      Quantity: 1
+      Prices: 5000
+    # 罗盘
+    - Type: 393
+      Quantity: 1
+      Prices: 5000
+    # 信号枪
+    - Type: 930
+      Quantity: 1
+      Prices: 2500
+    # 钉鞋
+    - Type: 975
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 997
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 1166
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 1303
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 1320
+      Quantity: 1
+      Prices: 10000
+    # 巫师帽
+    - Type: 238
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 88
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 410
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 411
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 1325
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 5011
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 5097
+      Quantity: 1
+      Prices: 5000
+    # 骸骨弓
+    - Type: 682
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 光束剑
+    - Type: 723
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 粘性绷带
+    - Type: 885
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 盔甲抛光剂
+    - Type: 886
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 扩音器
+    - Type: 890
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 魔法箭袋
+    - Type: 1321
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 符文帽
+    - Type: 754
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    # 符文长袍
+    - Type: 755
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    # 小蜗:)
+    - Type: 2006
+      Quantity: 1
+      Prices: 1000
+    # 鼠鼠
+    - Type: 2003
+      Quantity: 1
+      Prices: 1000
+    # 金色鼠鼠
+    - Type: 2894
+      Quantity: 1
+      Prices: 10000
+    # 紫晶兔兔
+    - Type: 4838
+      Quantity: 1
+      Prices: 1000
+    # 紫晶松鼠
+    - Type: 4831
+      Quantity: 1
+      Prices: 1000
+    # 黄玉兔兔
+    - Type: 4839
+      Quantity: 1
+      Prices: 1000
+    # 黄玉松鼠
+    - Type: 4832
+      Quantity: 1
+      Prices: 1000
+    # 蓝玉兔兔
+    - Type: 4840
+      Quantity: 1
+      Prices: 1000
+    # 蓝玉松鼠
+    - Type: 4833
+      Quantity: 1
+      Prices: 1000
+    # 翡翠兔兔
+    - Type: 4841
+      Quantity: 1
+      Prices: 1000
+    # 翡翠松鼠
+    - Type: 4834
+      Quantity: 1
+      Prices: 1000
+    # 红玉兔兔
+    - Type: 4842
+      Quantity: 1
+      Prices: 1000
+    # 红玉松鼠
+    - Type: 4835
+      Quantity: 1
+      Prices: 1000
+    # 钻石兔兔
+    - Type: 4843
+      Quantity: 1
+      Prices: 1000
+    # 钻石松鼠
+    - Type: 4836
+      Quantity: 1
+      Prices: 1000
+    # 琥珀兔兔
+    - Type: 4844
+      Quantity: 1
+      Prices: 1000
+    # 琥珀松鼠
+    - Type: 4837
+      Quantity: 1
+      Prices: 1000
+    # 发光蜗牛
+    - Type: 2007
+      Quantity: 1
+      Prices: 1500
+    # 松露蠕虫
+    - Type: 2673
+      Quantity: 1
+      Prices: 25000
+      UnlockCondition: DownedPlantera
+  # 地狱
+  Underworld:
+    #
+    - Type: 4025
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 5097
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 267
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 272
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 906
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1322
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1323
+      Quantity: 1
+      Prices: 15000
+    # 火之花
+    - Type: 112
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    # 烈焰火鞭
+    - Type: 218
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    #
+    - Type: 220
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    #
+    - Type: 274
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    #
+    - Type: 485
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    #
+    - Type: 3282
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    #
+    - Type: 4443
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    #
+    - Type: 4551
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    #
+    - Type: 4737
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    # 宝藏磁石
+    - Type: 5010
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: DownedSkeletron
+    # 战士徽章
+    - Type: 490
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    # 游侠徽章
+    - Type: 491
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    # 巫士徽章
+    - Type: 489
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    # 召唤师徽章
+    - Type: 2998
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    #
+    - Type: 683
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: DownedMechBossAny
+    #
+    - Type: 1518
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: DownedMechBossAny
+    # 狱火球
+    - Type: 3290
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 地狱蝴蝶
+    - Type: 4845
+      Quantity: 1
+      Prices: 1500
+      UnlockCondition: DownedSkeletron
+    # 地狱萤火虫
+    - Type: 4847
+      Quantity: 1
+      Prices: 2500
+      UnlockCondition: DownedSkeletron
+    # 地狱蜗牛
+    - Type: 4849
+      Quantity: 1
+      Prices: 3500
+      UnlockCondition: DownedSkeletron
+  # 丛林
+  Jungle:
+    # 法爆魔杖
+    - Type: ImproveGame/MagickWand
+      Quantity: 1
+      Prices: 50000
+    #
+    - Type: 4023
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 5042
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 4292
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4294
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 211
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 212
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 213
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 753
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 887
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 964
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 2204
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 2292
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 3017
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 960
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 961
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 962
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 885
+      Quantity: 1
+      Prices: 12500
+      UnlockCondition: Hardmode
+    #
+    - Type: 1265
+      Quantity: 1
+      Prices: 17500
+      UnlockCondition: Hardmode
+    #
+    - Type: 1328
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1521
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1611
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1533
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 叶列次球
+    - Type: 3286
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 生命果
+    - Type: 1291
+      Quantity: 1
+      Prices: 7500
+      UnlockCondition: DownedMechBossAny
+    # 青蛙
+    - Type: 2121
+      Quantity: 1
+      Prices: 1000
+    # 蛆虫
+    - Type: 3192
+      Quantity: 1
+      Prices: 1500
+    # 鼻涕虫
+    - Type: 3193
+      Quantity: 1
+      Prices: 2500
+    # 蚜虫
+    - Type: 3194
+      Quantity: 1
+      Prices: 4000
+    # 丛林龟龟
+    - Type: 4465
+      Quantity: 1
+      Prices: 1000
+  # 海洋
+  Beach:
+    #
+    - Type: 4287
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4283
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4035
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 319
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 863
+      Quantity: 1
+      Prices: 7500
+    # 蛙腿
+    - Type: 2423
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 1303
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 186
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 187
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 268
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 277
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 4404
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 4425
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 4460
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 1315
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    # 海鸥
+    - Type: 4359
+      Quantity: 1
+      Prices: 1000
+    # 海马
+    - Type: 4480
+      Quantity: 1
+      Prices: 1000
+    # 金色海马
+    - Type: 4482
+      Quantity: 1
+      Prices: 10000
+    # 粉色水母
+    - Type: 2438
+      Quantity: 1
+      Prices: 2000
+    # 蓝色水母
+    - Type: 2436
+      Quantity: 1
+      Prices: 2000
+    # 绿色水母
+    - Type: 2437
+      Quantity: 1
+      Prices: 2000
+  # 雪地
+  Snow:
+    #
+    - Type: 4027
+      Quantity: 1
+      Prices: 3000
+    #
+    - Type: 4026
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 4295
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4286
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 1309
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 670
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 724
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 950
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 1319
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 987
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 1579
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 3199
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 669
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 2198
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 951
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 393
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 5097
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 18
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 118
+      Quantity: 1
+      Prices: 2500
+    # 冰冻海龟壳
+    - Type: 1253
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    #
+    - Type: 5096
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4613
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4428
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 676
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 725
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1264
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1312
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1519
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 2161
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 726
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1306
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3289
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 冰冻钥匙
+    - Type: 1537
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 企鹅
+    - Type: 2205
+      Quantity: 1
+      Prices: 1000
+  # 沙漠
+  Desert:
+    #
+    - Type: 4012
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 870
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 871
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 872
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 848
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 866
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 3772
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 934
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 857
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 4056
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 4055
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 4061
+      Quantity: 1
+      Prices: 3500
+    #
+    - Type: 4062
+      Quantity: 1
+      Prices: 3500
+    #
+    - Type: 4263
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 4346
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 4276
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 4262
+      Quantity: 1
+      Prices: 3500
+    #
+    - Type: 889
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 890
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 888
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 527
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 528
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 893
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3783
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4669
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4714
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3795
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    # 蝎子
+    - Type: 2157
+      Quantity: 1
+      Prices: 1000
+    # 黑蝎子
+    - Type: 2156
+      Quantity: 1
+      Prices: 1500
+    # 䴙䴘
+    - Type: 4374
+      Quantity: 1
+      Prices: 1000
+    # 鳉鱼
+    - Type: 4373
+      Quantity: 1
+      Prices: 1000
+    # 黑蜻蜓
+    - Type: 4334
+      Quantity: 1
+      Prices: 2000
+    # 橙蜻蜓
+    - Type: 4337
+      Quantity: 1
+      Prices: 2000
+    # 黄蜻蜓
+    - Type: 4339
+      Quantity: 1
+      Prices: 2000
+  # 腐化
+  Corrupt:
+    #
+    - Type: 4015
+      Quantity: 1
+      Prices: 3000
+    #
+    - Type: 4284
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4289
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 522
+      Quantity: 1
+      Prices: 1000
+    # 暗影之魂
+    - Type: 521
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 956
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 957
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 958
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 69
+      Quantity: 1
+      Prices: 500
+    #
+    - Type: 96
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 162
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 64
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 111
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 115
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 5094
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 5091
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 1534
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4611
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 996
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    #
+    - Type: 888
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 892
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 890
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3008
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3023
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3012
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3014
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3015
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 891
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+  # 血腥
+  Crimson:
+    #
+    - Type: 4015
+      Quantity: 1
+      Prices: 3000
+    #
+    - Type: 4285
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4296
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 1332
+      Quantity: 1
+      Prices: 1000
+    # 暗影之魂
+    - Type: 521
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 800
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 802
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 1256
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 1290
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 3062
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 5094
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 5091
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 1535
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 996
+      Quantity: 1
+      Prices: 10000
+      UnlockCondition: Hardmode
+    #
+    - Type: 888
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 527
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 890
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 891
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 892
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3006
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3007
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3013
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3016
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3020
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+  # 神圣
+  Hallow:
+    #
+    - Type: 4017
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 4288
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 4297
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 502
+      Quantity: 1
+      Prices: 1000
+      UnlockCondition: Hardmode
+    # 光明之魂
+    - Type: 520
+      Quantity: 1
+      Prices: 1000
+      UnlockCondition: Hardmode
+    #
+    - Type: 528
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1309
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 1536
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 890
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 889
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 893
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3260
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    #
+    - Type: 856
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4684
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: Hardmode
+    #
+    - Type: 1326
+      Quantity: 1
+      Prices: 50000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3029
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3030
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3051
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 3022
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4988
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: Hardmode
+    #
+    - Type: 4961
+      Quantity: 1
+      Prices: 20000
+      UnlockCondition: DownedPlantera
+    # 荧光虫
+    - Type: 2004
+      Quantity: 1
+      Prices: 3500
+  # 地牢
+  Dungeon:
+    #
+    - Type: 4013
+      Quantity: 1
+      Prices: 3000
+    #
+    - Type: 5042
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 113
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 148
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 155
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 156
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 157
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 163
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 164
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 165
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 327
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 329
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 891
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 932
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 1307
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 2192
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 2999
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 3000
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 3095
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 3317
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 671
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 679
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 759
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 938
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 963
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 977
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1183
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1254
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1266
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1300
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1444
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1445
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1446
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1513
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 1517
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 3291
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 4679
+      Quantity: 1
+      Prices: 15000
+    #
+    - Type: 4789
+      Quantity: 1
+      Prices: 15000
