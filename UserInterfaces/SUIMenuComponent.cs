@@ -24,7 +24,7 @@ public class SUIMenuComponent : View
         SetSize(0f, 40f, 1f);
         OnDraw += _ => { BgColor = Color.Black * HoverTimer.Lerp(0.25f, 0.4f); };
 
-        Icon = new SUIImage(environment.Icon?.Value)
+        Icon = new SUIImage(environment.Icon)
         {
             ImageScale = new Vector2(0.95f),
             ImageAlign = new Vector2(0.5f),

@@ -5,11 +5,14 @@ namespace PointShop;
 
 public class KeybindPlayer : ModPlayer
 {
+    /// <summary>
+    /// 积分商店 UI 快捷键
+    /// </summary>
     public static ModKeybind PointShopUIKeybind { get; private set; }
 
     public override void Load()
     {
-        PointShopUIKeybind = KeybindLoader.RegisterKeybind(Mod, nameof(PointShopUIKeybind), "P");
+        PointShopUIKeybind = KeybindLoader.RegisterKeybind(Mod, nameof(PointShopUIKeybind), "Mouse4");
     }
 
     public override void Unload()
@@ -21,7 +24,7 @@ public class KeybindPlayer : ModPlayer
     {
         if (PointShopUIKeybind.JustPressed)
         {
-            PointShopUI.OpenUI = !PointShopUI.OpenUI;
+            PointShopUI.SwitchStatus = !PointShopUI.SwitchStatus;
         }
     }
 }

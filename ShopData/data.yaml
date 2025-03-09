@@ -1,4 +1,7 @@
 CommonItems: # 通用物品 (这会把物品添加到每个环境中)
+  - Type: PointShop/PointCoin
+    Quantity: 10
+    Prices: 5000
   # 生命水晶
   - Type: 29
     Quantity: 1
@@ -8,9 +11,6 @@ CommonItems: # 通用物品 (这会把物品添加到每个环境中)
     Quantity: 1
     Prices: 10000
     UnlockCondition: DownedMechBossAny
-  - Type: PointShop/PointCoin
-    Quantity: 10
-    Prices: 5000
 
 # 配置每个环境商店的物品
 EnvironmentShopItems:
@@ -19,7 +19,98 @@ EnvironmentShopItems:
       Quantity: 50
       Prices: 8888
   # 森林
-  Forest:
+  Forest: 
+    # 钓鱼机
+    - Type: ImproveGame/Autofisher
+      Quantity: 1
+      Prices: 5000
+    # 草人
+    - Type: ImproveGame/Dummy
+      Quantity: 1
+      Prices: 2500
+    # 无人机
+    - Type: ImproveGame/DetectorDrone
+      Quantity: 1
+      Prices: 2500
+    # 晶状体
+    - Type: 38
+      Quantity: 1
+      Prices: 1000
+    # 黑色晶状体
+    - Type: 236
+      Quantity: 1
+      Prices: 10000
+    # 破布
+    - Type: 362
+      Quantity: 1
+      Prices: 1000
+    # 太阳花
+    - Type: 313
+      Quantity: 1
+      Prices: 1000
+    # 太阳花种子
+    - Type: 307
+      Quantity: 1
+      Prices: 2500
+    # 雷达
+    - Type: 3084
+      Quantity: 1
+      Prices: 5000
+    # 生命体分析
+    - Type: 3118
+      Quantity: 1
+      Prices: 5000
+    # 秒伤计算
+    - Type: 3119
+      Quantity: 1
+      Prices: 5000
+    # 秒表
+    - Type: 3099
+      Quantity: 1
+      Prices: 5000
+    # 金属带扣
+    - Type: 285
+      Quantity: 1
+      Prices: 5000
+    # 攀爬爪
+    - Type: 953
+      Quantity: 1
+      Prices: 5000
+    - Type: 3068
+      Quantity: 1
+      Prices: 5000
+    # 史莱姆法杖
+    - Type: 1309
+      Quantity: 1
+      Prices: 7500
+    # 月光护身符
+    - Type: 485
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 快走时钟
+    - Type: 889
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
+    # 僵尸手臂
+    - Type: 1304
+      Quantity: 1
+      Prices: 5000
+    # 镣铐
+    - Type: 216
+      Quantity: 1
+      Prices: 5000
+    - Type: 832
+      Quantity: 1
+      Prices: 5000
+    - Type: 933
+      Quantity: 1
+      Prices: 5000
+    # 眼球风筝
+    - Type: 4683
+      Quantity: 1
+      Prices: 2500
     - Type: 4009 # 苹果
       Quantity: 1
       Prices: 1000
@@ -35,55 +126,6 @@ EnvironmentShopItems:
     - Type: 4291 # 柠檬
       Quantity: 1
       Prices: 1000
-    - Type: 285 # 金属带扣
-      Quantity: 1
-      Prices: 5000
-    - Type: 953 # 攀爬爪
-      Quantity: 1
-      Prices: 5000
-    - Type: 3084
-      Quantity: 1
-      Prices: 5000
-    - Type: 3068
-      Quantity: 1
-      Prices: 5000
-    - Type: 216
-      Quantity: 1
-      Prices: 5000
-    - Type: 362 # 破布
-      Quantity: 1
-      Prices: 1000
-    - Type: 38 # 晶状体
-      Quantity: 1
-      Prices: 1000
-    - Type: 236 # 黑色晶状体
-      Quantity: 1
-      Prices: 10000
-    - Type: 832
-      Quantity: 1
-      Prices: 5000
-    - Type: 933
-      Quantity: 1
-      Prices: 5000
-    - Type: 1304
-      Quantity: 1
-      Prices: 5000
-    - Type: 1309
-      Quantity: 1
-      Prices: 7500
-    - Type: 4683 # 眼球风筝
-      Quantity: 1
-      Prices: 2500
-    # 月光护身符
-    - Type: 485
-      Quantity: 1
-      Prices: 15000
-      UnlockCondition: Hardmode
-    # 快走时钟
-    - Type: 889
-      Quantity: 1
-      Prices: 15000
-      UnlockCondition: Hardmode
     - Type: 2019 # 兔兔
       Quantity: 1
       Prices: 1000
@@ -213,57 +255,86 @@ EnvironmentShopItems:
     - Type: 4375 # 大鼠鼠
       Quantity: 1
       Prices: 1000
+    # 手机
+    - Type: 3124 
+      Quantity: 1
+      Prices: 25000
+      UnlockCondition: Hardmode
   # 天空
   Sky:
-    - Type: 4016
-      Quantity: 1
-      Prices: 2000
+    # 羽毛
     - Type: 320
       Quantity: 1
       Prices: 1000
+    # 红气球
     - Type: 65
       Quantity: 1
       Prices: 10000
     - Type: 159
       Quantity: 1
-      Prices: 10000
+      Prices: 5000
     - Type: 4978
       Quantity: 1
-      Prices: 10000
+      Prices: 5000
+    # 天磨
     - Type: 2197
       Quantity: 1
-      Prices: 10000
-    - Type: 4379
-      Quantity: 1
-      Prices: 2500
-    # 巨型鸟妖之羽
-    - Type: 1516
-      Quantity: 1
-      Prices: 10000
-      UnlockCondition: Hardmode
+      Prices: 5000
     # 飞翔之魂
     - Type: 575
       Quantity: 1
       Prices: 1000
       UnlockCondition: Hardmode
-  # 洞穴
-  Caverns:
-    # 薯片
-    - Type: 4030
+    # 巨型鸟妖之羽
+    - Type: 1516
       Quantity: 1
-      Prices: 1000
-    # 牛奶
-    - Type: 5041
-      Quantity: 1
-      Prices: 1000
-    #
-    - Type: 1274
+      Prices: 10000
+      UnlockCondition: Hardmode
+    - Type: 4379
       Quantity: 1
       Prices: 2500
+    # 鸡块
+    - Type: 4016
+      Quantity: 1
+      Prices: 2000
+  # 洞穴
+  Caverns:
+    # 虚空魔杖
+    - Type: ImproveGame/MoveChest
+      Quantity: 1
+      Prices: 5000
+    # 旗帜盒
+    - Type: ImproveGame/BannerChest
+      Quantity: 1
+      Prices: 5000
+    # 药水袋
+    - Type: ImproveGame/PotionBag
+      Quantity: 1
+      Prices: 5000
     # 生命水晶
     - Type: 29
       Quantity: 1
       Prices: 5000
+    # 闪耀根
+    - Type: 315
+      Quantity: 1
+      Prices: 1000
+    # 闪耀根种子
+    - Type: 309
+      Quantity: 1
+      Prices: 2500
+    # 深度计
+    - Type: 18
+      Quantity: 1
+      Prices: 5000
+    # 罗盘
+    - Type: 393
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 3102
+      Quantity: 1
+      Prices: 10000
     # 靴子
     - Type: 54
       Quantity: 1
@@ -284,14 +355,6 @@ EnvironmentShopItems:
     - Type: 4144
       Quantity: 1
       Prices: 15000
-    # 深度计
-    - Type: 18
-      Quantity: 1
-      Prices: 5000
-    #
-    - Type: 3102
-      Quantity: 1
-      Prices: 10000
     # 魔镜
     - Type: 50
       Quantity: 1
@@ -310,10 +373,6 @@ EnvironmentShopItems:
       Prices: 5000
     #
     - Type: 285
-      Quantity: 1
-      Prices: 5000
-    # 罗盘
-    - Type: 393
       Quantity: 1
       Prices: 5000
     # 信号枪
@@ -340,22 +399,6 @@ EnvironmentShopItems:
     - Type: 1320
       Quantity: 1
       Prices: 10000
-    # 巫师帽
-    - Type: 238
-      Quantity: 1
-      Prices: 5000
-    #
-    - Type: 88
-      Quantity: 1
-      Prices: 5000
-    #
-    - Type: 410
-      Quantity: 1
-      Prices: 5000
-    #
-    - Type: 411
-      Quantity: 1
-      Prices: 5000
     #
     - Type: 1325
       Quantity: 1
@@ -408,6 +451,34 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 5000
       UnlockCondition: Hardmode
+    # 巫师帽
+    - Type: 238
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 88
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 410
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 411
+      Quantity: 1
+      Prices: 5000
+    #
+    - Type: 1274
+      Quantity: 1
+      Prices: 2500
+    # 薯片
+    - Type: 4030
+      Quantity: 1
+      Prices: 1000
+    # 牛奶
+    - Type: 5041
+      Quantity: 1
+      Prices: 1000
     # 小蜗:)
     - Type: 2006
       Quantity: 1
@@ -491,11 +562,15 @@ EnvironmentShopItems:
     - Type: 4025
       Quantity: 1
       Prices: 2000
-    #
-    - Type: 5097
+    # 火焰花
+    - Type: 318
       Quantity: 1
-      Prices: 5000
-    #
+      Prices: 1000
+    # 火焰花种子
+    - Type: 312
+      Quantity: 1
+      Prices: 2500
+    # 巫毒娃娃
     - Type: 267
       Quantity: 1
       Prices: 7500
@@ -503,6 +578,10 @@ EnvironmentShopItems:
     - Type: 272
       Quantity: 1
       Prices: 10000
+    #
+    - Type: 5097
+      Quantity: 1
+      Prices: 5000
     #
     - Type: 906
       Quantity: 1
@@ -513,6 +592,10 @@ EnvironmentShopItems:
       Prices: 15000
     #
     - Type: 1323
+      Quantity: 1
+      Prices: 15000
+    # 恶魔海螺
+    - Type: 4819
       Quantity: 1
       Prices: 15000
     # 火之花
@@ -620,7 +703,26 @@ EnvironmentShopItems:
     # 法爆魔杖
     - Type: ImproveGame/MagickWand
       Quantity: 1
-      Prices: 50000
+      Prices: 15000
+    # 孢子
+    - Type: 331
+      Quantity: 1
+      Prices: 2500
+    # 毒刺
+    - Type: 209
+      Quantity: 1
+      Prices: 2500
+    # 藤条
+    - Type: 210
+      Quantity: 1
+      Prices: 2500
+    # 月光草
+    - Type: 314
+      Quantity: 1
+      Prices: 1000
+    - Type: 308
+      Quantity: 1
+      Prices: 2500
     #
     - Type: 4023
       Quantity: 1
@@ -748,21 +850,21 @@ EnvironmentShopItems:
   # 海洋
   Beach:
     #
-    - Type: 4287
-      Quantity: 1
-      Prices: 1000
-    #
-    - Type: 4283
-      Quantity: 1
-      Prices: 1000
-    #
-    - Type: 4035
-      Quantity: 1
-      Prices: 2000
-    #
     - Type: 319
       Quantity: 1
       Prices: 1000
+    # 袖珍
+    - Type: 3120
+      Quantity: 1
+      Prices: 5000
+    # 天气收音机
+    - Type: 3037
+      Quantity: 1
+      Prices: 5000
+    # 六分仪
+    - Type: 3096
+      Quantity: 1
+      Prices: 5000
     #
     - Type: 863
       Quantity: 1
@@ -775,10 +877,6 @@ EnvironmentShopItems:
     - Type: 1303
       Quantity: 1
       Prices: 5000
-    #
-    - Type: 186
-      Quantity: 1
-      Prices: 2500
     #
     - Type: 187
       Quantity: 1
@@ -804,10 +902,26 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 5000
     #
+    - Type: 186
+      Quantity: 1
+      Prices: 2500
+    #
     - Type: 1315
       Quantity: 1
       Prices: 10000
       UnlockCondition: Hardmode
+    #
+    - Type: 4287
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4283
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4035
+      Quantity: 1
+      Prices: 2000
     # 海鸥
     - Type: 4359
       Quantity: 1
@@ -834,22 +948,21 @@ EnvironmentShopItems:
       Prices: 2000
   # 雪地
   Snow:
-    #
-    - Type: 4027
-      Quantity: 1
-      Prices: 3000
-    #
-    - Type: 4026
-      Quantity: 1
-      Prices: 2000
-    #
-    - Type: 4295
+    # 寒颤棘
+    - Type: 2358
       Quantity: 1
       Prices: 1000
-    #
-    - Type: 4286
+    - Type: 2357
       Quantity: 1
-      Prices: 1000
+      Prices: 2500
+    #
+    - Type: 950
+      Quantity: 1
+      Prices: 7500
+    #
+    - Type: 987
+      Quantity: 1
+      Prices: 10000
     #
     - Type: 1309
       Quantity: 1
@@ -863,17 +976,9 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 5000
     #
-    - Type: 950
-      Quantity: 1
-      Prices: 7500
-    #
     - Type: 1319
       Quantity: 1
       Prices: 5000
-    #
-    - Type: 987
-      Quantity: 1
-      Prices: 10000
     #
     - Type: 1579
       Quantity: 1
@@ -895,15 +1000,7 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 5000
     #
-    - Type: 393
-      Quantity: 1
-      Prices: 5000
-    #
     - Type: 5097
-      Quantity: 1
-      Prices: 5000
-    #
-    - Type: 18
       Quantity: 1
       Prices: 5000
     #
@@ -980,34 +1077,56 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 15000
       UnlockCondition: Hardmode
+    #
+    - Type: 4027
+      Quantity: 1
+      Prices: 3000
+    #
+    - Type: 4026
+      Quantity: 1
+      Prices: 2000
+    #
+    - Type: 4295
+      Quantity: 1
+      Prices: 1000
+    #
+    - Type: 4286
+      Quantity: 1
+      Prices: 1000
     # 企鹅
     - Type: 2205
       Quantity: 1
       Prices: 1000
   # 沙漠
   Desert:
-    #
-    - Type: 4012
+    - Type: 317
       Quantity: 1
-      Prices: 2000
-    #
-    - Type: 870
+      Prices: 1000
+    - Type: 311
       Quantity: 1
       Prices: 2500
-    #
-    - Type: 871
+    # 巴斯特雕像
+    - Type: 4276
       Quantity: 1
-      Prices: 2500
+      Prices: 7500
     #
-    - Type: 872
+    - Type: 4056
       Quantity: 1
-      Prices: 2500
+      Prices: 7500
     #
-    - Type: 848
+    - Type: 4263
       Quantity: 1
-      Prices: 2500
+      Prices: 7500
     #
-    - Type: 866
+    - Type: 4055
+      Quantity: 1
+      Prices: 10000
+    # 沙暴
+    - Type: 857
+      Quantity: 1
+      Prices: 10000
+    #
+    - Type: 934
       Quantity: 1
       Prices: 2500
     #
@@ -1015,45 +1134,21 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 2500
     #
-    - Type: 934
-      Quantity: 1
-      Prices: 2500
-    #
-    - Type: 857
-      Quantity: 1
-      Prices: 10000
-    #
-    - Type: 4056
-      Quantity: 1
-      Prices: 7500
-    #
-    - Type: 4055
-      Quantity: 1
-      Prices: 10000
-    #
     - Type: 4061
       Quantity: 1
-      Prices: 3500
+      Prices: 5000
     #
     - Type: 4062
       Quantity: 1
-      Prices: 3500
+      Prices: 5000
     #
-    - Type: 4263
+    - Type: 4262
       Quantity: 1
-      Prices: 7500
+      Prices: 2500
     #
     - Type: 4346
       Quantity: 1
       Prices: 2500
-    #
-    - Type: 4276
-      Quantity: 1
-      Prices: 7500
-    #
-    - Type: 4262
-      Quantity: 1
-      Prices: 3500
     #
     - Type: 889
       Quantity: 1
@@ -1104,6 +1199,30 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 10000
       UnlockCondition: Hardmode
+    #
+    - Type: 870
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 871
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 872
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 848
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 866
+      Quantity: 1
+      Prices: 2500
+    #
+    - Type: 4012
+      Quantity: 1
+      Prices: 2000
     # 蝎子
     - Type: 2157
       Quantity: 1
@@ -1150,10 +1269,24 @@ EnvironmentShopItems:
     - Type: 522
       Quantity: 1
       Prices: 1000
+      UnlockCondition: Hardmode
     # 暗影之魂
     - Type: 521
       Quantity: 1
       Prices: 1000
+      UnlockCondition: Hardmode
+    # 魔菇
+    - Type: 60
+      Quantity: 1
+      Prices: 500
+    # 死亡草
+    - Type: 316
+      Quantity: 1
+      Prices: 1000
+    # 种子
+    - Type: 310
+      Quantity: 1
+      Prices: 2500
     #
     - Type: 956
       Quantity: 1
@@ -1168,8 +1301,8 @@ EnvironmentShopItems:
       Prices: 7500
     #
     - Type: 69
-      Quantity: 1
-      Prices: 500
+      Quantity: 10
+      Prices: 1000
     #
     - Type: 96
       Quantity: 1
@@ -1276,10 +1409,24 @@ EnvironmentShopItems:
     - Type: 1332
       Quantity: 1
       Prices: 1000
+      UnlockCondition: Hardmode
     # 暗影之魂
     - Type: 521
       Quantity: 1
       Prices: 1000
+      UnlockCondition: Hardmode
+    # 毒蘑菇
+    - Type: 2887
+      Quantity: 1
+      Prices: 500
+    # 死亡草
+    - Type: 316
+      Quantity: 1
+      Prices: 1000
+    # 种子
+    - Type: 310
+      Quantity: 1
+      Prices: 2500
     #
     - Type: 800
       Quantity: 1
@@ -1485,147 +1632,183 @@ EnvironmentShopItems:
     - Type: 5042
       Quantity: 1
       Prices: 2000
-    #
+    # 魔法飞弹
     - Type: 113
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 148
       Quantity: 1
       Prices: 5000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 155
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 156
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 157
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 163
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 164
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 165
       Quantity: 1
       Prices: 5000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 327
       Quantity: 1
       Prices: 5000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 329
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 891
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 932
       Quantity: 1
       Prices: 5000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 1307
       Quantity: 1
       Prices: 5000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 2192
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 2999
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 3000
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 3095
       Quantity: 1
       Prices: 10000
+      UnlockCondition: DownedSkeletron
     #
     - Type: 3317
       Quantity: 1
       Prices: 10000
-    #
+      UnlockCondition: DownedSkeletron
+    # 钥匙剑
     - Type: 671
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 679
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 759
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 938
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 963
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 977
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1183
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1254
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1266
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1300
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1444
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1445
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1446
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1513
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 1517
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 3291
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 4679
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera
     #
     - Type: 4789
       Quantity: 1
       Prices: 15000
+      UnlockCondition: DownedPlantera

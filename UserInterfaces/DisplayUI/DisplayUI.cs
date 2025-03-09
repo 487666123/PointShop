@@ -1,15 +1,18 @@
-﻿using SilkyUIFramework.Attributes;
+﻿using System.Linq;
+using SilkyUIFramework.Attributes;
 using SilkyUIFramework.BasicComponents;
-using SilkyUIFramework.BasicElements;
 using SilkyUIFramework.Extensions;
 using Terraria.GameInput;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 
-[AutoloadUI("Vanilla: Radial Hotbars", "PointShop: PointShopUI")]
+[RegisterUI("Vanilla: Radial Hotbars", "PointShop: PointShopUI")]
 public class DisplayUI : BasicBody
 {
+
+    public Dictionary<GameEnvironment, SUIDisplayItem> DisplayItemTable = [];
     public SUIScrollView ScrollView { get; private set; }
+
     public override void OnInitialize()
     {
         ScrollView = new SUIScrollView(Direction.Vertical)
@@ -27,31 +30,43 @@ public class DisplayUI : BasicBody
         foreach (var environment in environments)
         {
             var displayItem = new SUIDisplayItem(environment);
+            DisplayItemTable[environment] = displayItem;
             displayItem.Join(ScrollView.Container);
-            displayItem.UpdateData();
-
-            DisplayItems[environment.Name] = displayItem;
         }
     }
-
-    public Dictionary<string, SUIDisplayItem> DisplayItems = [];
 
     public void UpdateList()
     {
         if (PointShopPlayer.Local is not { } player) return;
 
-        var list = DisplayItems.Keys.Where(name => player.CurrentEnvironments.Any(env => env.Name.Equals(name)));
+        ScrollView.Container.RemoveAllChildren();
 
-        foreach (var (key, displayItem) in DisplayItems)
+        var list = DisplayItemTable.Keys.Where(name => player.CurrentEnvironments.Any(env => env.Name.Equals(name)));
+
+        if (player.CurrentEnvironments.Count > 0)
         {
-            displayItem.UpdateData();
+            foreach (var item in player.CurrentEnvironments)
+            {
+                if (DisplayItemTable.TryGetValue(item, out var uie))
+                {
+                    uie.Join(ScrollView.Container);
+                }
+            }
         }
+
+        foreach (var (key, displayItem) in DisplayItemTable.Where(item => !player.CurrentEnvironments.Contains(item.Key)))
+        {
+            displayItem.Join(ScrollView.Container);
+        }
+
+        ScrollView.Recalculate();
     }
 
     public override void Update(GameTime gameTime)
     {
-        if (ScrollView.IsMouseHovering) PlayerInput.LockVanillaMouseScroll("SilkyUIFramework");
-
+        UpdateList();
+        if (ScrollView.IsMouseHovering)
+            PlayerInput.LockVanillaMouseScroll("SilkyUIFramework");
         base.Update(gameTime);
     }
 }
@@ -71,7 +86,7 @@ public class SUIDisplayItem : View
         FlexWrap = false;
         Environment = environment;
 
-        Icon = new SUIImage(environment.Icon.Value)
+        Icon = new SUIImage(environment.Icon)
         {
             ImageScale = new Vector2(0.75f),
             ImageAlign = new Vector2(0.5f),
@@ -90,14 +105,8 @@ public class SUIDisplayItem : View
 
     public override void Update(GameTime gameTime)
     {
-        UpdateData();
-        Recalculate();
-        base.Update(gameTime);
-    }
-
-    public void UpdateData()
-    {
-        Icon.Texture = Environment.Icon.Value;
+        Icon.Texture2D = Environment.Icon;
         Points.Text = $"{Environment.GetPlayerPoints():#,##0}";
+        base.Update(gameTime);
     }
 }

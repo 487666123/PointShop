@@ -1,23 +1,15 @@
 ﻿using PointShop.Items;
 using Terraria.GameContent.ItemDropRules;
-using static Terraria.ID.ContentSamples;
 
 namespace PointShop.Commons;
 
 public class PointShopNPC : GlobalNPC
 {
-
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
-        if (npc.damage <= 0) return;
+        if (npc.damage <= 0 || NPCID.Sets.ProjectileNPC[npc.type]) return;
 
-        var count = 1;
-        try
-        {
-            // 不知道会不会报错，内部实现是字典，万一有问题所以就先这样了
-            count = BestiaryHelper.GetBestiaryStarsPriority(npc);
-        }
-        catch { }
+        ContentSamples.NpcBestiaryRarityStars.TryGetValue(npc.type, out var count);
         var itemDropRule = ItemDropRule.Common(ModContent.ItemType<PointCoin>(), minimumDropped: count, maximumDropped: count);
         npcLoot.Add(itemDropRule);
     }

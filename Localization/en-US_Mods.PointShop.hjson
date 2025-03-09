@@ -105,8 +105,22 @@
     //         WhatIsThis.Label: "{$Mods.PointShop.Config.PointTipMode.WhatIsThis}"
     //     }
     // }
-
     DisplayName: PointShop
+    NameFilter: Name Filter
+    Clear: Clear
+    Buy: Buy
+    Configs:
+    {
+        PointShopConfig:
+        {
+            DisplayName: Point Shop Config
+            PointMultiplier:
+            {
+                Label: Point Multiplier
+                Tooltip: ""
+            }
+        }
+    }
     Items:
     {
         PointCoin:

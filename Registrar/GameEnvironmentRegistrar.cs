@@ -1,38 +1,39 @@
-﻿namespace PointShop.ShopSystem;
+﻿namespace PointShop.Registrar;
 
 public class GameEnvironmentRegistrar : ModSystem
 {
+    /// <summary>
+    /// 洞穴 大理石 花岗岩 发光蘑菇
+    /// </summary>
+    private static bool IsCaverns(Player player)
+    {
+        return player is
+        { ZoneDirtLayerHeight: true } or
+        { ZoneRockLayerHeight: true };
+        //{ ZoneNormalCaverns: true } or
+        //{ ZoneMarble: true } or
+        //{ ZoneGranite: true } or
+        //{ ZoneGlowshroom: true };
+    }
+
     public override void Load()
     {
-        #region 森林 正常洞穴 天空 地狱 海洋 地牢
-
-        // 虚无
-        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Void, "Void",
-            player => true, 0, new(28, 216, 94), GameEnvironmentType.Void);
-
-        // 森林
-        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Surface, "Forest",
-            player => player is { ZoneForest: true }, 0, new(28, 216, 94));
-
-        // 正常洞穴 (不包括那些特殊环境)
-        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Caverns, "Caverns",
-            player => player is { ZoneNormalCaverns: true }, 1000, new(128, 77, 57));
+        #region 森林 正常洞穴 天空 海洋
 
         // 天空
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Sky, "Sky",
             player => player is { ZoneSkyHeight: true }, 2000, new(255, 225, 143), GameEnvironmentType.Average);
 
-        // 地狱
-        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Underworld, "Underworld",
-            player => player is { ZoneUnderworldHeight: true }, 2000, new(160, 35, 0), GameEnvironmentType.Average);
+        // 森林
+        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Surface, "Forest",
+            player => player is { ZoneForest: true }, 2000, new(28, 216, 94));
+
+        // 正常洞穴 (不包括那些特殊环境)
+        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Caverns, "Caverns", IsCaverns, 2000, new(128, 77, 57));
 
         // 海洋
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Beach, "Beach",
             player => player is { ZoneBeach: true }, 2000, new(48, 91, 191), GameEnvironmentType.Average);
-
-        // 地牢
-        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Dungeon, "Dungeon",
-            player => player is { ZoneDungeon: true }, 2000, new(35, 71, 117), GameEnvironmentType.Average);
 
         #endregion
 
@@ -52,7 +53,7 @@ public class GameEnvironmentRegistrar : ModSystem
 
         #endregion
 
-        #region 雪地 沙漠 丛林 神圣 腐化 猩红
+        #region 雪地 沙漠 丛林 神圣 腐化 猩红 地牢 地狱
 
         // 雪地
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Snow, "Snow",
@@ -78,6 +79,18 @@ public class GameEnvironmentRegistrar : ModSystem
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Hallow, "Hallow",
             player => player is { ZoneHallow: true }, 2000, new(0, 167, 209));
 
+        // 地牢
+        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Dungeon, "Dungeon",
+            player => player is { ZoneDungeon: true }, 2000, new(35, 71, 117), GameEnvironmentType.Average);
+
+        // 地狱
+        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Underworld, "Underworld",
+            player => player is { ZoneUnderworldHeight: true }, 2000, new(160, 35, 0), GameEnvironmentType.Average);
+
         #endregion
+
+        // 虚无
+        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Void, "Void",
+            player => true, 1000, new(28, 216, 94), GameEnvironmentType.Void);
     }
 }

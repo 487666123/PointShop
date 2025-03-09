@@ -8,9 +8,23 @@ public class UnlockCondition(Mod mod, string name, Asset<Texture2D> icon)
     public string DisplayName => Language.GetText($"Mods.{Mod.Name}.UnlockCondition.{Name}.DisplayName").Value;
     public string Description => Language.GetText($"Mods.{Mod.Name}.UnlockCondition.{Name}.Description").Value;
 
-    public virtual bool IsUnlock()
+    private bool _isUnlock;
+    public bool IsUnlock
     {
-        return true;
+        get => _isUnlock;
+        set
+        {
+            if (_isUnlock == value) return;
+            _isUnlock = value;
+            StateChanged.Raise(new EventArgs<bool>(value));
+        }
+    }
+
+    public WeakEventManager<EventArgs<bool>> StateChanged = new();
+
+    public virtual void Update(GameTime gameTime)
+    {
+        StateChanged.Update(gameTime);
     }
 }
 
@@ -18,9 +32,9 @@ public class SimpleUnlockCondition(Mod mod, string name, Asset<Texture2D> icon, 
 {
     public Func<bool> Condition { get; set; } = condition;
 
-    public override bool IsUnlock()
+    public override void Update(GameTime gameTime)
     {
-        if (Condition != null) return Condition();
-        return base.IsUnlock();
+        IsUnlock = Condition?.Invoke() ?? true;
+        base.Update(gameTime);
     }
 }

@@ -1,4 +1,4 @@
-namespace PointShop.ShopSystem;
+namespace PointShop.Registrar;
 
 public class UnlockConditionRegistrar : ModSystem
 {

@@ -5,14 +5,16 @@
 /// </summary>
 public partial class ShopItem : IEventHandlerHolder
 {
+    public Mod Mod { get; }
     List<object> IEventHandlerHolder.ActiveHandlers { get; } = [];
 
     public virtual Asset<Texture2D> Icon { get; }
     private string _displayName = "特辣的海藻";
-    public virtual string DisplayName => _displayName;
+    public virtual string DisplayName { get => _displayName; set => _displayName = value; }
     public GameEnvironment Parent { get; }
 
-    public WeakEventManager<EventArgs<ShopItem>> OnPricesChanged = new();
+    public WeakEventManager<EventArgs<double>> PricesChanged = new();
+    public WeakEventManager<EventArgs<bool>> UnlockStateChanged = new();
 
     public double OriginalPrices;
     public partial double Prices { get; set; }
@@ -23,7 +25,7 @@ public partial class ShopItem : IEventHandlerHolder
         {
             if (field == value) return;
             field = value;
-            OnPricesChanged.Raise(new EventArgs<ShopItem>(this));
+            PricesChanged.Raise(new(field));
         }
     }
 
@@ -33,34 +35,45 @@ public partial class ShopItem : IEventHandlerHolder
         return PointShopSystem.TryGetUnlockCondition(UnlockCondition, out unlockCondition);
     }
 
-    public ShopItem(GameEnvironment gameEnvironment, int prices, string unlockCondition)
+    public ShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string unlockCondition)
     {
+        Mod = mod;
         Parent = gameEnvironment;
         OriginalPrices = prices;
         Prices = prices * PointShopSystem.PricesMultiplier;
         UnlockCondition = unlockCondition;
 
-        PointShopSystem.OnPricesMultiplierChanged.AddHandler(this, (_, args) =>
+        IsUnlock = true;
+
+        if (TryGetUnlockCondition(out var condition))
         {
-            Prices = OriginalPrices * args.Value;
-        });
+            condition.StateChanged.AddHandler(this,
+                (_, args) => IsUnlock = args.Value);
+        }
+
+        PointShopSystem.OnPricesMultiplierChanged.AddHandler(this,
+            (_, args) => Prices = OriginalPrices * args.Value);
     }
 
     public virtual void OnEnterWorld() { }
     public virtual void Update(GameTime gameTime)
     {
-        OnPricesChanged.Update(gameTime);
+        PricesChanged.Update(gameTime);
+        UnlockStateChanged.Update(gameTime);
     }
 
     public virtual void Buy() => Parent.PurchaseItems(this);
 
-    public virtual bool IsUnlock()
+    private bool _isUnlock = true;
+    public bool IsUnlock
     {
-        if (TryGetUnlockCondition(out var condition))
+        get => _isUnlock;
+        set
         {
-            return condition.IsUnlock();
+            if (_isUnlock == value) return;
+            _isUnlock = value;
+            UnlockStateChanged.Raise(new(_isUnlock));
         }
-        return true;
     }
 
     /// <summary>
@@ -70,7 +83,7 @@ public partial class ShopItem : IEventHandlerHolder
     public virtual void GetRewards(Player player) { }
 }
 
-public class SimpleShopItem(GameEnvironment gameEnvironment, int prices, string conditionName, Item item) : ShopItem(gameEnvironment, prices, conditionName)
+public class SimpleShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string conditionName, Item item) : ShopItem(mod, gameEnvironment, prices, conditionName)
 {
     public Item Item { get; } = item;
 
@@ -90,6 +103,6 @@ public class SimpleShopItem(GameEnvironment gameEnvironment, int prices, string 
         base.GetRewards(player);
         if (player is null) return;
 
-        Item.NewItem(null, player.getRect(), Item.Clone());
+        player.QuickSpawnItem(null, Item.type, Item.stack);
     }
 }

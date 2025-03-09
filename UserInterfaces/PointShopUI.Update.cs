@@ -23,16 +23,16 @@ public partial class PointShopUI
         if (!PointShopSystem.TryGetGameEnvironment(CurrentEnvironmentName, out var environment)) return;
 
         var displayName = environment.DisplayName;
-        if (EnvironmentName.Text != displayName)
+        if (ShopFooter.EnvironmentName.Text != displayName)
         {
-            EnvironmentName.Text = displayName;
+            ShopFooter.EnvironmentName.Text = displayName;
             MakeLayoutDirty();
         }
 
         var points = environment.GetPlayerPoints();
         if (_lastPoints != points)
         {
-            Balance.Text = $"{points:#,##0}";
+            ShopFooter.Balance.Text = $"{points:#,##0}";
             _lastPoints = points;
             MakeLayoutDirty();
         }
@@ -50,8 +50,8 @@ public partial class PointShopUI
 
             button.OnLeftMouseDown += (_, _) =>
             {
-                UpdateShopItemTable(environment.Name, (Item) => true);
                 CurrentEnvironmentName = environment.Name;
+                UpdateShopItemTable();
             };
 
             if (i + 1 != environments.Count)
@@ -61,15 +61,16 @@ public partial class PointShopUI
         }
     }
 
+    private string _keywords = "";
+    private bool ShopItemFilters(ShopItem shopItem) => shopItem.DisplayName.Contains(_keywords.Trim());
+
     /// <summary>
     /// 更新物品表格
     /// </summary>
-    public void UpdateShopItemTable(string name, Func<ShopItem, bool> filters)
+    public void UpdateShopItemTable()
     {
-        if (!PointShopSystem.TryGetGameEnvironment(name, out var environment)) return;
+        if (!PointShopSystem.TryGetGameEnvironment(CurrentEnvironmentName, out var environment)) return;
         MakeLayoutDirty();
-
-        CurrentEnvironmentName = name;
 
         ShopItemTable.Container.RemoveAllChildren();
 
@@ -77,7 +78,7 @@ public partial class PointShopUI
 
         foreach (var item in environment.ShopItemList)
         {
-            if (!(filters?.Invoke(item) ?? true)) continue;
+            if (!ShopItemFilters(item)) continue;
 
             if (item is SimpleShopItem simpleShopItem)
             {

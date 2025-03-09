@@ -1,3 +1,6 @@
+using PointShop.Registrar;
+using Terraria.WorldBuilding;
+
 namespace PointShop;
 
 public class PointShop : Mod
@@ -40,20 +43,32 @@ public class PointShop : Mod
             // 注册条件
             case nameof(RegisterCondition):
             {
-                if (args.Length == 3)
+                if (args.Length == 5)
                 {
-                    RegisterCondition(args[1], args[2]);
+                    RegisterCondition(args[1], args[2], args[3], args[4]);
                 }
                 break;
             }
             // 注册商品
             case nameof(AddShopItem):
             {
-                if (args.Length == 4)
+                if (args.Length == 5)
                 {
-                    AddShopItem(args[1], args[2], args[3]);
+                    AddShopItem(args[1], args[2], args[3], args[4]);
                 }
                 break;
+            }
+            // 添加商品通过文件
+            case nameof(AddShopItemByFile):
+            {
+                if (args.Length == 3)
+                    AddShopItemByFile(args[1], args[2]);
+                break;
+            }
+            // 获取解锁条件
+            case nameof(GetAllUnlockConditionTable):
+            {
+                return GetAllUnlockConditionTable();
             }
             default:
             {
@@ -65,7 +80,13 @@ public class PointShop : Mod
         return null;
     }
 
-    public static void RegisterGameEnvironment(object modObj, object iconObj, object nameObj, object conditionObj, object priorityObj, object colorObj)
+    public static Dictionary<string, Func<bool>> GetAllUnlockConditionTable()
+    {
+        return PointShopSystem.GetAllUnlockConditionTable();
+    }
+
+    public static void RegisterGameEnvironment(object modObj, object iconObj, object nameObj,
+        object conditionObj, object priorityObj, object colorObj)
     {
         if (modObj is not Mod mod || iconObj is not Asset<Texture2D> icon || nameObj is not string name ||
          conditionObj is not Func<Player, bool> condition || priorityObj is not int priority || colorObj is not Color color) return;
@@ -73,20 +94,28 @@ public class PointShop : Mod
         PointShopSystem.RegisterGameEnvironment(mod, icon, name, condition, priority, color);
     }
 
-    public static void RegisterCondition(object nameObj, object conditionObj)
+    public static void RegisterCondition(object modObj, object nameObj, object iconObj, object conditionObj)
     {
-        if (nameObj is not string name || conditionObj is not Func<bool> condition) return;
+        if (modObj is not Mod mod || nameObj is not string name ||
+            iconObj is not Asset<Texture2D> icon || conditionObj is not Func<bool> condition) return;
 
-        // PointShopSystem.RegisterUnlockCondition(name, condition);
+        PointShopSystem.RegisterUnlockCondition(mod, name, icon, condition);
     }
 
-    public static void AddShopItem(object pricesObj, object unlockConditionsNameObj, object itemObj)
+    public static void AddShopItem(object modObj, object pricesObj, object unlockConditionsNameObj, object itemObj)
     {
-        if (pricesObj is not int prices || unlockConditionsNameObj is not string unlockConditionsName ||
+        if (modObj is not Mod mod || pricesObj is not int prices || unlockConditionsNameObj is not string unlockConditionsName ||
             itemObj is not Item item ||
             !PointShopSystem.TryGetGameEnvironment(unlockConditionsName, out var gameEnvironment)) return;
 
-        gameEnvironment.AddShopItem(new SimpleShopItem(gameEnvironment, prices, unlockConditionsName, item));
+        gameEnvironment.AddShopItem(new SimpleShopItem(mod, gameEnvironment, prices, unlockConditionsName, item));
+    }
+
+    public static void AddShopItemByFile(object modObj, object yamlStringObj)
+    {
+        if (modObj is not Mod mod || yamlStringObj is not string yamlString) return;
+
+        ShopItemsRegistrar.RegisterShopData(mod, ShopItemsRegistrar.GetShopData(yamlString));
     }
 }
 

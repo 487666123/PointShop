@@ -77,21 +77,39 @@ public partial class SUIShopItemComponent : View, IEventHandlerHolder
         prices.SetHeight(0f, 1f);
         prices.UseMenuTickSoundForMouseOver();
 
-        shopItem.OnPricesChanged.AddHandler(this, (_, args) =>
+        shopItem.PricesChanged.AddHandler(this, (_, args) =>
         {
-            prices.Text = $"{args.Value.Prices:#,##0}";
+            prices.Text = $"{args.Value:#,##0}";
             MakeDirty();
         });
 
         if (shopItem.TryGetUnlockCondition(out var unlockCondition))
         {
             CoverView = new SUICoverView(unlockCondition.Icon, unlockCondition.DisplayName, unlockCondition.Description);
-
-            IsUnlock = unlockCondition.IsUnlock();
-            if (!IsUnlock)
+            if (!unlockCondition.IsUnlock)
             {
                 CoverView.Join(this);
             }
+
+            ShopItem.UnlockStateChanged.AddHandler(this, (_, args) =>
+            {
+                if (args.Value)
+                {
+                    if (HasChild(CoverView))
+                    {
+                        RemoveChild(CoverView);
+                        MakeDirty();
+                    }
+                }
+                else
+                {
+                    if (!HasChild(CoverView))
+                    {
+                        AppendFromView(CoverView);
+                        MakeDirty();
+                    }
+                }
+            });
         }
     }
 
@@ -109,49 +127,28 @@ public partial class SUIShopItemComponent : View, IEventHandlerHolder
 
         SUIDividingLine = SUIDividingLine.Horizontal(SUIColor.Border * 0.25f).Join(this);
 
-        Image = new SUIImage(ShopItem.Icon?.Value, false)
+        Image = new SUIImage(ShopItem.Icon)
         { }.Join(this);
         Image.SetSize(0f, -2f, 1f, 0.8f);
 
         SUIDividingLine = SUIDividingLine.Horizontal(Color.Black * 0.4f).Join(this);
     }
 
-    protected partial bool IsUnlock { get; set; }
-    protected partial bool IsUnlock
-    {
-        get => field;
-        set
-        {
-            if (field == value || CoverView is null) return;
-            field = value;
-            if (field)
-            {
-                if (HasChild(CoverView))
-                {
-                    RemoveChild(CoverView);
-                    MakeDirty();
-                }
-            }
-            else
-            {
-                if (!HasChild(CoverView))
-                {
-                    AppendFromView(CoverView);
-                    MakeDirty();
-                }
-            }
-        }
-    }
     public override void Update(GameTime gameTime)
     {
-        IsUnlock = ShopItem.IsUnlock();
-
+        base.Update(gameTime);
         if (IsDirty)
         {
             Recalculate();
             IsDirty = false;
         }
-        base.Update(gameTime);
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+        if (BuyButton.IsMouseHovering)
+            Main.hoverItemName = LanguageHelper.GetTextByPointShop("Buy").Value;
     }
 }
 
@@ -184,7 +181,7 @@ public class SUISimpleShopItem(SimpleShopItem shopItem) : SUIShopItemComponent(s
 
         SUIItemSlot = new SUIItemSlot
         {
-            Item = simpleShopItem.Item,
+            Item = new Item(simpleShopItem.Item.type, simpleShopItem.Item.stack),
             BgColor = Color.Transparent,
             BorderColor = Color.Transparent,
             Border = 0,
@@ -227,7 +224,7 @@ public class SUICoverView : View
         MainAlignment = MainAlignment.Center;
         CrossAlignment = CrossAlignment.Center;
 
-        Icon = new SUIImage(icon.Value)
+        Icon = new SUIImage(icon)
         {
             ImageAlign = new Vector2(0.5f),
             ImageScale = new Vector2(0.85f),

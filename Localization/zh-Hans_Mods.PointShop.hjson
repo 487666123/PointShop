@@ -222,8 +222,23 @@
 	// 		// WhatIsThis.Label: "{$Mods.PointShop.Config.PointTipMode.WhatIsThis}"
 	// 	}
 	// }
-
+    //}
     DisplayName: 积分商店
+    NameFilter: 筛选
+    Clear: 清空
+    Buy: 购买
+    Configs:
+    {
+        PointShopConfig:
+        {
+            DisplayName: 积分商店配置
+            PointMultiplier:
+            {
+                Label: 积分售价乘数
+                Tooltip: ""
+            }
+        }
+    }
     Items:
     {
         PointCoin:

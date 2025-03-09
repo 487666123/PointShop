@@ -4,9 +4,8 @@ namespace PointShop.Commons.Players;
 
 internal class PlayerData : ModPlayer
 {
-    public Vector2 PointShopPosition { get; set; }
-
     public static PlayerData Instance => Main.LocalPlayer.GetModPlayer<PlayerData>();
+    public Vector2 PointShopPosition { get; set; }
 
     public override void LoadData(TagCompound tag)
     {

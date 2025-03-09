@@ -7,11 +7,14 @@ public static class PointPopupHelper
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static PointPopup SearchEnvironment(string name)
+    public static PointPopup SearchPointPopupByEnvironment(GameEnvironment gameEnvironment)
     {
+        // 原版会服用, 要检测 .name 是否等于 DisplayName
         foreach (var popupText in Main.popupText)
         {
-            if (popupText is PointPopup { active: true } pointPopup && pointPopup.EnvironmentName.Equals(name))
+            if (popupText is PointPopup { active: true } pointPopup &&
+                pointPopup.GameEnvironment == gameEnvironment &&
+                pointPopup.name.StartsWith(gameEnvironment.DisplayName))
             {
                 return pointPopup;
             }
@@ -20,12 +23,10 @@ public static class PointPopupHelper
         return null;
     }
 
-    /// <summary>
-    /// 创建一个 Popup
-    /// </summary>
+    /// <summary> 创建一个 Popup </summary>
     public static void Create(Vector2 center, GameEnvironment environment, double points, int duration)
     {
-        if (SearchEnvironment(environment.Name) is { } pointPopup)
+        if (SearchPointPopupByEnvironment(environment) is { } pointPopup)
         {
             points += pointPopup.Points;
             pointPopup.active = false;
@@ -41,10 +42,10 @@ public static class PointPopupHelper
             DurationInFrames = duration,
         };
 
-        NewPointText(environment, points, request, center);
+        NewPointPopup(environment, points, request, center);
     }
 
-    public static int NewPointText(GameEnvironment environment, double points, AdvancedPopupRequest request, Vector2 position)
+    public static int NewPointPopup(GameEnvironment environment, double points, AdvancedPopupRequest request, Vector2 position)
     {
         if (!Main.showItemText || Main.netMode == NetmodeID.Server) return -1;
 
@@ -56,11 +57,11 @@ public static class PointPopupHelper
             // 找到的改为 PointPopup
             if (Main.popupText[index] is not PointPopup popup)
             {
-                popup = new(environment.Name, points);
+                popup = new(environment, points);
                 Main.popupText[index] = popup;
             }
             PopupText.ResetText(popup);
-            popup.SetNameAndPoints(environment.Name, points);
+            popup.SetNameAndPoints(environment, points);
             popup.active = true;
             popup.position = position - textSize / 2f;
             popup.name = request.Text;
@@ -187,14 +188,14 @@ public static class PointPopupHelper
 /// <summary>
 /// TNND, 没有虚方法
 /// </summary>
-public class PointPopup(string environmentName, double points) : PopupText
+public class PointPopup(GameEnvironment gameEnvironment, double points) : PopupText
 {
-    public string EnvironmentName = environmentName;
+    public GameEnvironment GameEnvironment = gameEnvironment;
     public double Points = points;
 
-    public void SetNameAndPoints(string environmentName, double points)
+    public void SetNameAndPoints(GameEnvironment gameEnvironment, double points)
     {
-        EnvironmentName = environmentName;
+        GameEnvironment = gameEnvironment;
         Points = points;
     }
 }

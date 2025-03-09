@@ -2,35 +2,36 @@
 using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.BasicComponents;
-using SilkyUIFramework.BasicElements;
 using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces;
 
-[AutoloadUI("Vanilla: Radial Hotbars", "PointShop: PointShopUI")]
+[RegisterUI("Vanilla: Radial Hotbars", "PointShop: PointShopUI")]
 public partial class PointShopUI : BasicBody
 {
-    public static bool OpenUI { get; set; } = false;
+    public static bool SwitchStatus { get; set; } = false;
     public override bool Enabled
     {
         get
         {
-            if (OpenUI) return OpenUI;
-            return !SwitchTimer.ReverseUpdateCompleted;
+            if (SwitchStatus) return true;
+            return !SwitchTimer.IsReverseCompleted;
         }
-        set => OpenUI = value;
+        set => SwitchStatus = value;
     }
 
     public string CurrentEnvironmentName { get; set; } = "Forest";
 
-    public override bool UnableToSelect => SwitchTimer.IsReverse;
+    public override bool IsInteractable => !SwitchTimer.IsReverse;
 
     public SUIDraggableView MainPanel { get; private set; }
     public SUIScrollView MenuList { get; private set; }
     public View Header { get; private set; }
-    public View Footer { get; private set; }
+    //public View Footer { get; private set; }
     public View ContentContainer { get; private set; }
     public SUIScrollView ShopItemTable { get; private set; }
+
+    public SUIEditText SearchBox { get; private set; }
 
     public bool IsLayoutDirty { get; set; } = true;
     public void MakeLayoutDirty() => IsLayoutDirty = true;
@@ -49,10 +50,13 @@ public partial class PointShopUI : BasicBody
             CornerRadius = new Vector4(8f),
             DragOffset = new Vector2(630f, 20f),
         }.Join(this);
-        MainPanel.SetWidth(700);
         MainPanel.SetPadding(0f);
+        MainPanel.SetWidth(700);
 
-        CreateHeader();
+        // 标题
+
+        new SUICommonHeader($"{LanguageHelper.GetTextByPointShop("DisplayName")}").Join(MainPanel);
+        SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(MainPanel);
 
         // 菜单列表 and 商品列表
 
@@ -63,9 +67,7 @@ public partial class PointShopUI : BasicBody
             FlexWrap = false,
             Gap = new Vector2(0f),
         }.Join(MainPanel);
-        ContentContainer.SetSize(0f, 400f, 1f);
-
-        #region 菜单
+        ContentContainer.SetSize(0f, 450f, 1f);
 
         MenuList = new SUIScrollView
         {
@@ -83,8 +85,6 @@ public partial class PointShopUI : BasicBody
 
         SUIDividingLine.Vertical(Color.Black * 0.5f).Join(ContentContainer);
 
-        #endregion
-
         // 商品列表
         var rightContainer = new View
         {
@@ -96,6 +96,81 @@ public partial class PointShopUI : BasicBody
         rightContainer.SetSize(0f, 0f, 0f, 1f);
 
         #region 过滤器
+
+        var searchBarContainer = new View
+        {
+            Display = Display.Flexbox,
+            //SpecifyWidth = true,
+            //FlexWeight = { Enable = true, Value = 1f },
+            MainAlignment = MainAlignment.Start,
+            CrossAlignment = CrossAlignment.Center,
+            Gap = new Vector2(4),
+        }.Join(rightContainer);
+        searchBarContainer.SetWidth(0f, 1f);
+        searchBarContainer.PaddingTop = 4f;
+        searchBarContainer.PaddingLeft = 4f;
+        searchBarContainer.PaddingRight = 4f;
+
+        var searchBar = new View()
+        {
+            CornerRadius = new Vector4(4f),
+            Border = 2,
+            BorderColor = SUIColor.Border * 0.75f,
+            BgColor = SUIColor.Background * 0.25f,
+            Display = Display.Flexbox,
+            //SpecifyWidth = true,
+            //FlexWeight = { Enable = true, Value = 1f },
+        }.Join(searchBarContainer);
+        searchBar.SetWidth(0, 1f);
+        searchBar.SetHeight(32f, 0f);
+
+        // 搜索
+        var searchText = new SUIText
+        {
+            Text = $"{LanguageHelper.GetTextByPointShop("NameFilter")}",
+            TextScale = 0.8f,
+            TextAlign = new Vector2(0.5f),
+            CornerRadius = new Vector4(2f, 0f, 2f, 0f),
+            BgColor = SUIColor.Background * 0.5f,
+        }.Join(searchBar);
+        searchText.SetPadding(12f);
+        searchText.SetHeight(0f, 1f);
+
+        SUIDividingLine.Vertical(Color.Black * 0.5f).Join(searchBar);
+
+        SearchBox = new SUIEditText
+        {
+            BgColor = SUIColor.Border * 0.25f,
+            TextAlign = new Vector2(0f, 0.5f),
+            TextScale = 0.8f,
+            CursorFlashColor = Color.White,
+            OverflowHidden = true,
+            SpecifyWidth = true,
+            FlexWeight = { Enable = true, Value = 1 },
+        }.Join(searchBar);
+        SearchBox.OnTextChanged += () =>
+        {
+            _keywords = SearchBox.Text;
+            UpdateShopItemTable();
+        };
+        SearchBox.SetPadding(8f);
+        SearchBox.SetHeight(0f, 1f);
+
+        SUIDividingLine.Vertical(Color.Black * 0.5f).Join(searchBar);
+
+        // 清空
+        var clearText = new SUIText
+        {
+            Text = $"{LanguageHelper.GetTextByPointShop("Clear")}",
+            TextScale = 0.8f,
+            TextAlign = new Vector2(0.5f),
+            CornerRadius = new Vector4(0f, 2f, 0f, 2f),
+            BgColor = SUIColor.Background * 0.5f,
+            DragIgnore = false,
+        }.Join(searchBar);
+        clearText.OnLeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
+        clearText.SetPadding(12f);
+        clearText.SetHeight(0f, 1f);
 
         // var filtersContainer = new View()
         // {
@@ -141,60 +216,111 @@ public partial class PointShopUI : BasicBody
         ShopItemTable.Container.TemplateColumns = [.. TemplateUnit.Repeat(4, 0f, 1f)];
         ShopItemTable.Container.TemplateRows = [.. TemplateUnit.Repeat(1, 160f)];
 
-        UpdateShopItemTable("Forest", item => true);
+        UpdateShopItemTable();
 
-        CreateFooter();
+        SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(MainPanel);
+        ShopFooter = new SUIShopFooter().Join(MainPanel);
     }
 
-    public void CreateHeader()
+    public SUIShopFooter ShopFooter { get; private set; }
+
+    //public View BalanceContainer { get; private set; }
+    //public SUIText EnvironmentName { get; private set; }
+    //public SUIText Balance { get; private set; }
+
+    public readonly AnimationTimer SwitchTimer = new(3);
+
+    protected override void UpdateAnimationTimer(GameTime gameTime)
     {
-        Header = new View
-        {
-            Display = Display.Flexbox,
-            LayoutDirection = LayoutDirection.Row,
-            FlexWrap = false,
-            Gap = new Vector2(4f),
-            BgColor = Color.Black * 0.25f,
-            CornerRadius = new Vector4(6f, 6f, 0f, 0f),
-        }.Join(MainPanel);
-        Header.SetSize(0f, 45f, 1f);
-        Header.PaddingLeft = 12f;
-        Header.PaddingRight = 12f;
+        base.UpdateAnimationTimer(gameTime);
+        StartByStatus(SwitchTimer, SwitchStatus);
+        SwitchTimer.Update(gameTime);
+    }
+
+    public static void StartByStatus(AnimationTimer timer, bool status)
+    {
+        if (status) { if (!timer.IsForward) timer.StartForwardUpdate(); }
+        else if (!timer.IsReverse) timer.StartReverseUpdate();
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        UseRenderTarget = SwitchTimer.Status is AnimationTimerStaus.ForwardUpdating or AnimationTimerStaus.ReverseUpdating;
+        Opacity = SwitchTimer.Lerp(0f, 1f);
+
+        var center = MainPanel.GetDimensions().Center();
+        TransformMatrix =
+            Matrix.CreateTranslation(-center.X, -center.Y, 0) *
+            Matrix.CreateScale(SwitchTimer.Lerp(0.95f, 1f), SwitchTimer.Lerp(0.95f, 1f), 1) *
+            Matrix.CreateTranslation(center.X, center.Y, 0);
+
+        base.Draw(spriteBatch);
+    }
+}
+
+public class SUICommonHeader : View
+{
+    public SUICross SUICross { get; }
+    public SUICommonHeader(string name)
+    {
+        Display = Display.Flexbox;
+        LayoutDirection = LayoutDirection.Row;
+        MainAlignment = MainAlignment.SpaceBetween;
+        CrossAlignment = CrossAlignment.Center;
+        FlexWrap = false;
+        BgColor = Color.Black * 0.25f;
+        CornerRadius = new Vector4(6f, 6f, 0f, 0f);
+        SetSize(0f, 40f, 1f);
 
         var titleText = new SUIText
         {
-            Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")}",
+            Text = name,
             TextScale = 0.45f,
-            TextAlign = new Vector2(0.5f),
-        }.Join(Header);
-        titleText.SetHeight(0, 1f);
+            TextAlign = new Vector2(0f, 0.5f),
+        }.Join(this);
+        titleText.SetSize(0f, 0f, 0.25f, 1f);
         titleText.UseDeathText();
+        titleText.PaddingLeft = 12f;
+        titleText.PaddingRight = 12f;
 
-        SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(MainPanel);
-    }
-
-    public void CreateFooter()
-    {
-        SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(MainPanel);
-
-        Footer = new View
+        SUICross = new SUICross(SUIColor.Warn * 0.75f, SUIColor.Border * 0.75f)
         {
-            Display = Display.Flexbox,
-            LayoutDirection = LayoutDirection.Row,
-            MainAlignment = MainAlignment.SpaceBetween,
-            Gap = new Vector2(4f),
-            BgColor = Color.Black * 0.25f,
-            CornerRadius = new Vector4(0f, 0f, 6f, 6f),
-        }.Join(MainPanel);
-        Footer.SetSize(0f, 30f, 1f);
-        Footer.PaddingLeft = 12f;
-        Footer.PaddingRight = 12f;
+            CrossSize = 22f,
+            CrossRounded = 3.5f,
+            CrossBorderHoverColor = SUIColor.Highlight,
+            CrossBackgroundHoverColor = SUIColor.Warn,
+            BoxSizing = SilkyUIFramework.Core.BoxSizing.ContentBox,
+        }.Join(this);
+        SUICross.SetSize(24, 0, 0f, 1f);
+        SUICross.PaddingLeft = 12f;
+        SUICross.PaddingRight = 12f;
+        SUICross.OnLeftMouseDown += delegate { PointShopUI.SwitchStatus = false; };
+    }
+}
+
+public class SUIShopFooter : View
+{
+    public View BalanceContainer { get; }
+    public SUIText EnvironmentName { get; }
+    public SUIText Balance { get; }
+
+    public SUIShopFooter()
+    {
+        Display = Display.Flexbox;
+        LayoutDirection = LayoutDirection.Row;
+        MainAlignment = MainAlignment.SpaceBetween;
+        Gap = new Vector2(4f);
+        BgColor = Color.Black * 0.25f;
+        CornerRadius = new Vector4(0f, 0f, 6f, 6f);
+        SetSize(0f, 30f, 1f);
+        PaddingLeft = 12f;
+        PaddingRight = 12f;
 
         BalanceContainer = new View
         {
             Display = Display.Flexbox,
             LayoutDirection = LayoutDirection.Row,
-        }.Join(Footer);
+        }.Join(this);
         BalanceContainer.SetHeight(0, 1f);
 
         EnvironmentName = new SUIText()
@@ -205,7 +331,6 @@ public partial class PointShopUI : BasicBody
         }.Join(BalanceContainer);
         EnvironmentName.SetHeight(0f, 1f);
 
-        // 价格左边的积分币 ItemSlot
         var coinSlot = new SUIItemSlot
         {
             Item = new Item(ModContent.ItemType<PointCoin>()),
@@ -232,40 +357,7 @@ public partial class PointShopUI : BasicBody
             Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")} {ModContent.GetInstance<PointShop>().Version}",
             TextScale = 0.75f,
             TextAlign = new Vector2(0.5f),
-        }.Join(Footer);
+        }.Join(this);
         titleText.SetHeight(0, 1f);
-    }
-
-    public View BalanceContainer { get; private set; }
-    public SUIText EnvironmentName { get; private set; }
-    public SUIText Balance { get; private set; }
-
-    public readonly AnimationTimer SwitchTimer = new(3);
-
-    protected override void UpdateAnimationTimer(GameTime gameTime)
-    {
-        base.UpdateAnimationTimer(gameTime);
-        StartByStatus(SwitchTimer, OpenUI);
-        SwitchTimer.Update((float)gameTime.ElapsedGameTime.TotalSeconds * 60f);
-    }
-
-    public static void StartByStatus(AnimationTimer timer, bool status)
-    {
-        if (status) { if (!timer.IsForward) timer.StartForwardUpdate(); }
-        else if (!timer.IsReverse) timer.StartReverseUpdate();
-    }
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        UseRenderTarget = SwitchTimer.Status is AnimationTimerStaus.ForwardUpdating or AnimationTimerStaus.ReverseUpdating;
-        Opacity = SwitchTimer.Lerp(0f, 1f);
-
-        var center = MainPanel.GetDimensions().Center();
-        TransformMatrix =
-            Matrix.CreateTranslation(-center.X, -center.Y, 0) *
-            Matrix.CreateScale(SwitchTimer.Lerp(0.9f, 1f), SwitchTimer.Lerp(0.9f, 1f), 1) *
-            Matrix.CreateTranslation(center.X, center.Y, 0);
-
-        base.Draw(spriteBatch);
     }
 }

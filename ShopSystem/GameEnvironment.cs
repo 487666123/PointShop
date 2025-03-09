@@ -46,7 +46,7 @@ public class GameEnvironment(Mod mod, Asset<Texture2D> icon, string name, int pr
         // 商品属于环境, 已解锁, 并且支付成功
         if (_shopItemList.Contains(shopItem))
         {
-            if (!shopItem.IsUnlock())
+            if (!shopItem.IsUnlock)
             {
                 Main.NewText($"{LanguageHelper.GetTextByPointShop("ShopItem.Lock").Value}"); return;
             }
