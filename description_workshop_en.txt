@@ -1,2 +1,35 @@
-﻿If you want to report a problem,
-please describe it in detail and take a break for two days before resuming the update.
+﻿**[b]Points Store 2.0[/b]**
+
+**[b]This is a reset version, and all original data will be completely erased![/b]**
+
+[hr]
+**[b]✨ New Features[/b]**
+[list]
+[*] Supports expansion, allowing the addition of [b]Mod items[/b].
+[*] The store is no longer limited to in-game items; you can also purchase [b]character attributes[/b] or other content (requires Mod support).
+[/list]
+
+[hr]
+**[b]📢 Important Notes[/b]**
+[list]
+[*] This version was developed urgently and [b]may contain unknown issues[/b].
+[*] The old version will be renamed and re-released, but [b]data from the old version cannot be migrated[/b].
+[/list]
+
+[hr]
+**[b]📮 Feedback Channels[/b]**
+[olist]
+[*] [b]Steam Workshop[/b]
+    ([i]Please provide detailed descriptions and attach screenshots when reporting issues![/i])
+[/olist]
+
+[hr]
+**[b]💖 Support the Author[/b]**
+[list]
+[*] [url=https://space.bilibili.com/402475941]Bilibili Homepage[/url]
+[*] [url=https://afdian.com/a/tMLZero]Afdian Sponsorship[/url]
+[/list]
+
+[hr]
+**[b]🌐 Open Source Repository[/b]**
+[url=https://gitee.com/MyGoold/exchange-item]Gitee Project Repository[/url]

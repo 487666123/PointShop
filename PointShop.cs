@@ -5,26 +5,35 @@ namespace PointShop;
 
 public class PointShop : Mod
 {
-    public override string Name => "PointShop";
-
-    public enum MessageType : byte
+    private class DisplayNameUpdater : ModSystem
     {
-        EarnPoint
+        /// <summary>
+        /// 修改 DisplayName
+        /// </summary>
+        public override void OnLocalizationsLoaded() =>
+            Instance.DisplayName = LanguageHelper.GetTextByPointShop("DisplayName").Value;
     }
 
-    public override void HandlePacket(BinaryReader reader, int whoAmI)
-    {
-        var msgType = (MessageType)reader.ReadByte();
-        switch (msgType)
-        {
-            case MessageType.EarnPoint:
-                // PointShopHelper.BonusPoints(reader.ReadByte());
-                break;
-            default:
-                Logger.WarnFormat($"PointShop: Unknown Message type: {msgType}");
-                break;
-        }
-    }
+    public static PointShop Instance => ModContent.GetInstance<PointShop>();
+
+    //public enum MessageType : byte
+    //{
+    //    EarnPoint
+    //}
+
+    //public override void HandlePacket(BinaryReader reader, int whoAmI)
+    //{
+    //    var msgType = (MessageType)reader.ReadByte();
+    //    switch (msgType)
+    //    {
+    //        case MessageType.EarnPoint:
+    //            // PointShopHelper.BonusPoints(reader.ReadByte());
+    //            break;
+    //        default:
+    //            Logger.WarnFormat($"PointShop: Unknown Message type: {msgType}");
+    //            break;
+    //    }
+    //}
 
     public override object Call(params object[] args)
     {
@@ -36,7 +45,7 @@ public class PointShop : Mod
             {
                 if (args.Length == 7)
                 {
-                    RegisterGameEnvironment(args[1], args[2], args[3], args[4], args[5], args[5]);
+                    RegisterGameEnvironment(args[1], args[2], args[3], args[4], args[5], args[6]);
                 }
                 break;
             }
@@ -52,9 +61,9 @@ public class PointShop : Mod
             // 注册商品
             case nameof(AddShopItem):
             {
-                if (args.Length == 5)
+                if (args.Length == 6)
                 {
-                    AddShopItem(args[1], args[2], args[3], args[4]);
+                    AddShopItem(args[1], args[2], args[3], args[4], args[5]);
                 }
                 break;
             }
@@ -102,11 +111,11 @@ public class PointShop : Mod
         PointShopSystem.RegisterUnlockCondition(mod, name, icon, condition);
     }
 
-    public static void AddShopItem(object modObj, object pricesObj, object unlockConditionsNameObj, object itemObj)
+    public static void AddShopItem(object modObj, object gameEnvironmentNameObj, object itemObj, object pricesObj, object unlockConditionsNameObj)
     {
         if (modObj is not Mod mod || pricesObj is not int prices || unlockConditionsNameObj is not string unlockConditionsName ||
-            itemObj is not Item item ||
-            !PointShopSystem.TryGetGameEnvironment(unlockConditionsName, out var gameEnvironment)) return;
+            itemObj is not Item item || gameEnvironmentNameObj is not string gameEnvironmentName ||
+            !PointShopSystem.TryGetGameEnvironment(gameEnvironmentName, out var gameEnvironment)) return;
 
         gameEnvironment.AddShopItem(new SimpleShopItem(mod, gameEnvironment, prices, unlockConditionsName, item));
     }

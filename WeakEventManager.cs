@@ -3,7 +3,6 @@
 /// <summary>
 /// 如果你要使用, 就必须将 Update 放在一个循环中
 /// </summary>
-/// <typeparam name="TEventArgs"></typeparam>
 public class WeakEventManager<TEventArgs> where TEventArgs : EventArgs
 {
     public double CleanupIntervalMilliseconds { get; set; } = 5000D;

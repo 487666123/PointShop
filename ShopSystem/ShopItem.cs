@@ -29,6 +29,18 @@ public partial class ShopItem : IEventHandlerHolder
         }
     }
 
+    private bool _isUnlock = true;
+    public bool IsUnlock
+    {
+        get => _isUnlock;
+        set
+        {
+            if (_isUnlock == value) return;
+            _isUnlock = value;
+            UnlockStateChanged.Raise(new(_isUnlock));
+        }
+    }
+
     public readonly string UnlockCondition;
     public bool TryGetUnlockCondition(out UnlockCondition unlockCondition)
     {
@@ -47,8 +59,8 @@ public partial class ShopItem : IEventHandlerHolder
 
         if (TryGetUnlockCondition(out var condition))
         {
-            condition.StateChanged.AddHandler(this,
-                (_, args) => IsUnlock = args.Value);
+            IsUnlock = condition.IsUnlock;
+            condition.StateChanged.AddHandler(this, (_, args) => IsUnlock = args.Value);
         }
 
         PointShopSystem.OnPricesMultiplierChanged.AddHandler(this,
@@ -63,18 +75,6 @@ public partial class ShopItem : IEventHandlerHolder
     }
 
     public virtual void Buy() => Parent.PurchaseItems(this);
-
-    private bool _isUnlock = true;
-    public bool IsUnlock
-    {
-        get => _isUnlock;
-        set
-        {
-            if (_isUnlock == value) return;
-            _isUnlock = value;
-            UnlockStateChanged.Raise(new(_isUnlock));
-        }
-    }
 
     /// <summary>
     /// 获得奖励

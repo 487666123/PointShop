@@ -105,10 +105,11 @@
     //         WhatIsThis.Label: "{$Mods.PointShop.Config.PointTipMode.WhatIsThis}"
     //     }
     // }
-    DisplayName: PointShop
+    DisplayName: Point Shop
     NameFilter: Name Filter
     Clear: Clear
     Buy: Buy
+	ShowGroupLinks: false
     Configs:
     {
         PointShopConfig:
@@ -117,6 +118,20 @@
             PointMultiplier:
             {
                 Label: Point Multiplier
+                Tooltip: ""
+            }
+        }
+        PointShopClientSideConfig:
+        {
+            DisplayName: Point Shop Client Configuration
+            PointsDisplayWidget:
+            {
+                Label: Points Data Display Widget
+                Tooltip: ""
+            }
+            DisplayLinks:
+            {
+                Label: Show Related Links (Please Re-enter the Map After Switching)
                 Tooltip: ""
             }
         }

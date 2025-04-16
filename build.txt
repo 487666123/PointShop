@@ -1,5 +1,5 @@
 displayName = 积分商店 Point Shop
 author = 局长，天乐，Lacewing，世纪小花
-version = 2.0.3.2
+version = 2.0.5.0
 hideCode = true
 modReferences = SilkyUIFramework

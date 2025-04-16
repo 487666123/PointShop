@@ -1,23 +1,18 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using PointShop.Items;
+﻿using PointShop.Items;
 using SilkyUIFramework.BasicComponents;
-using SilkyUIFramework.BasicElements;
 using SilkyUIFramework.Extensions;
 using Terraria.GameContent.UI;
 
 namespace PointShop.UserInterfaces;
 
-public partial class SUIShopItemComponent : View, IEventHandlerHolder
+public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
 {
     List<object> IEventHandlerHolder.ActiveHandlers { get; } = [];
-
-    protected bool IsDirty;
-    public void MakeDirty() => IsDirty = true;
 
     public ShopItem ShopItem { get; }
 
     public SUIImage Image { get; protected set; }
-    public View BuyButton { get; protected set; }
+    public UIElementGroup BuyButton { get; protected set; }
     public SUIDividingLine SUIDividingLine { get; protected set; }
     public SUICoverView CoverView { get; protected set; }
 
@@ -25,34 +20,34 @@ public partial class SUIShopItemComponent : View, IEventHandlerHolder
     {
         ShopItem = shopItem;
 
-        Display = Display.Flexbox;
-        LayoutDirection = LayoutDirection.Column;
-        FlexWrap = false;
+        LayoutType = LayoutType.Flexbox;
+        FlexDirection = FlexDirection.Column;
 
-        CornerRadius = new Vector4(4f);
+        BorderRadius = new Vector4(4f);
         Border = 2;
         BorderColor = SUIColor.Border * 0.75f;
-        BgColor = Color.Black * 0.25f;
+        BackgroundColor = Color.Black * 0.25f;
 
-        SetSize(0, 0f, 1f, 1f);
+        FlexGrow = 1f;
+        SetSize(100f, 160f);
 
         Create(shopItem);
 
         // 购买按钮
-        BuyButton = new View()
+        BuyButton = new UIElementGroup()
         {
-            CornerRadius = new Vector4(0f, 0f, 2f, 2f),
-            Display = Display.Flexbox,
-            LayoutDirection = LayoutDirection.Row,
+            BorderRadius = new Vector4(0f, 0f, 2f, 2f),
+            LayoutType = LayoutType.Flexbox,
+            FlexDirection = FlexDirection.Row,
             MainAlignment = MainAlignment.Center,
             CrossAlignment = CrossAlignment.Center,
         }.Join(this);
         BuyButton.SetSize(0f, 28f, 1f);
-        BuyButton.OnUpdateAnimationTimer += (_) =>
+        BuyButton.OnUpdateStatus += (gameTime) =>
         {
-            BuyButton.BgColor = BuyButton.HoverTimer.Lerp(SUIColor.Highlight * 0.05f, Color.White * 0.1f);
+            BuyButton.BackgroundColor = BuyButton.HoverTimer.Lerp(SUIColor.Highlight * 0.05f, Color.White * 0.1f);
         };
-        BuyButton.OnLeftMouseDown += (_, _) => ShopItem.Buy();
+        BuyButton.LeftMouseDown += (_, _) => ShopItem.Buy();
 
         // 价格左边的积分币 ItemSlot
         var coinSlot = new SUIItemSlot
@@ -60,14 +55,14 @@ public partial class SUIShopItemComponent : View, IEventHandlerHolder
             Item = new Item(ModContent.ItemType<PointCoin>()),
             ItemAlign = new Vector2(0f, 0.5f),
             ItemScale = 0.8f,
-            BgColor = Color.Transparent,
+            BackgroundColor = Color.Transparent,
             BorderColor = Color.Transparent,
             ItemInteractive = false,
         }.Join(BuyButton);
         coinSlot.SetSize(20, 0f, 0f, 1f);
 
         // 价格
-        var prices = new SUIText()
+        var prices = new UITextView()
         {
             Text = $"{ShopItem.Prices:#,##0}",
             TextAlign = new Vector2(0.5f, 0.5f),
@@ -75,16 +70,16 @@ public partial class SUIShopItemComponent : View, IEventHandlerHolder
             TextColor = Color.White,
         }.Join(BuyButton);
         prices.SetHeight(0f, 1f);
-        prices.UseMenuTickSoundForMouseOver();
+        //prices.UseMenuTickSoundForMouseOver();
 
         shopItem.PricesChanged.AddHandler(this, (_, args) =>
         {
             prices.Text = $"{args.Value:#,##0}";
-            MakeDirty();
         });
 
         if (shopItem.TryGetUnlockCondition(out var unlockCondition))
         {
+
             CoverView = new SUICoverView(unlockCondition.Icon, unlockCondition.DisplayName, unlockCondition.Description);
             if (!unlockCondition.IsUnlock)
             {
@@ -95,19 +90,11 @@ public partial class SUIShopItemComponent : View, IEventHandlerHolder
             {
                 if (args.Value)
                 {
-                    if (HasChild(CoverView))
-                    {
-                        RemoveChild(CoverView);
-                        MakeDirty();
-                    }
+                    if (HasChild(CoverView)) RemoveChild(CoverView);
                 }
                 else
                 {
-                    if (!HasChild(CoverView))
-                    {
-                        AppendFromView(CoverView);
-                        MakeDirty();
-                    }
+                    if (!HasChild(CoverView)) AppendChild(CoverView);
                 }
             });
         }
@@ -115,38 +102,30 @@ public partial class SUIShopItemComponent : View, IEventHandlerHolder
 
     protected virtual void Create(ShopItem shopItem)
     {
-        var ShopItemName = new SUIText
+        var ShopItemName = new UITextView
         {
-            CornerRadius = new Vector4(2f, 2f, 0f, 0f),
+            BorderRadius = new Vector4(2f, 2f, 0f, 0f),
             Text = $"{shopItem.DisplayName}",
-            BgColor = SUIColor.Background * 0.25f,
+            BackgroundColor = SUIColor.Background * 0.25f,
             TextScale = 0.65f,
             TextAlign = new Vector2(0.5f),
         }.Join(this);
         ShopItemName.SetSize(0f, 28f, 1f);
 
-        SUIDividingLine = SUIDividingLine.Horizontal(SUIColor.Border * 0.25f).Join(this);
+        SUIDividingLine = SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(this);
 
         Image = new SUIImage(ShopItem.Icon)
         { }.Join(this);
-        Image.SetSize(0f, -2f, 1f, 0.8f);
+        Image.FlexGrow = 1f;
+        Image.SetWidth(0f, 1f);
 
-        SUIDividingLine = SUIDividingLine.Horizontal(Color.Black * 0.4f).Join(this);
+        SUIDividingLine = SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(this);
     }
 
-    public override void Update(GameTime gameTime)
+    protected override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        base.Update(gameTime);
-        if (IsDirty)
-        {
-            Recalculate();
-            IsDirty = false;
-        }
-    }
+        base.Draw(gameTime, spriteBatch);
 
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        base.Draw(spriteBatch);
         if (BuyButton.IsMouseHovering)
             Main.hoverItemName = LanguageHelper.GetTextByPointShop("Buy").Value;
     }
@@ -166,83 +145,92 @@ public class SUISimpleShopItem(SimpleShopItem shopItem) : SUIShopItemComponent(s
             rarityColor = color;
         }
 
-        var ShopItemName = new SUIText
+        var ShopItemName = new UITextView
         {
-            CornerRadius = new Vector4(2f, 2f, 0f, 0f),
+            BorderRadius = new Vector4(2f, 2f, 0f, 0f),
             Text = $"{shopItem.DisplayName}",
-            BgColor = rarityColor * 0.05f,
+            BackgroundColor = rarityColor * 0.05f,
             TextColor = rarityColor,
             TextScale = 0.65f,
             TextAlign = new Vector2(0.5f),
+            FitWidth = false,
+            FitHeight = false,
         }.Join(this);
         ShopItemName.SetSize(0f, 28f, 1f);
 
-        SUIDividingLine = SUIDividingLine.Horizontal(SUIColor.Border * 0.25f).Join(this);
+        SUIDividingLine = SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(this);
 
         SUIItemSlot = new SUIItemSlot
         {
             Item = new Item(simpleShopItem.Item.type, simpleShopItem.Item.stack),
-            BgColor = Color.Transparent,
-            BorderColor = Color.Transparent,
             Border = 0,
+            BorderColor = Color.Transparent,
+            BackgroundColor = Color.Transparent,
             ItemInteractive = false,
-            FlexWeight = { Enable = true, Value = 1f },
-            SpecifyHeight = true,
             ItemIconSizeLimit = 50,
-            StackAlign = new Vector2(0.7f, 0.65f),
-            StackFormat = "x{0}",
+            StackAlign = new Vector2(0.7f, 0.7f),
+            StackFormat = "{0}",
+            FlexGrow = 1f,
+            FlexShrink = 1f,
         }.Join(this);
+        SUIItemSlot.SetHeight(0f, 0.5f);
         SUIItemSlot.SetWidth(0f, 1f);
 
-        SUIDividingLine = SUIDividingLine.Horizontal(SUIColor.Border * 0.25f).Join(this);
+        SUIDividingLine = SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(this);
     }
 }
 
 /// <summary>
 /// Cover 覆盖
 /// </summary>
-public class SUICoverView : View
+public class SUICoverView : UIElementGroup
 {
     public readonly SUIImage Icon;
-    public readonly SUIText DisplayName;
-    public string Description = "解锁条件详情";
+    public readonly UITextView DisplayName;
+    public string Description = string.Empty;
 
     public SUICoverView(Asset<Texture2D> icon, string displayName, string description)
     {
+        Positioning = Positioning.Absolute;
+
+        ZIndex = 114514;
         Description = description;
-        UseImmediateMode = true;
-        ZIndex = 9999;
 
         SetSize(0f, 0f, 1f, 1f);
-        CornerRadius = new Vector4(2);
-        BgColor = new Color(0.5f, 0.5f, 0.5f) * 0.25f;
-        Positioning = SilkyUIFramework.Core.Positioning.Absolute;
 
-        Display = Display.Flexbox;
-        Gap = new Vector2(8f);
-        LayoutDirection = LayoutDirection.Column;
+        LayoutType = LayoutType.Flexbox;
+        FlexDirection = FlexDirection.Column;
         MainAlignment = MainAlignment.Center;
         CrossAlignment = CrossAlignment.Center;
+        CrossContentAlignment = CrossContentAlignment.Center;
+
+        BorderRadius = new Vector4(2);
+        BackgroundColor = new Color(0.5f, 0.5f, 0.5f) * 0.25f;
 
         Icon = new SUIImage(icon)
         {
             ImageAlign = new Vector2(0.5f),
             ImageScale = new Vector2(0.85f),
+            FitWidth = false,
+            FitHeight = false,
         }.Join(this);
         Icon.SetSize(32f, 32f);
 
-        DisplayName = new SUIText()
+        DisplayName = new UITextView
         {
             Text = displayName,
             TextAlign = new Vector2(0.5f),
             TextScale = 0.8f,
         }.Join(this);
-        DisplayName.SetWidth(0f, 1f);
     }
 
-    public override void Draw(SpriteBatch spriteBatch)
+    protected override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        base.Draw(spriteBatch);
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null,
+            SilkyUI.RasterizerStateForOverflowHidden, null, SilkyUI.TransformMatrix);
+
+        base.Draw(gameTime, spriteBatch);
 
         if (IsMouseHovering && !string.IsNullOrWhiteSpace(Description))
         {

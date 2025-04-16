@@ -19,7 +19,7 @@ EnvironmentShopItems:
       Quantity: 50
       Prices: 8888
   # 森林
-  Forest: 
+  Forest:
     # 钓鱼机
     - Type: ImproveGame/Autofisher
       Quantity: 1
@@ -52,6 +52,10 @@ EnvironmentShopItems:
     - Type: 307
       Quantity: 1
       Prices: 2500
+    # 血泪
+    - Type: 4271
+      Quantity: 1
+      Prices: 5000
     # 雷达
     - Type: 3084
       Quantity: 1
@@ -256,7 +260,7 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 1000
     # 手机
-    - Type: 3124 
+    - Type: 3124
       Quantity: 1
       Prices: 25000
       UnlockCondition: Hardmode
@@ -946,6 +950,8 @@ EnvironmentShopItems:
     - Type: 2437
       Quantity: 1
       Prices: 2000
+      # 困难模式
+      UnlockCondition: Hardmode
   # 雪地
   Snow:
     # 寒颤棘

@@ -5,16 +5,10 @@ namespace PointShop.UserInterfaces;
 
 public partial class PointShopUI
 {
-    public override void Update(GameTime gameTime)
+    protected override void Update(GameTime gameTime)
     {
         UpdatePoints();
         base.Update(gameTime);
-
-        if (IsLayoutDirty)
-        {
-            Recalculate();
-            IsLayoutDirty = false;
-        }
     }
 
     private double _lastPoints;
@@ -26,7 +20,6 @@ public partial class PointShopUI
         if (ShopFooter.EnvironmentName.Text != displayName)
         {
             ShopFooter.EnvironmentName.Text = displayName;
-            MakeLayoutDirty();
         }
 
         var points = environment.GetPlayerPoints();
@@ -34,24 +27,21 @@ public partial class PointShopUI
         {
             ShopFooter.Balance.Text = $"{points:#,##0}";
             _lastPoints = points;
-            MakeLayoutDirty();
         }
     }
 
     public void UpdateMenuList()
     {
-        MakeLayoutDirty();
         var environments = PointShopSystem.Environments;
 
         for (int i = 0; i < environments.Count; i++)
         {
             var environment = environments[i];
-            var button = new SUIMenuComponent(environment).Join(MenuList);
+            var button = new SUIMenuComponent(environment).Join(MenuList.Container);
 
-            button.OnLeftMouseDown += (_, _) =>
+            button.LeftMouseDown += (_, _) =>
             {
                 CurrentEnvironmentName = environment.Name;
-                UpdateShopItemTable();
             };
 
             if (i + 1 != environments.Count)
@@ -64,30 +54,31 @@ public partial class PointShopUI
     private string _keywords = "";
     private bool ShopItemFilters(ShopItem shopItem) => shopItem.DisplayName.Contains(_keywords.Trim());
 
+    public static bool ShopItemTableIsDirty { get; set; } = true;
+
     /// <summary>
     /// 更新物品表格
     /// </summary>
     public void UpdateShopItemTable()
     {
         if (!PointShopSystem.TryGetGameEnvironment(CurrentEnvironmentName, out var environment)) return;
-        MakeLayoutDirty();
 
         ShopItemTable.Container.RemoveAllChildren();
 
         var items = environment.ShopItemList;
 
-        foreach (var item in environment.ShopItemList)
+        foreach (var item in items)
         {
             if (!ShopItemFilters(item)) continue;
 
             if (item is SimpleShopItem simpleShopItem)
             {
-                ShopItemTable.Container.AppendFromView(new SUISimpleShopItem(simpleShopItem));
+                ShopItemTable.Container.AppendChild(new SUISimpleShopItem(simpleShopItem));
                 // new SUISimpleShopItem(simpleShopItem).Join(ShopItemTable.Container);
             }
             else
             {
-                ShopItemTable.Container.AppendFromView(new SUIShopItemComponent(item));
+                ShopItemTable.Container.AppendChild(new SUIShopItemComponent(item));
                 // new SUIShopItemComponent(item).Join(ShopItemTable.Container);
             }
         }

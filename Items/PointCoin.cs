@@ -6,7 +6,7 @@ namespace PointShop.Items;
 
 public class PointCoin : ModItem
 {
-    public double Points { get; set; } = 100;
+    private double Points { get; set; }
 
     public override void SetStaticDefaults()
     {
@@ -26,18 +26,13 @@ public class PointCoin : ModItem
         Item.maxStack = Item.CommonMaxStack;
         Item.value = Item.sellPrice(silver: 1);
         Item.rare = ItemRarityID.Red;
+        Points = 100;
     }
 
-    public override void Update(ref float gravity, ref float maxFallSpeed)
-    {
+    public override void Update(ref float gravity, ref float maxFallSpeed) =>
         Lighting.AddLight(Item.Center, Color.Yellow.ToVector3() * 0.5f);
-        base.Update(ref gravity, ref maxFallSpeed);
-    }
 
-    public override bool CanPickup(Player player)
-    {
-        return true;
-    }
+    public override bool CanPickup(Player player) => true;
 
     public override bool OnPickup(Player player)
     {
@@ -45,8 +40,8 @@ public class PointCoin : ModItem
 
         var points = Points * Item.stack;
 
-        var min = Math.Clamp(player.luck + 0.75f, 0.5f, 0.75f);
-        var max = Math.Max(player.luck + 1.25f, 1.25f);
+        var min = Math.Clamp(player.luck, -0.25f, 0f) + 0.75f;
+        var max = Math.Max(player.luck, 0f) + 1.25f;
         points *= Main.rand.NextFloat(min, max);
 
         var eachPoints = points / shopPlayer.AverageEnvironments.Count;
@@ -58,15 +53,14 @@ public class PointCoin : ModItem
                 GameEnvironmentType.Unique or GameEnvironmentType.Void => points,
                 GameEnvironmentType.Average or _ => eachPoints,
             };
-            SoundEngine.PlaySound(SoundID.Grab, null);
+            SoundEngine.PlaySound(SoundID.Grab);
             shopPlayer.IncreasePoint(env.Name, value);
-            PointPopupHelper.Create(new Vector2(player.position.X + player.width / 2, player.position.Y), env, value, 90);
+            PointPopupHelper.Create(new Vector2(player.position.X + player.width / 2, player.position.Y), env, value,
+                90);
         }
+
         return false;
     }
 
-    public override void GrabRange(Player player, ref int grabRange)
-    {
-        grabRange += 16 * 30;
-    }
+    public override void GrabRange(Player player, ref int grabRange) => grabRange += 16 * 30;
 }

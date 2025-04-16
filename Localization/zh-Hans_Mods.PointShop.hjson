@@ -227,6 +227,7 @@
     NameFilter: 筛选
     Clear: 清空
     Buy: 购买
+	ShowGroupLinks: true
     Configs:
     {
         PointShopConfig:
@@ -235,6 +236,20 @@
             PointMultiplier:
             {
                 Label: 积分售价乘数
+                Tooltip: ""
+            }
+        }
+        PointShopClientSideConfig:
+        {
+            DisplayName: 积分商店客户端配置
+            PointsDisplayWidget:
+            {
+                Label: 积分数据小部件
+                Tooltip: ""
+            }
+            DisplayLinks:
+            {
+                Label: 显示相关链接 (切换后请重新进入地图)
                 Tooltip: ""
             }
         }
