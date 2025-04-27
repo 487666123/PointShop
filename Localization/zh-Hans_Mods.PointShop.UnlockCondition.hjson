@@ -1,22 +1,19 @@
-{
-    Hardmode:
-    {
-        DisplayName: 困难模式
-        Description: 困难模式解锁
-    }
-    DownedSkeletron:
-    {
-        DisplayName: 骷髅王
-        Description: 击败骷髅王解锁
-    }
-    DownedMechBossAny:
-    {
-        DisplayName: 任意机械 BOSS
-        Description: 击败任意机械 BOSS 解锁
-    }
-    DownedPlantera:
-    {
-        DisplayName: 世纪之花
-        Description: 击败世纪之花解锁
-    }
+Hardmode: {
+	DisplayName: 困难模式
+	Description: 困难模式解锁
+}
+
+DownedSkeletron: {
+	DisplayName: 骷髅王
+	Description: 击败骷髅王解锁
+}
+
+DownedMechBossAny: {
+	DisplayName: 任意机械 BOSS
+	Description: 击败任意机械 BOSS 解锁
+}
+
+DownedPlantera: {
+	DisplayName: 世纪之花
+	Description: 击败世纪之花解锁
 }

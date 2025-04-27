@@ -5,13 +5,34 @@ namespace PointShop.Commons;
 
 public class PointShopNPC : GlobalNPC
 {
+    /// <summary>
+    /// 向所有有伤害的 NPC 添加 PointCoin 添加掉落
+    /// </summary>
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
         if (npc.damage <= 0 || NPCID.Sets.ProjectileNPC[npc.type]) return;
 
+        // 获取 NPC 在图鉴中的稀有度
         ContentSamples.NpcBestiaryRarityStars.TryGetValue(npc.type, out var count);
-        var itemDropRule = ItemDropRule.Common(ModContent.ItemType<PointCoin>(), minimumDropped: count, maximumDropped: count);
+
+        var coinType = ModContent.ItemType<PointCoin>();
+
+        // chanceDenominator    机会分母
+        // minimumDropped       最小掉落
+        // maximumDropped       最大掉落
+        // var itemDropRule = ItemDropRule.Common(coinType, 1, count, count);
+
+        var itemDropRule = ItemDropRule.ByCondition(new CannotShowUIDropRuleCondition(), coinType, 1, count, count);
+
+        // 添加掉落
         npcLoot.Add(itemDropRule);
+    }
+
+    private class CannotShowUIDropRuleCondition : IItemDropRuleCondition
+    {
+        public string GetConditionDescription() => string.Empty;
+        public bool CanDrop(DropAttemptInfo info) => true;
+        public bool CanShowItemDropInUI() => false;
     }
 
     // public override bool InstancePerEntity => true;

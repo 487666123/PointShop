@@ -27,6 +27,7 @@ public class SUIMenuComponent : UIElementGroup
         {
             ImageScale = new Vector2(0.95f),
             ImageAlign = new Vector2(0.5f),
+            FitWidth = false,
         }.Join(this);
         Icon.SetWidth(28);
 

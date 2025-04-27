@@ -6,7 +6,7 @@ namespace PointShop.Items;
 
 public class PointCoin : ModItem
 {
-    private double Points { get; set; }
+    protected virtual double Points => 100f;
 
     public override void SetStaticDefaults()
     {
@@ -22,11 +22,11 @@ public class PointCoin : ModItem
 
     public override void SetDefaults()
     {
-        Item.width = Item.height = 18;
+        Item.width = 18;
+        Item.height = 18;
         Item.maxStack = Item.CommonMaxStack;
         Item.value = Item.sellPrice(silver: 1);
         Item.rare = ItemRarityID.Red;
-        Points = 100;
     }
 
     public override void Update(ref float gravity, ref float maxFallSpeed) =>
@@ -48,13 +48,16 @@ public class PointCoin : ModItem
 
         foreach (var env in shopPlayer.CurrentEnvironments)
         {
-            var value = env.Type switch
+            var value = env.PointsSharingType switch
             {
-                GameEnvironmentType.Unique or GameEnvironmentType.Void => points,
-                GameEnvironmentType.Average or _ => eachPoints,
+                PointsSharingType.Unique or PointsSharingType.Void => points,
+                PointsSharingType.Average or _ => eachPoints,
             };
+            // 拾取音效
             SoundEngine.PlaySound(SoundID.Grab);
+            // 增加积分
             shopPlayer.IncreasePoint(env.Name, value);
+            // 创建提示信息
             PointPopupHelper.Create(new Vector2(player.position.X + player.width / 2, player.position.Y), env, value,
                 90);
         }

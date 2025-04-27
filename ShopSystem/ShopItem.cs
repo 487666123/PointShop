@@ -3,48 +3,27 @@
 /// <summary>
 /// 商品
 /// </summary>
-public partial class ShopItem : IEventHandlerHolder
+public class ShopItem : IEventHandlerHolder
 {
+    /// <summary>
+    /// 添加此商品的 Mod（并非为此商品的所属 Mod）
+    /// </summary>
     public Mod Mod { get; }
+
     List<object> IEventHandlerHolder.ActiveHandlers { get; } = [];
 
+    /// <summary>
+    /// 商品的图标
+    /// </summary>
     public virtual Asset<Texture2D> Icon { get; }
-    private string _displayName = "特辣的海藻";
-    public virtual string DisplayName { get => _displayName; set => _displayName = value; }
-    public GameEnvironment Parent { get; }
 
-    public WeakEventManager<EventArgs<double>> PricesChanged = new();
-    public WeakEventManager<EventArgs<bool>> UnlockStateChanged = new();
-
-    public double OriginalPrices;
-    public partial double Prices { get; set; }
-    public partial double Prices
+    /// <summary>
+    /// 商品的显示名称
+    /// </summary>
+    public virtual string DisplayName
     {
         get => field;
-        set
-        {
-            if (field == value) return;
-            field = value;
-            PricesChanged.Raise(new(field));
-        }
-    }
-
-    private bool _isUnlock = true;
-    public bool IsUnlock
-    {
-        get => _isUnlock;
-        set
-        {
-            if (_isUnlock == value) return;
-            _isUnlock = value;
-            UnlockStateChanged.Raise(new(_isUnlock));
-        }
-    }
-
-    public readonly string UnlockCondition;
-    public bool TryGetUnlockCondition(out UnlockCondition unlockCondition)
-    {
-        return PointShopSystem.TryGetUnlockCondition(UnlockCondition, out unlockCondition);
+        set => field = value;
     }
 
     public ShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string unlockCondition)
@@ -67,23 +46,96 @@ public partial class ShopItem : IEventHandlerHolder
             (_, args) => Prices = OriginalPrices * args.Value);
     }
 
+    /// <summary>
+    /// 此商品所在的环境
+    /// </summary>
+    public GameEnvironment Parent { get; }
+
+    public readonly WeakEventManager<EventArgs<double>> PricesChanged = new();
+    public readonly WeakEventManager<EventArgs<bool>> UnlockStateChanged = new();
+
+    /// <summary>
+    /// 商品的原始价格
+    /// </summary>
+    public double OriginalPrices { get; }
+
+    /// <summary>
+    /// 商品调整后的价格
+    /// </summary>
+    public double Prices
+    {
+        get => field;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            PricesChanged.Raise(new EventArgs<double>(field));
+        }
+    }
+
+    public bool IsUnlock
+    {
+        get => field;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            UnlockStateChanged.Raise(new EventArgs<bool>(field));
+        }
+    }
+
+    /// <summary>
+    /// 商品解锁条件（查询名称）
+    /// </summary>
+    public readonly string UnlockCondition;
+
+    /// <summary>
+    /// 获取解锁条件，可能没有解锁条件
+    /// </summary>
+    /// <param name="unlockCondition">解锁条件</param>
+    /// <returns>是否有解锁条件（通常没有解锁条件可以直接购买）</returns>
+    public bool TryGetUnlockCondition(out UnlockCondition unlockCondition)
+    {
+        return PointShopSystem.TryGetUnlockCondition(UnlockCondition, out unlockCondition);
+    }
+
+    /// <summary>
+    /// 本地玩家进入世界时调用
+    /// </summary>
     public virtual void OnEnterWorld() { }
+
+    /// <summary>
+    /// 本地更新
+    /// </summary>
+    /// <param name="gameTime"></param>
     public virtual void Update(GameTime gameTime)
     {
         PricesChanged.Update(gameTime);
         UnlockStateChanged.Update(gameTime);
     }
 
+    /// <summary>
+    /// 可以直接调用方法购买此物品（它会调用父元素的 <see cref="GameEnvironment.PurchaseItems"/>）
+    /// </summary>
     public virtual void Buy() => Parent.PurchaseItems(this);
 
     /// <summary>
-    /// 获得奖励
+    /// 当环境中的 <see cref="GameEnvironment.PurchaseItems"/> 方法对购买校验通过后，调用此方法以给予玩家奖励
     /// </summary>
-    /// <param name="player">一般是本地玩家</param>
+    /// <param name="player">购买商品的玩家（通常是本地玩家）</param>
     public virtual void GetRewards(Player player) { }
 }
 
-public class SimpleShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string conditionName, Item item) : ShopItem(mod, gameEnvironment, prices, conditionName)
+/// <summary>
+/// 简单商品，即 游戏道具 商品
+/// </summary>
+/// <param name="mod"></param>
+/// <param name="gameEnvironment"></param>
+/// <param name="prices"></param>
+/// <param name="conditionName"></param>
+/// <param name="item"></param>
+public class SimpleShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string conditionName, Item item)
+    : ShopItem(mod, gameEnvironment, prices, conditionName)
 {
     public Item Item { get; } = item;
 
@@ -101,8 +153,7 @@ public class SimpleShopItem(Mod mod, GameEnvironment gameEnvironment, int prices
     public override void GetRewards(Player player)
     {
         base.GetRewards(player);
-        if (player is null) return;
 
-        player.QuickSpawnItem(null, Item.type, Item.stack);
+        player?.QuickSpawnItem(null, Item.type, Item.stack);
     }
 }

@@ -36,7 +36,7 @@ public class PointShopSystem : ModSystem
 
     /// <summary> 注册游戏环境 </summary>
     public static bool RegisterGameEnvironment(Mod mod, Asset<Texture2D> icon, string name, Func<Player, bool> condition, int priority, Color uniqueColor,
-        GameEnvironmentType type = GameEnvironmentType.Average)
+        PointsSharingType type = PointsSharingType.Average)
     {
         var environment = new SimpleEnvironment(mod, icon, name, condition, priority, uniqueColor, type);
         return RegisterGameEnvironment(environment);

@@ -10,17 +10,27 @@ namespace PointShop.UserInterfaces;
 [RegisterUI("Vanilla: Radial Hotbars", "PointShop: PointShopUI")]
 public partial class PointShopUI : BasicBody
 {
-    public static bool SwitchStatus { get; set; } = false;
+    /// <summary>
+    /// 显示 UI，状态控制
+    /// </summary>
+    public static bool ShowUI { get; set; }
+
+    /// <summary>
+    /// 是否启用，包括事件与绘制
+    /// </summary>
     public override bool Enabled
     {
         get
         {
-            if (SwitchStatus) return true;
+            if (ShowUI) return true;
             return !SwitchTimer.IsReverseCompleted;
         }
-        set => SwitchStatus = value;
+        set => ShowUI = value;
     }
 
+    /// <summary>
+    /// 商店UI中当前显示的环境商店内部名称
+    /// </summary>
     public static string CurrentEnvironmentName
     {
         get;
@@ -32,14 +42,27 @@ public partial class PointShopUI : BasicBody
         }
     } = "Forest";
 
-    public override bool IsInteractable => !SwitchTimer.IsReverse;
+    /// <summary>
+    /// 是否可交互（不影响绘制）
+    /// </summary>
+    public override bool IsInteractable => SwitchTimer.IsCompleted;
 
-    public SUIScrollView MenuList { get; private set; }
-    public UIElementGroup Header { get; private set; }
-    //public View Footer { get; private set; }
-
+    /// <summary>
+    /// 菜单列表
+    /// </summary>
+    public SUIScrollView MenuListScrollView { get; private set; }
+    /// <summary>
+    /// 商店底部栏
+    /// </summary>
+    public PointShopFooter ShopFooter { get; private set; }
+    /// <summary>
+    /// 内容容器（所有内容的容器）
+    /// </summary>
     public UIElementGroup ContentContainer { get; private set; }
-    public SUIScrollView ShopItemTable { get; private set; }
+    /// <summary>
+    /// 商品表
+    /// </summary>
+    public SUIScrollView ShopItemTableScrollView { get; private set; }
 
     public SUIEditText SearchBox { get; private set; }
 
@@ -76,7 +99,7 @@ public partial class PointShopUI : BasicBody
         }.Join(this);
         ContentContainer.SetSize(0f, 450f, 1f);
 
-        MenuList = new SUIScrollView
+        MenuListScrollView = new SUIScrollView
         {
             Gap = new Vector2(4f),
             Mask =
@@ -91,8 +114,8 @@ public partial class PointShopUI : BasicBody
                 Gap = Size.Zero,
             }
         }.Join(ContentContainer);
-        MenuList.SetPadding(4f);
-        MenuList.SetSize(0f, 0f, 0.25f, 1f);
+        MenuListScrollView.SetPadding(4f);
+        MenuListScrollView.SetSize(0f, 0f, 0.25f, 1f);
 
         UpdateMenuList();
 
@@ -187,15 +210,15 @@ public partial class PointShopUI : BasicBody
         #endregion
 
         // 商品表格
-        ShopItemTable = new SUIScrollView
+        ShopItemTableScrollView = new SUIScrollView
         {
             Gap = new Vector2(4),
             FlexGrow = 1f,
         }.Join(rightContainer);
-        ShopItemTable.SetPadding(4f);
-        ShopItemTable.SetWidth(0f, 1f);
+        ShopItemTableScrollView.SetPadding(4f);
+        ShopItemTableScrollView.SetWidth(0f, 1f);
 
-        ShopItemTable.Container.Gap = new Vector2(4);
+        ShopItemTableScrollView.Container.Gap = new Vector2(4);
         //ShopItemTable.Container.TemplateColumns = [.. TemplateUnit.Repeat(4, 0f, 1f)];
         //ShopItemTable.Container.TemplateRows = [.. TemplateUnit.Repeat(1, 160f)];
 
@@ -203,13 +226,11 @@ public partial class PointShopUI : BasicBody
         ShopFooter = new PointShopFooter().Join(this);
     }
 
-    public PointShopFooter ShopFooter { get; private set; }
-
     public readonly AnimationTimer SwitchTimer = new(3);
 
     protected override void UpdateStatus(GameTime gameTime)
     {
-        if (SwitchStatus) SwitchTimer.StartUpdate();
+        if (ShowUI) SwitchTimer.StartUpdate();
         else SwitchTimer.StartReverseUpdate();
 
         SwitchTimer.Update(gameTime);
@@ -287,11 +308,13 @@ public partial class PointShopUI : BasicBody
                 var batch = Main.spriteBatch;
                 batch.End();
                 BlurMakeSystem.KawaseBlur();
-                batch.Begin(SpriteSortMode.Deferred, null, null, null, SilkyUI.RasterizerStateForOverflowHidden, null, SilkyUI.TransformMatrix);
+                batch.Begin(SpriteSortMode.Deferred, null, null, null, SilkyUI.RasterizerStateForOverflowHidden, null,
+                    SilkyUI.TransformMatrix);
             }
 
             SDFRectangle.SampleVersion(BlurMakeSystem.BlurRenderTarget,
-                Bounds.Position * Main.UIScale, Bounds.Size * Main.UIScale, BorderRadius * Main.UIScale, Matrix.Identity);
+                Bounds.Position * Main.UIScale, Bounds.Size * Main.UIScale, BorderRadius * Main.UIScale,
+                Matrix.Identity);
         }
 
         base.Draw(gameTime, spriteBatch);

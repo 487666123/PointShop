@@ -49,7 +49,7 @@ public static class PointPopupHelper
     {
         if (!Main.showItemText || Main.netMode == NetmodeID.Server) return -1;
 
-        int index = SearchInactiveOrBottom();
+        var index = SearchInactiveOrBottom();
         if (index >= 0)
         {
             Vector2 textSize = FontAssets.MouseText.Value.MeasureString(request.Text);
@@ -81,21 +81,19 @@ public static class PointPopupHelper
     /// </summary>
     public static int SearchInactiveOrBottom()
     {
-        int index = -1;
-        for (int i = 0; i < Main.popupText.Length; i++)
+        var index = -1;
+        for (var i = 0; i < Main.popupText.Length; i++)
         {
-            if (Main.popupText[i] == null || !Main.popupText[i].active)
-            {
-                index = i;
-                break;
-            }
+            if (Main.popupText[i] != null && Main.popupText[i].active) continue;
+            index = i;
+            break;
         }
 
         // 没找到就拿最靠下的 (为啥不是拿最靠上的，原版就这么写的不管了)
         if (index == -1)
         {
             double bottom = Main.bottomWorld;
-            for (int i = 0; i < 20; i++)
+            for (var i = 0; i < 20; i++)
             {
                 if (bottom > Main.popupText[i].position.Y)
                 {

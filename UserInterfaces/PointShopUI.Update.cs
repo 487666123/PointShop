@@ -37,7 +37,7 @@ public partial class PointShopUI
         for (int i = 0; i < environments.Count; i++)
         {
             var environment = environments[i];
-            var button = new SUIMenuComponent(environment).Join(MenuList.Container);
+            var button = new SUIMenuComponent(environment).Join(MenuListScrollView.Container);
 
             button.LeftMouseDown += (_, _) =>
             {
@@ -46,7 +46,7 @@ public partial class PointShopUI
 
             if (i + 1 != environments.Count)
             {
-                SUIDividingLine.Horizontal(SUIColor.Border * 0.75f).Join(MenuList.Container);
+                SUIDividingLine.Horizontal(SUIColor.Border * 0.75f).Join(MenuListScrollView.Container);
             }
         }
     }
@@ -63,7 +63,7 @@ public partial class PointShopUI
     {
         if (!PointShopSystem.TryGetGameEnvironment(CurrentEnvironmentName, out var environment)) return;
 
-        ShopItemTable.Container.RemoveAllChildren();
+        ShopItemTableScrollView.Container.RemoveAllChildren();
 
         var items = environment.ShopItemList;
 
@@ -73,12 +73,12 @@ public partial class PointShopUI
 
             if (item is SimpleShopItem simpleShopItem)
             {
-                ShopItemTable.Container.AppendChild(new SUISimpleShopItem(simpleShopItem));
+                ShopItemTableScrollView.Container.AppendChild(new SUISimpleShopItem(simpleShopItem));
                 // new SUISimpleShopItem(simpleShopItem).Join(ShopItemTable.Container);
             }
             else
             {
-                ShopItemTable.Container.AppendChild(new SUIShopItemComponent(item));
+                ShopItemTableScrollView.Container.AppendChild(new SUIShopItemComponent(item));
                 // new SUIShopItemComponent(item).Join(ShopItemTable.Container);
             }
         }

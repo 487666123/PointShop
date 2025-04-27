@@ -50,7 +50,7 @@ public class WeakEventManager<TEventArgs> where TEventArgs : EventArgs
 
     public void Update(GameTime gameTime)
     {
-        double currentTime = gameTime.TotalGameTime.TotalMilliseconds;
+        var currentTime = gameTime.TotalGameTime.TotalMilliseconds;
 
         if (_needsCleanup || currentTime - _lastCleanupTimeMilliseconds >= CleanupIntervalMilliseconds)
         {

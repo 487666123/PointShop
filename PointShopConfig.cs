@@ -13,7 +13,7 @@ internal class PointShopConfig : ModConfig
     [Increment(0.025f)]
     [DefaultValue(1f)]
     [CustomModConfigItem(typeof(RoundFloatElement))]
-    public float PointMultiplier;
+    public float PointMultiplier { get; set; }
 
     public override void OnChanged()
     {

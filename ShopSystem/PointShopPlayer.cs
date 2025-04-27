@@ -20,7 +20,7 @@ public partial class PointShopPlayer : ModPlayer
         bool first = true;
         CurrentEnvironments.AddRange(PointShopSystem.Environments.Where(env =>
         {
-            if (env.Type is GameEnvironmentType.Void && !first) return false;
+            if (env.PointsSharingType is PointsSharingType.Void && !first) return false;
 
             if (env.Condition(Player))
             {
@@ -30,7 +30,7 @@ public partial class PointShopPlayer : ModPlayer
             return false;
         }));
         AverageEnvironments.Clear();
-        AverageEnvironments.AddRange(CurrentEnvironments.Where(env => env.Type == GameEnvironmentType.Average));
+        AverageEnvironments.AddRange(CurrentEnvironments.Where(env => env.PointsSharingType == PointsSharingType.Average));
     }
 
     //public bool TryGetItemPoints(Item item, out double points)

@@ -22,18 +22,18 @@ public class GameEnvironmentRegistrar : ModSystem
 
         // 天空
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Sky, "Sky",
-            player => player is { ZoneSkyHeight: true }, 2000, new(255, 225, 143), GameEnvironmentType.Average);
+            player => player is { ZoneSkyHeight: true }, 2000, new Color(255, 225, 143), PointsSharingType.Average);
 
         // 森林
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Surface, "Forest",
-            player => player is { ZoneForest: true }, 2000, new(28, 216, 94));
+            player => player is { ZoneForest: true }, 2000, new Color(28, 216, 94));
 
         // 正常洞穴 (不包括那些特殊环境)
-        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Caverns, "Caverns", IsCaverns, 2000, new(128, 77, 57));
+        PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Caverns, "Caverns", IsCaverns, 2000, new Color(128, 77, 57));
 
         // 海洋
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Beach, "Beach",
-            player => player is { ZoneBeach: true }, 2000, new(48, 91, 191), GameEnvironmentType.Average);
+            player => player is { ZoneBeach: true }, 2000, new Color(48, 91, 191), PointsSharingType.Average);
 
         #endregion
 
@@ -81,16 +81,16 @@ public class GameEnvironmentRegistrar : ModSystem
 
         // 地牢
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Dungeon, "Dungeon",
-            player => player is { ZoneDungeon: true }, 2000, new(35, 71, 117), GameEnvironmentType.Average);
+            player => player is { ZoneDungeon: true }, 2000, new(35, 71, 117), PointsSharingType.Average);
 
         // 地狱
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Underworld, "Underworld",
-            player => player is { ZoneUnderworldHeight: true }, 2000, new(160, 35, 0), GameEnvironmentType.Average);
+            player => player is { ZoneUnderworldHeight: true }, 2000, new(160, 35, 0), PointsSharingType.Average);
 
         #endregion
 
         // 虚无
         PointShopSystem.RegisterGameEnvironment(Mod, ModAsset.Void, "Void",
-            player => true, 1000, new(28, 216, 94), GameEnvironmentType.Void);
+            player => true, 1000, new Color(28, 216, 94), PointsSharingType.Void);
     }
 }
