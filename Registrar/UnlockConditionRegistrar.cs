@@ -1,5 +1,8 @@
 namespace PointShop.Registrar;
 
+/// <summary>
+/// ½âËøÌõ¼ş×¢²á
+/// </summary>
 public class UnlockConditionRegistrar : ModSystem
 {
     public override void Load()

@@ -10,7 +10,7 @@
 
 	<ItemGroup>
 		<Reference Include="SilkyUIFramework">
-			<HintPath>libs\SilkyUIFramework.dll</HintPath>
+			<HintPath>..\SilkyUIFramework\bin\Release\net8.0\SilkyUIFramework.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
