@@ -5,12 +5,24 @@
 /// </summary>
 public class WeakEventManager<TEventArgs> where TEventArgs : EventArgs
 {
+    /// <summary>
+    /// 清理间隔
+    /// </summary>
     public double CleanupIntervalMilliseconds { get; set; } = 5000D;
 
+    /// <summary>
+    /// 标记为需要清理引用
+    /// </summary>
     private bool _needsCleanup = false;
+
+    /// <summary>
+    /// 上次清理的时间
+    /// </summary>
     private double _lastCleanupTimeMilliseconds = 0;
 
-    // 使用元组同时保存弱引用和事件源
+    /// <summary>
+    /// 使用元组同时保存弱引用和事件源
+    /// </summary>
     private readonly List<WeakReference<EventHandler<TEventArgs>>> _eventBindings = [];
 
     /// <summary>
@@ -19,6 +31,7 @@ public class WeakEventManager<TEventArgs> where TEventArgs : EventArgs
     public void AddHandler(IEventHandlerHolder source, EventHandler<TEventArgs> handler)
     {
         ArgumentNullException.ThrowIfNull(source);
+
         source.ActiveHandlers.Add(handler);
         _eventBindings.Add(new WeakReference<EventHandler<TEventArgs>>(handler));
     }
@@ -28,7 +41,8 @@ public class WeakEventManager<TEventArgs> where TEventArgs : EventArgs
     /// </summary>
     public void RemoveHandler(IEventHandlerHolder source, EventHandler<TEventArgs> handler)
     {
-        if (source == null) return;
+        ArgumentNullException.ThrowIfNull(source);
+
         source.ActiveHandlers.Remove(handler);
         _eventBindings.RemoveAll(b => !b.TryGetTarget(out var h) || h == handler);
     }
@@ -37,17 +51,18 @@ public class WeakEventManager<TEventArgs> where TEventArgs : EventArgs
     {
         foreach (var handlerRef in _eventBindings)
         {
-            if (handlerRef.TryGetTarget(out var handler)) // 确保源对象存活
-            {
+            // 确保源对象存活
+            if (handlerRef.TryGetTarget(out var handler))
                 handler.Invoke(this, eventArgs);
-            }
             else
-            {
                 _needsCleanup = true;
-            }
         }
     }
 
+    /// <summary>
+    /// 周期检测清理
+    /// </summary>
+    /// <param name="gameTime"></param>
     public void Update(GameTime gameTime)
     {
         var currentTime = gameTime.TotalGameTime.TotalMilliseconds;
@@ -60,6 +75,9 @@ public class WeakEventManager<TEventArgs> where TEventArgs : EventArgs
         }
     }
 
+    /// <summary>
+    /// 清理所有不存在的引用
+    /// </summary>
     private void Cleanup() => _eventBindings.RemoveAll(handlerRef => !handlerRef.TryGetTarget(out _));
 }
 

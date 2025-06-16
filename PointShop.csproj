@@ -5,13 +5,10 @@
 
 	<PropertyGroup>
 		<AssemblyName>PointShop</AssemblyName>
-		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Reference Include="SilkyUIFramework">
-			<HintPath>..\SilkyUIFramework\bin\Release\net8.0\SilkyUIFramework.dll</HintPath>
-		</Reference>
+		<ProjectReference Include="..\SilkyUIFramework\SilkyUIFramework.csproj"></ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>

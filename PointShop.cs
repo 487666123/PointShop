@@ -1,5 +1,4 @@
 using PointShop.Registrar;
-using Terraria.WorldBuilding;
 
 namespace PointShop;
 

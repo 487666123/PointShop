@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using SilkyUIFramework.Animation;
+﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.BasicComponents;
 using SilkyUIFramework.Extensions;
