@@ -46,10 +46,10 @@ public class SimpleShopData
 
 public class SimpleShopItemGenerator
 {
-    public string Type { get; set; }
-    public int Quantity { get; set; }
-    public int Prices { get; set; }
-    public string UnlockCondition { get; set; }
+    public string Type { get; set; } = "";
+    public int Quantity { get; set; } = 0;
+    public int Prices { get; set; } = 0;
+    public string UnlockCondition { get; set; } = "";
 
     public SimpleShopItem Generate(Mod mod, GameEnvironment gameEnvironment)
     {
