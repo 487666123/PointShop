@@ -1,5 +1,4 @@
 ﻿using Terraria.Audio;
-using Terraria;
 using Terraria.DataStructures;
 
 namespace PointShop.Items;

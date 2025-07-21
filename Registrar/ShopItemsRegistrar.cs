@@ -4,11 +4,16 @@ public class ShopItemsRegistrar : ModSystem
 {
     public override void PostSetupContent()
     {
-        var shopData = GetShopData(FileHelper.GetString(FileHelper.ShopDataPath));
+        var shopData = ConvertYamlStringToShopData(FileHelper.GetString(FileHelper.ShopDataPath));
         RegisterShopData(Mod, shopData);
     }
 
-    public static SimpleShopData GetShopData(string yamlDataString)
+    /// <summary>
+    /// 从 yaml 字符串中获取商店数据
+    /// </summary>
+    /// <param name="yamlDataString">yaml 字符串</param>
+    /// <returns></returns>
+    public static SimpleShopData ConvertYamlStringToShopData(string yamlDataString)
     {
         return FileHelper.YamlDeserializer.Deserialize<SimpleShopData>(yamlDataString);
     }

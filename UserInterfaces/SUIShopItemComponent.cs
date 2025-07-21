@@ -5,6 +5,9 @@ using Terraria.GameContent.UI;
 
 namespace PointShop.UserInterfaces;
 
+/// <summary>
+/// 商品卡片组件，包括商品名称、商品图标、购买按钮、价格等
+/// </summary>
 public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
 {
     List<object> IEventHandlerHolder.ActiveHandlers { get; } = [];
@@ -114,8 +117,7 @@ public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
 
         SUIDividingLine = SUIDividingLine.Horizontal(Color.Black * 0.5f).Join(this);
 
-        Image = new SUIImage(ShopItem.Icon)
-        { }.Join(this);
+        Image = new SUIImage(ShopItem.Icon).Join(this);
         Image.FlexGrow = 1f;
         Image.SetWidth(0f, 1f);
 

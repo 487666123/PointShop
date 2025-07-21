@@ -3,13 +3,11 @@
 public static class PointPopupHelper
 {
     /// <summary>
-    /// 搜索
+    /// 寻找第一个 <see cref="PointPopup"/>
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static PointPopup SearchPointPopupByEnvironment(GameEnvironment gameEnvironment)
+    public static PointPopup FindFirstPointPopupByEnvironment(GameEnvironment gameEnvironment)
     {
-        // 原版会服用, 要检测 .name 是否等于 DisplayName
+        // 原版会复用, 要检测 .name 是否等于 DisplayName
         foreach (var popupText in Main.popupText)
         {
             if (popupText is PointPopup { active: true } pointPopup &&
@@ -26,7 +24,7 @@ public static class PointPopupHelper
     /// <summary> 创建一个 Popup </summary>
     public static void Create(Vector2 center, GameEnvironment environment, double points, int duration)
     {
-        if (SearchPointPopupByEnvironment(environment) is { } pointPopup)
+        if (FindFirstPointPopupByEnvironment(environment) is { } pointPopup)
         {
             points += pointPopup.Points;
             pointPopup.active = false;
@@ -49,7 +47,7 @@ public static class PointPopupHelper
     {
         if (!Main.showItemText || Main.netMode == NetmodeID.Server) return -1;
 
-        var index = SearchInactiveOrBottom();
+        var index = FindInactiveOrBottom();
         if (index >= 0)
         {
             Vector2 textSize = FontAssets.MouseText.Value.MeasureString(request.Text);
@@ -79,7 +77,7 @@ public static class PointPopupHelper
     /// <summary>
     /// 找到不活跃的
     /// </summary>
-    public static int SearchInactiveOrBottom()
+    public static int FindInactiveOrBottom()
     {
         var index = -1;
         for (var i = 0; i < Main.popupText.Length; i++)
@@ -89,7 +87,7 @@ public static class PointPopupHelper
             break;
         }
 
-        // 没找到就拿最靠下的 (为啥不是拿最靠上的，原版就这么写的不管了)
+        // 没找到就拿最靠下的 (为啥不是拿最靠上的？原版就这么写的不管了)
         if (index == -1)
         {
             double bottom = Main.bottomWorld;

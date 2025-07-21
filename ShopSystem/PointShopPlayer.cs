@@ -1,8 +1,4 @@
-﻿using PointShop.Items;
-using Terraria.Audio;
-using Terraria.ModLoader.IO;
-
-namespace PointShop.ShopSystem;
+﻿namespace PointShop.ShopSystem;
 
 /// <summary>
 /// 处理积分的各种操作

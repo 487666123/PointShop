@@ -1,5 +1,4 @@
 using PointShop.Registrar;
-using Terraria.WorldBuilding;
 
 namespace PointShop;
 
@@ -124,7 +123,7 @@ public class PointShop : Mod
     {
         if (modObj is not Mod mod || yamlStringObj is not string yamlString) return;
 
-        ShopItemsRegistrar.RegisterShopData(mod, ShopItemsRegistrar.GetShopData(yamlString));
+        ShopItemsRegistrar.RegisterShopData(mod, ShopItemsRegistrar.ConvertYamlStringToShopData(yamlString));
     }
 }
 

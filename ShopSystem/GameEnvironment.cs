@@ -25,7 +25,7 @@ public class GameEnvironment(
     /// 影响分享顺序（如果受顺序影响），也影响 UI 中排列的顺序
     /// </summary>
     public int Priority { get; } = priority;
-    
+
     /// <summary>
     /// 环境的代表图标
     /// </summary>

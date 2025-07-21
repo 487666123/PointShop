@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using SilkyUIFramework.Animation;
+﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.BasicComponents;
 using SilkyUIFramework.Extensions;
@@ -29,7 +28,7 @@ public partial class PointShopUI : BasicBody
     }
 
     /// <summary>
-    /// 商店UI中当前显示的环境商店内部名称
+    /// 商店 UI 中当前显示的环境商店内部名称
     /// </summary>
     public static string CurrentEnvironmentName
     {

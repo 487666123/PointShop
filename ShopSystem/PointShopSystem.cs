@@ -3,39 +3,41 @@
 public class PointShopSystem : ModSystem
 {
     public static readonly WeakEventManager<EventArgs<float>> OnPricesMultiplierChanged = new();
-    private static float _pricesMultiplier = 1f;
+
     public static float PricesMultiplier
     {
-        get => _pricesMultiplier;
+        get;
         set
         {
-            if (value == _pricesMultiplier) return;
-            _pricesMultiplier = value;
+            if (value == field) return;
+
+            field = value;
             OnPricesMultiplierChanged.Raise(new EventArgs<float>(value));
         }
     }
 
     /// <summary> 解锁条件表 </summary>
     private static readonly Dictionary<string, UnlockCondition> _unlockConditionTable = [];
+
     /// <summary> 环境表 </summary>
     private static readonly Dictionary<string, GameEnvironment> _environmentTable = [];
+
     private static List<GameEnvironment> _environments = [];
     public static IReadOnlyList<GameEnvironment> Environments => _environments;
     public static IReadOnlyDictionary<string, UnlockCondition> UnlockConditions => _unlockConditionTable;
     /// <summary> 注册游戏环境 </summary>
     public static bool RegisterGameEnvironment(GameEnvironment environment)
     {
-        if (_environmentTable.TryAdd(environment.Name, environment))
-        {
-            _environments.Add(environment);
-            _environments = [.. _environments.OrderByDescending(env => env.Priority)];
-            return true;
-        }
-        return false;
+        if (!_environmentTable.TryAdd(environment.Name, environment)) return false;
+
+        _environments.Add(environment);
+        _environments = [.. _environments.OrderByDescending(env => env.Priority)];
+        return true;
     }
 
     /// <summary> 注册游戏环境 </summary>
-    public static bool RegisterGameEnvironment(Mod mod, Asset<Texture2D> icon, string name, Func<Player, bool> condition, int priority, Color uniqueColor,
+    public static bool RegisterGameEnvironment(Mod mod, Asset<Texture2D> icon, string name,
+        Func<Player, bool> condition, int priority, Color uniqueColor,
         PointsSharingType type = PointsSharingType.Average)
     {
         var environment = new SimpleEnvironment(mod, icon, name, condition, priority, uniqueColor, type);
@@ -50,6 +52,7 @@ public class PointShopSystem : ModSystem
             gameEnvironment = null;
             return false;
         }
+
         return _environmentTable.TryGetValue(name, out gameEnvironment);
     }
 
@@ -73,6 +76,7 @@ public class PointShopSystem : ModSystem
             unlockCondition = null;
             return false;
         }
+
         return _unlockConditionTable.TryGetValue(name, out unlockCondition);
     }
 
@@ -119,8 +123,10 @@ public class PointShopSystem : ModSystem
             {
                 Update(gameTime);
             }
-            catch { }
-            orig(self, gameTime);
+            finally
+            {
+                orig(self, gameTime);
+            }
         };
     }
 }
