@@ -24,7 +24,7 @@ public class PointShopSystem : ModSystem
 
     private static List<GameEnvironment> _environments = [];
     public static IReadOnlyList<GameEnvironment> Environments => _environments;
-
+    public static IReadOnlyDictionary<string, UnlockCondition> UnlockConditions => _unlockConditionTable;
     /// <summary> 注册游戏环境 </summary>
     public static bool RegisterGameEnvironment(GameEnvironment environment)
     {

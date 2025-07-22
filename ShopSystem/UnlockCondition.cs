@@ -5,8 +5,8 @@ public class UnlockCondition(Mod mod, string name, Asset<Texture2D> icon)
     public readonly Mod Mod = mod;
     public string Name { get; set; } = name;
     public Asset<Texture2D> Icon { get; } = icon;
-    public string DisplayName => Language.GetText($"Mods.{Mod.Name}.UnlockCondition.{Name}.DisplayName").Value;
-    public string Description => Language.GetText($"Mods.{Mod.Name}.UnlockCondition.{Name}.Description").Value;
+    public virtual string DisplayName => Language.GetText($"Mods.{Mod.Name}.UnlockCondition.{Name}.DisplayName").Value;
+    public virtual string Description => Language.GetText($"Mods.{Mod.Name}.UnlockCondition.{Name}.Description").Value;
 
     private bool _isUnlock;
     public bool IsUnlock
