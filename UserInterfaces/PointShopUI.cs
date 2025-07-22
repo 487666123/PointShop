@@ -181,7 +181,7 @@ public partial class PointShopUI : BasicBody
             FitWidth = false,
             FitHeight = false,
         }.Join(searchBar);
-        SearchBox.OnTextChanged += () =>
+        SearchBox.ContentChanged += (sender, e) =>
         {
             _keywords = SearchBox.Text;
             ShopItemTableIsDirty = true;
