@@ -1,6 +1,8 @@
-﻿using PointShop.Items;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PointShop.Items;
 using SilkyUIFramework.BasicComponents;
 using SilkyUIFramework.Extensions;
+using SilkyUIFramework.UserInterfaces;
 using Terraria.GameContent.UI;
 
 namespace PointShop.UserInterfaces;
@@ -50,7 +52,43 @@ public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
         {
             BuyButton.BackgroundColor = BuyButton.HoverTimer.Lerp(SUIColor.Highlight * 0.05f, Color.White * 0.1f);
         };
-        BuyButton.LeftMouseDown += (_, _) => ShopItem.Buy();
+        BuyButton.LeftMouseDown += delegate
+        {
+            //ShopItem.Buy();
+            IMouseMenu mouseMenu = SilkyUISystem.ServiceProvider.GetRequiredService<IMouseMenu>();
+            mouseMenu.OpenMenu(MouseAnchor.TopLeft, BuyButton.Bounds.Center,
+                ["购买 1 份", "购买 5 份", "购买 10 份", "购买 100 份", "购买 1000 份", "购买 10000 份"], (content, index) =>
+                {
+                    return index switch
+                    {
+                        0 => ShopItem.Buy(1),
+                        1 => ShopItem.Buy(5),
+                        2 => ShopItem.Buy(10),
+                        3 => ShopItem.Buy(100),
+                        4 => ShopItem.Buy(1000),
+                        5 => ShopItem.Buy(10000),
+                        _ => ShopItem.Buy(),
+                    };
+                });
+        };
+        BuyButton.RightMouseDown += delegate
+        {
+            IMouseMenu mouseMenu = SilkyUISystem.ServiceProvider.GetRequiredService<IMouseMenu>();
+            mouseMenu.OpenMenu(MouseAnchor.TopLeft, BuyButton.Bounds.Center,
+                ["购买 1 份", "购买 5 份", "购买 10 份", "购买 100 份", "购买 1000 份", "购买 10000 份"], (content, index) =>
+                {
+                    return index switch
+                    {
+                        0 => ShopItem.Buy(1),
+                        1 => ShopItem.Buy(5),
+                        2 => ShopItem.Buy(10),
+                        3 => ShopItem.Buy(100),
+                        4 => ShopItem.Buy(1000),
+                        5 => ShopItem.Buy(10000),
+                        _ => ShopItem.Buy(),
+                    };
+                });
+        };
 
         // 价格左边的积分币 ItemSlot
         var coinSlot = new SUIItemSlot

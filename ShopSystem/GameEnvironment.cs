@@ -61,7 +61,8 @@ public class GameEnvironment(
     /// <param name="gameTime"></param>
     public virtual void Update(GameTime gameTime)
     {
-        foreach (var shopItem in _shopItemList)
+        var cloneList = _shopItemList.ToArray();
+        foreach (var shopItem in cloneList)
         {
             shopItem.Update(gameTime);
         }
@@ -77,13 +78,19 @@ public class GameEnvironment(
     /// </summary>
     public IReadOnlyList<ShopItem> ShopItemList => _shopItemList;
 
-    /// <summary>
-    /// 添加商品
-    /// </summary>
-    /// <param name="shopItem"></param>
+    /// <summary> 添加商品 </summary>
     public void AddShopItem(ShopItem shopItem)
     {
         if (shopItem is null) return;
+
+        if (shopItem.CommonItem)
+        {
+            var firstCommonItem = _shopItemList.FindLastIndex(item => item.CommonItem);
+            if (firstCommonItem == -1) firstCommonItem = 0;
+            _shopItemList.Insert(firstCommonItem, shopItem);
+            return;
+        }
+
         _shopItemList.Add(shopItem);
     }
 
@@ -92,9 +99,9 @@ public class GameEnvironment(
     /// 如若要购买成功需满足条件：商品属于此环境、此环境的积分大于商品价格
     /// </summary>
     /// <param name="shopItem">要购买的商品</param>
-    public void PurchaseItems(ShopItem shopItem)
+    public bool PurchaseItems(ShopItem shopItem, int quantity = 1)
     {
-        if (shopItem is null || PointShopPlayer.Local is not { } player) return;
+        if (shopItem is null || PointShopPlayer.Local is not { } player) return false;
 
         // 商品属于环境, 已解锁, 并且支付成功
         if (_shopItemList.Contains(shopItem))
@@ -102,20 +109,22 @@ public class GameEnvironment(
             if (!shopItem.IsUnlock)
             {
                 Main.NewText($"{LanguageHelper.GetTextByPointShop("ShopItem.Lock").Value}");
-                return;
+                return false;
             }
 
-            if (!player.PayPoints(Name, shopItem.Prices))
+            if (!player.PayPoints(Name, shopItem.Prices, quantity))
             {
                 Main.NewText($"{LanguageHelper.GetTextByPointShop("ShopItem.InsufficientPoints").Value}");
-                return;
+                return false;
             }
 
-            shopItem.GetRewards(player.Player);
-            return;
+            shopItem.GetRewards(player.Player, quantity);
+            return true;
         }
 
         Main.NewText($"{LanguageHelper.GetTextByPointShop("ShopItem.ShopItemError").Value}");
+
+        return false;
     }
 
     public virtual double GetPlayerPoints()

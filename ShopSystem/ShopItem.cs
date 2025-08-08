@@ -26,7 +26,9 @@ public class ShopItem : IEventHandlerHolder
         set => field = value;
     }
 
-    public ShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string unlockCondition)
+    public bool CommonItem { get; }
+
+    public ShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string unlockCondition, bool commonItem = false)
     {
         Mod = mod;
         Parent = gameEnvironment;
@@ -44,6 +46,7 @@ public class ShopItem : IEventHandlerHolder
 
         PointShopSystem.OnPricesMultiplierChanged.AddHandler(this,
             (_, args) => Prices = OriginalPrices * args.Value);
+        CommonItem = commonItem;
     }
 
     /// <summary>
@@ -117,13 +120,13 @@ public class ShopItem : IEventHandlerHolder
     /// <summary>
     /// 可以直接调用方法购买此物品（它会调用父元素的 <see cref="GameEnvironment.PurchaseItems"/>）
     /// </summary>
-    public virtual void Buy() => Parent.PurchaseItems(this);
+    public virtual bool Buy(int quantity = 1) => Parent.PurchaseItems(this, quantity);
 
     /// <summary>
     /// 当环境中的 <see cref="GameEnvironment.PurchaseItems"/> 方法对购买校验通过后，调用此方法以给予玩家奖励
     /// </summary>
     /// <param name="player">购买商品的玩家（通常是本地玩家）</param>
-    public virtual void GetRewards(Player player) { }
+    public virtual void GetRewards(Player player, int quantity = 1) { }
 }
 
 /// <summary>
@@ -134,8 +137,8 @@ public class ShopItem : IEventHandlerHolder
 /// <param name="prices"></param>
 /// <param name="conditionName"></param>
 /// <param name="item"></param>
-public class SimpleShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string conditionName, Item item)
-    : ShopItem(mod, gameEnvironment, prices, conditionName)
+public class SimpleShopItem(Mod mod, GameEnvironment gameEnvironment, int prices, string conditionName, Item item, bool commonItem = false)
+    : ShopItem(mod, gameEnvironment, prices, conditionName, commonItem)
 {
     public Item Item { get; } = item;
 
@@ -150,10 +153,10 @@ public class SimpleShopItem(Mod mod, GameEnvironment gameEnvironment, int prices
 
     public override string DisplayName => Item.Name;
 
-    public override void GetRewards(Player player)
+    public override void GetRewards(Player player, int quantity = 1)
     {
         base.GetRewards(player);
 
-        player?.QuickSpawnItem(null, Item.type, Item.stack);
+        player?.QuickSpawnItem(null, Item.type, Item.stack * quantity);
     }
 }

@@ -89,8 +89,8 @@ public class PointsDisplayWidgetUI : BasicBody
 
         ScrollView.Container.RemoveAllChildren();
 
-        var list = DisplayItemTable.Keys.Where(
-            name => player.CurrentEnvironments.Any(env => env.Name.Equals(name)));
+        //var list = DisplayItemTable.Keys.Where(
+        //    name => player.CurrentEnvironments.Any(env => env.Name.Equals(name)));
 
         if (player.CurrentEnvironments.Count > 0)
         {

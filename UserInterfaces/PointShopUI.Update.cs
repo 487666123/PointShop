@@ -74,7 +74,7 @@ public partial class PointShopUI
             if (item is SimpleShopItem simpleShopItem)
             {
                 ShopItemTableScrollView.Container.AppendChild(new SUISimpleShopItem(simpleShopItem));
-                // new SUISimpleShopItem(simpleShopItem).Join(ShopItemTable.Container);
+                //new SUISimpleShopItem(simpleShopItem).Join(ShopItemTable.Container);
             }
             else
             {

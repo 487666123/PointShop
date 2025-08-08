@@ -24,7 +24,7 @@ public class ShopItemsRegistrar : ModSystem
         {
             foreach (var shopItemGenerator in shopData.CommonItems)
             {
-                if (shopItemGenerator.Generate(mod, environment) is { } shopItem)
+                if (shopItemGenerator.Generate(mod, environment, true) is { } shopItem)
                 {
                     environment.AddShopItem(shopItem);
                 }
@@ -56,13 +56,13 @@ public class SimpleShopItemGenerator
     public int Prices { get; set; } = 0;
     public string UnlockCondition { get; set; } = "";
 
-    public SimpleShopItem Generate(Mod mod, GameEnvironment gameEnvironment)
+    public SimpleShopItem Generate(Mod mod, GameEnvironment gameEnvironment, bool commonItem = false)
     {
         if (!int.TryParse(Type, out var id))
         {
             if (!ItemID.Search.TryGetId(Type, out id)) { return null; }
         }
         var item = new Item(id, Quantity);
-        return new SimpleShopItem(mod, gameEnvironment, Prices, UnlockCondition, item);
+        return new SimpleShopItem(mod, gameEnvironment, Prices, UnlockCondition, item, commonItem);
     }
 }

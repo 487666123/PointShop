@@ -96,13 +96,13 @@ public partial class PointShopPlayer : ModPlayer
     }
 
     /// <summary> 支付积分 </summary>
-    public bool PayPoints(string name, double point)
+    public bool PayPoints(string name, double point, int quantity = 1)
     {
         if (PointData.TryGetValue(name, out var value))
         {
-            if (value >= point)
+            if (value >= point * quantity)
             {
-                PointData[name] = value - point;
+                PointData[name] = value - point * quantity;
                 return true;
             }
         }

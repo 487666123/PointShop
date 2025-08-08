@@ -1,7 +1,7 @@
 CommonItems: # 通用物品 (这会把物品添加到每个环境中)
   - Type: PointShop/PointCoin
-    Quantity: 10
-    Prices: 5000
+    Quantity: 1
+    Prices: 500
   # 生命水晶
   - Type: 29
     Quantity: 1
@@ -16,8 +16,8 @@ CommonItems: # 通用物品 (这会把物品添加到每个环境中)
 EnvironmentShopItems:
   Void:
     - Type: 5380
-      Quantity: 50
-      Prices: 8888
+      Quantity: 1
+      Prices: 188
   # 森林
   Forest:
     # 钓鱼机

@@ -119,11 +119,9 @@ public class PointShop : Mod
         gameEnvironment.AddShopItem(new SimpleShopItem(mod, gameEnvironment, prices, unlockConditionsName, item));
     }
 
-    public static void AddShopItemByFile(object modObj, object yamlStringObj)
+    public static void AddShopItemByFile(object modObj, object yamlString)
     {
-        if (modObj is not Mod mod || yamlStringObj is not string yamlString) return;
-
-        ShopItemsRegistrar.RegisterShopData(mod, ShopItemsRegistrar.ConvertYamlStringToShopData(yamlString));
+        ShopItemsRegistrar.RegisterShopData(modObj as Mod, ShopItemsRegistrar.ConvertYamlStringToShopData(yamlString as string));
     }
 }
 
