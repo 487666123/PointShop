@@ -67,23 +67,12 @@ public partial class PointShopUI : BasicBody
 
     protected override void OnInitialize()
     {
-        ShopItemTableIsDirty = true;
-        BorderRadius = new Vector4(8f);
         BorderColor = SUIColor.Border;
         BackgroundColor = SUIColor.Background * 0.75f;
 
-        FitWidth = false;
-        FitHeight = true;
-
-        SetWidth(700f);
-
-        SetLeft(0f, 0f, 0.5f);
-        SetTop(0f, 0f, 0.5f);
-        SetGap(0f);
-
         new SUICommonHeader(this, $"{LanguageHelper.GetTextByPointShop("DisplayName")}").Join(this);
 
-        SUIDividingLine.Horizontal(Color.Black * 0.75f).Join(this);
+        InitializeComponent();
 
         // 菜单列表 and 商品列表
 

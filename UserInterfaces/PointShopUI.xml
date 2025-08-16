@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Body Class="PointShop.UserInterfaces.PointShopUI"
+	FitWidth ="false" FitHeight="true"
+	Width="700px" Left="0.5#" Top="0.5#" Gap="0" BorderRadius="8">
+	<HR BackgroundColor="rgba(0,0,0,0.75)"/>
+</Body>
