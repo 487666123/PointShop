@@ -1,8 +1,10 @@
 ﻿using PointShop.Items;
+using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces;
 
+[XmlElementMapping("PointShopFooter")]
 public class PointShopFooter : UIElementGroup
 {
     public static bool DisplayLinks { get; set; } = true;

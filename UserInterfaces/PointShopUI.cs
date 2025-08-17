@@ -1,7 +1,5 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
-using SilkyUIFramework.BasicComponents;
-using SilkyUIFramework.Extensions;
 using SilkyUIFramework.Graphics2D;
 
 namespace PointShop.UserInterfaces;
@@ -46,172 +44,43 @@ public partial class PointShopUI : BasicBody
     /// </summary>
     public override bool IsInteractable => SwitchTimer.IsCompleted;
 
-    /// <summary>
-    /// 菜单列表
-    /// </summary>
-    public SUIScrollView MenuListScrollView { get; private set; }
-    /// <summary>
-    /// 商店底部栏
-    /// </summary>
-    public PointShopFooter ShopFooter { get; private set; }
-    /// <summary>
-    /// 内容容器（所有内容的容器）
-    /// </summary>
-    public UIElementGroup ContentContainer { get; private set; }
-    /// <summary>
-    /// 商品表
-    /// </summary>
-    public SUIScrollView ShopItemTableScrollView { get; private set; }
-
-    public SUIEditText SearchBox { get; private set; }
-
     protected override void OnInitialize()
     {
         BorderColor = SUIColor.Border;
         BackgroundColor = SUIColor.Background * 0.75f;
 
-        new SUICommonHeader(this, $"{LanguageHelper.GetTextByPointShop("DisplayName")}").Join(this);
-
         InitializeComponent();
 
-        // 菜单列表 and 商品列表
+        Header.ControlTarget = this;
+        Header.Title.Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")}";
 
-        ContentContainer = new UIElementGroup
-        {
-            LayoutType = LayoutType.Flexbox,
-            FlexDirection = FlexDirection.Row,
-            CrossAlignment = CrossAlignment.Stretch,
-            CrossContentAlignment = CrossContentAlignment.Stretch,
-            FlexWrap = false,
-            Gap = new Vector2(0f),
-        }.Join(this);
-        ContentContainer.SetSize(0f, 450f, 1f);
-
-        MenuListScrollView = new SUIScrollView
-        {
-            Gap = new Vector2(4f),
-            Mask =
-            {
-                Border = 2,
-                BorderRadius = new Vector4(4),
-                BorderColor = Color.Black * 0.75f,
-            },
-            Container =
-            {
-                HiddenBox = HiddenBox.Inner,
-                Gap = Size.Zero,
-            }
-        }.Join(ContentContainer);
-        MenuListScrollView.SetPadding(4f);
-        MenuListScrollView.SetSize(0f, 0f, 0.25f, 1f);
+        MenuListScrollView.Mask.Border = 2;
+        MenuListScrollView.Mask.BorderRadius = new Vector4(4);
+        MenuListScrollView.Mask.BorderColor = Color.Black * 0.75f;
+        MenuListScrollView.Container.HiddenBox = HiddenBox.Inner;
+        MenuListScrollView.Container.Gap = Size.Zero;
 
         UpdateMenuList();
 
-        SUIDividingLine.Vertical(Color.Black * 0.75f).Join(ContentContainer);
+        SearchBar.Border = 2;
+        SearchBar.BorderColor = SUIColor.Border * 0.75f;
+        SearchBar.BackgroundColor = SUIColor.Background * 0.25f;
 
-        // 商品列表
-        var rightContainer = new UIElementGroup
-        {
-            LayoutType = LayoutType.Flexbox,
-            FlexWrap = false,
-            FlexDirection = FlexDirection.Column,
-            FlexGrow = 1f,
-        }.Join(ContentContainer);
-        rightContainer.SetHeight(0f, 1f);
+        SearchLeftText.Text = $"{LanguageHelper.GetTextByPointShop("NameFilter")}";
+        SearchLeftText.BackgroundColor = SUIColor.Background * 0.5f;
 
-        #region 过滤器
-
-        var searchBarContainer = new UIElementGroup
-        {
-            LayoutType = LayoutType.Flexbox,
-            MainAlignment = MainAlignment.Start,
-            CrossAlignment = CrossAlignment.Center,
-            CrossContentAlignment = CrossContentAlignment.Center,
-            Gap = new Vector2(4),
-            Padding = new Margin(4f, 4f, 4f, 0f),
-        }.Join(rightContainer);
-        searchBarContainer.SetWidth(0f, 1f);
-        searchBarContainer.SetHeight(36f, 0f);
-
-        var searchBar = new UIElementGroup
-        {
-            BorderRadius = new Vector4(4f),
-            Border = 2,
-            BorderColor = SUIColor.Border * 0.75f,
-            BackgroundColor = SUIColor.Background * 0.25f,
-            FlexGrow = 1f,
-        }.Join(searchBarContainer);
-        searchBar.SetHeight(0f, 1f);
-
-        // 搜索文字
-        var searchText = new UITextView
-        {
-            Text = $"{LanguageHelper.GetTextByPointShop("NameFilter")}",
-            TextScale = 0.8f,
-            TextAlign = new Vector2(0.5f),
-            BorderRadius = new Vector4(2f, 0f, 2f, 0f),
-            BackgroundColor = SUIColor.Background * 0.5f,
-            FlexShrink = 1f,
-            FitWidth = true,
-            FitHeight = false,
-        }.Join(searchBar);
-        searchText.SetPadding(12f, 0f);
-        searchText.SetHeight(0f, 1f);
-
-        SUIDividingLine.Vertical(Color.Black * 0.75f).Join(searchBar);
-
-        SearchBox = new SUIEditText
-        {
-            BackgroundColor = SUIColor.Border * 0.25f,
-            TextAlign = new Vector2(0f, 0.5f),
-            TextScale = 0.8f,
-            CursorFlashColor = Color.White,
-            FlexGrow = 1f,
-            FitWidth = false,
-            FitHeight = false,
-        }.Join(searchBar);
+        SearchBox.BackgroundColor = SUIColor.Border * 0.25f;
+        SearchBox.CursorFlashColor = Color.White;
         SearchBox.ContentChanged += (sender, e) =>
         {
             _keywords = SearchBox.Text;
             ShopItemTableIsDirty = true;
         };
-        SearchBox.SetPadding(8f);
-        SearchBox.SetHeight(0f, 1f);
 
-        SUIDividingLine.Vertical(Color.Black * 0.75f).Join(searchBar);
-
-        // 清空
-        var clearText = new UITextView
-        {
-            Text = $"{LanguageHelper.GetTextByPointShop("Clear")}",
-            TextScale = 0.8f,
-            TextAlign = new Vector2(0.5f),
-            BorderRadius = new Vector4(0f, 2f, 0f, 2f),
-            BackgroundColor = SUIColor.Background * 0.5f,
-            FitWidth = true,
-            FitHeight = false,
-        }.Join(searchBar);
-        clearText.LeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
-        clearText.SetPadding(12f, 0f);
-        clearText.SetHeight(0f, 1f);
-
-        #endregion
-
-        // 商品表格
-        ShopItemTableScrollView = new SUIScrollView
-        {
-            Gap = new Vector2(4),
-            FlexGrow = 1f,
-        }.Join(rightContainer);
-        ShopItemTableScrollView.SetPadding(4f);
-        ShopItemTableScrollView.SetWidth(0f, 1f);
+        ClearSearchButton.Text = $"{LanguageHelper.GetTextByPointShop("Clear")}";
+        ClearSearchButton.LeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
 
         ShopItemTableScrollView.Container.Gap = new Vector2(4);
-        //ShopItemTable.Container.TemplateColumns = [.. TemplateUnit.Repeat(4, 0f, 1f)];
-        //ShopItemTable.Container.TemplateRows = [.. TemplateUnit.Repeat(1, 160f)];
-
-        SUIDividingLine.Horizontal(Color.Black * 0.75f).Join(this);
-        ShopFooter = new PointShopFooter().Join(this);
     }
 
     public readonly AnimationTimer SwitchTimer = new(3);
