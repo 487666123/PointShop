@@ -1,11 +1,13 @@
-﻿using Terraria.Audio;
+﻿using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using tModPorter;
 
 namespace PointShop.Items;
 
 public class PointCoin : ModItem
 {
-    protected virtual double Points => 100f;
+    private static double Points => 100f;
 
     public override void SetStaticDefaults()
     {
@@ -30,8 +32,6 @@ public class PointCoin : ModItem
 
     public override void Update(ref float gravity, ref float maxFallSpeed) =>
         Lighting.AddLight(Item.Center, Color.Yellow.ToVector3() * 0.5f);
-
-    public override bool CanPickup(Player player) => true;
 
     public override bool OnPickup(Player player)
     {
@@ -65,4 +65,12 @@ public class PointCoin : ModItem
     }
 
     public override void GrabRange(Player player, ref int grabRange) => grabRange += 16 * 30;
+
+    public override bool GrabStyle(Player player)
+    {
+        var dir = Vector2.Normalize(player.Center - Item.Center) * 20f;
+        Item.velocity = (Item.velocity * 9 + dir) / 10;
+
+        return false;
+    }
 }
