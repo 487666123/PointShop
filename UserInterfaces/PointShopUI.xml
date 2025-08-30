@@ -1,57 +1,50 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Body Class="PointShop.UserInterfaces.PointShopUI"
-	FitWidth ="false" FitHeight="true"
-	Width="700px" Left="50#" Top="50#" Gap="0" BorderRadius="8">
-	<CommonHeader Name="Header"/>
-	<!-- 横向分界线 -->
-	<HR BackgroundColor="rgba(0,0,0,0.75)"/>
-	<!-- 内容容器 -->
-	<ElementGroup
-		Name="ContentContainer" Width="100%" Height="450px" FlexWrap="false" Gap="0"
-		FlexDirection="Row" CrossAlignment="Stretch" CrossContentAlignment="Stretch">
-		<!-- 菜单栏 -->
-		<ScrollView
-			Name="MenuListScrollView" Width="25%" Height="100%" Gap="4" Padding="4"/>
-		<VR BackgroundColor="rgba(0,0,0,0.75)"/>
-		<!-- RightContainer -->
-		<ElementGroup
-			Name="RightContainer" Height="100%" FlexDirection="Column" FlexGrow="1">
-			<!-- 搜索容器 -->
-			<ElementGroup
-				Name="SearchContainer" Width="100%" Height="36px"
-				MainAlignment="Start" CrossAlignment="Center" CrossContentAlignment="Center"
-				Gap="4" Padding="4 4 4 0">
-				<!-- 搜索条 -->
-				<ElementGroup
-					Name="SearchBar" Height="100%"
-					Border="2" BorderRadius="4" FlexGrow="1">
-					<!-- 左侧文本 -->
-					<TextView
-						Name="SearchLeftText"
-						Height="100%" Padding="12 0"
-						TextScale="0.8" TextAlign="0.5" BorderRadius="2 0 2 0"
-						FitWidth="true" FitHeight="false" FlexShrink="1"/>
-					<VR BackgroundColor="rgba(0,0,0,0.75)"/>
-					<!-- 输入框 -->
-					<EditText
-						Name="SearchBox"
-						FlexGrow="1" FitWidth="false" FitHeight="false" Height="100%" Padding="8"
-						TextScale="0.8" TextAlign="0 0.5"/>
-					<VR BackgroundColor="rgba(0,0,0,0.75)"/>
-					<!-- 清空按钮 -->
-					<TextView
-						Name="ClearSearchButton"
-						Height="100%" Padding="12 0"
-						TextScale="0.8" TextAlign="0.5" BorderRadius="0 2 0 2"
-						FitWidth="true" FitHeight="false" FlexShrink="1"/>
-				</ElementGroup>
-			</ElementGroup>
-			<!-- 商品表格 -->
-			<ScrollView
-				Name="ShopItemTableScrollView" Gap="4" FlexGrow="1" Padding="4" Width="100%"></ScrollView>
-		</ElementGroup>
-	</ElementGroup>
-	<!-- 横向分界线 -->
-	<HR BackgroundColor="rgba(0,0,0,0.75)"/>
-	<PointShopFooter Name="ShopFooter"/>
+    FitWidth="false" FitHeight="true"
+    Width="700px" Left="50#" Top="50#" Gap="0" BorderRadius="8">
+    <CommonHeader Name="Header" />
+    <!-- 横向分界线 -->
+    <HR BackgroundColor="rgba(0,0,0,0.75)" />
+    <!-- 内容容器 -->
+    <ElementGroup Name="ContentContainer"
+        Width="100%" Height="450px" FlexWrap="false" Gap="0"
+        FlexDirection="Row" CrossAlignment="Stretch" CrossContentAlignment="Stretch">
+        <!-- 菜单栏 -->
+        <ScrollView Name="MenuListScrollView" Width="25%" Height="100%" Gap="4" Padding="4" />
+        <VR BackgroundColor="rgba(0,0,0,0.75)" />
+        <!-- RightContainer -->
+        <ElementGroup Name="RightContainer" Height="100%" FlexDirection="Column" FlexGrow="1">
+            <!-- 搜索容器 -->
+            <ElementGroup Name="SearchContainer" Width="100%" Height="36px"
+                MainAlignment="Start" CrossAlignment="Center" CrossContentAlignment="Stretch"
+                Gap="4" Padding="4 4 4 0">
+                <!-- 搜索条 -->
+                <ElementGroup Name="SearchBar" Height="100%"
+                    Border="2" BorderRadius="4" FlexGrow="1">
+                    <!-- 左侧文本 -->
+                    <TextView Name="SearchLeftText"
+                        Height="100%" Padding="12 0"
+                        TextScale="0.8" TextAlign="0.5" BorderRadius="2 0 2 0"
+                        FitWidth="true" FitHeight="false" FlexShrink="1" />
+                    <VR BackgroundColor="rgba(0,0,0,0.75)" />
+                    <!-- 输入框 -->
+                    <EditText Name="SearchBox"
+                        FlexGrow="1" FitWidth="false" FitHeight="false" Height="100%" Padding="8"
+                        TextScale="0.8" TextAlign="0 0.5" />
+                    <VR BackgroundColor="rgba(0,0,0,0.75)" />
+                    <!-- 清空按钮 -->
+                    <TextView Name="ClearSearchButton"
+                        Height="100%" Padding="12 0"
+                        TextScale="0.8" TextAlign="0.5" BorderRadius="0 2 0 2"
+                        FitWidth="true" FitHeight="false" FlexShrink="1" />
+                </ElementGroup>
+            </ElementGroup>
+            <!-- 商品表格 -->
+            <ScrollView Name="ShopItemTableScrollView"
+                Gap="4" FlexGrow="1" Padding="4" Width="100%"></ScrollView>
+        </ElementGroup>
+    </ElementGroup>
+    <!-- 横向分界线 -->
+    <HR BackgroundColor="rgba(0,0,0,0.75)" />
+    <PointShopFooter Name="ShopFooter" />
 </Body>

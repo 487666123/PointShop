@@ -81,6 +81,8 @@ public partial class PointShopUI : BasicBody
         ClearSearchButton.LeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
 
         ShopItemTableScrollView.Container.Gap = new Vector2(4);
+
+        ShopItemTableIsDirty = true;
     }
 
     public readonly AnimationTimer SwitchTimer = new(3);
@@ -107,53 +109,7 @@ public partial class PointShopUI : BasicBody
             Matrix.CreateScale(SwitchTimer.Lerp(0.95f, 1f), SwitchTimer.Lerp(0.95f, 1f), 1) *
             Matrix.CreateTranslation(center.X, center.Y, 0);
 
-        //UseRenderTarget = true;
-        //Opacity = 0f;
-
         base.UpdateStatus(gameTime);
-
-        //var batch = Main.spriteBatch;
-
-        //var device = Main.graphics.GraphicsDevice;
-        //device.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
-
-        //batch.End();
-
-        //// 模糊
-        //KawaseBlur(Main.screenTarget, 10f, 2f, BlurType.Two);
-
-        //batch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.Identity);
-
-        //device.SetRenderTarget(null);
-        //Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.DiscardContents;
-
-        //var bounds = Bounds;
-        //bounds.X *= 2f;
-        //bounds.Y *= 2f;
-        //bounds.Width *= 2f;
-        //bounds.Height *= 2f;
-        //var rect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-
-        //batch.Draw(Main.screenTarget, bounds.Position, rect, Color.White, 0f, Vector2.Zero, 1f, 0, 1f);
-
-        //batch.Draw(TextureAssets.MagicPixel.Value,
-        //    bounds.Position + new Vector2(-2f, -2f),
-        //    new Rectangle(0, 0, 4, (int)bounds.Height + 6), Color.White, 0f, Vector2.Zero, 1f, 0, 1f);
-
-        //batch.Draw(TextureAssets.MagicPixel.Value,
-        //    bounds.Position + new Vector2(bounds.Width, -2f),
-        //    new Rectangle(0, 0, 4, (int)bounds.Height + 6), Color.White, 0f, Vector2.Zero, 1f, 0, 1f);
-
-        //batch.Draw(TextureAssets.MagicPixel.Value,
-        //    bounds.Position + new Vector2(0f, -2f),
-        //    new Rectangle(0, 0, (int)bounds.Width, 4), Color.White, 0f, Vector2.Zero, 1f, 0, 1f);
-
-        //batch.Draw(TextureAssets.MagicPixel.Value,
-        //    bounds.Position + new Vector2(0f, bounds.Height),
-        //    new Rectangle(0, 0, (int)bounds.Width, 4), Color.White, 0f, Vector2.Zero, 1f, 0, 1f);
-
-        //batch.End();
-        //batch.Begin(SpriteSortMode.Deferred, null, null, null, SilkyUI.RasterizerStateForOverflowHidden, null, Main.UIScaleMatrix);
     }
 
     protected override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

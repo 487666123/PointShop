@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Body Class="PointShop.UserInterfaces.SUICommonHeader"
-    Width="100%" Height="40px"
-    BackgroundColor="rgba(0,0,0,0.25)" BorderRadius="6 6 0 0"
-    FlexDirection="Row" MainAlignment="SpaceBetween" CrossAlignment="Center">
+	Width="100%" Height="40px"
+	BackgroundColor="rgba(0,0,0,0.25)" BorderRadius="6 6 0 0"
+	FlexDirection="Row" MainAlignment="SpaceBetween" CrossAlignment="Center">
 	<!-- 标题 -->
-	<TextView Name="Title" Padding="12 0" Width="25%" Height="100%" TextScale="0.45" TextAlign="0 0.5"/>
+	<TextView Name="Title" Width="25%" Height="100%"
+		Padding="12 0" TextScale="0.45" TextAlign="0 0.5" />
 	<!-- 关闭 -->
-	<Cross
+	<Cross Name="CloseButton" BoxSizing="Content"
 		Width="24px" Height="100%" Padding="12 0"
-		Name="CloseButton" BoxSizing="Content"
-		CrossSize="22f" CrossRounded="3.5"/>
+		CrossSize="22f" CrossRounded="3.5" />
 </Body>
