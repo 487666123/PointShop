@@ -27,7 +27,7 @@ public partial class SUICommonHeader : SUIDraggableView
         CloseButton.CrossBackgroundColor = SUIColor.Warn * 0.75f;
         CloseButton.CrossBorderHoverColor = SUIColor.Highlight;
         CloseButton.CrossBackgroundHoverColor = SUIColor.Warn;
-        CloseButton.LeftMouseDown += delegate { PointShopUI.ShowUI = false; };
+        CloseButton.LeftMouseDown += delegate { PointShopUI.IsShow = false; };
     }
 }
 

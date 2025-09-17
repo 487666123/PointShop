@@ -18,6 +18,7 @@ public class PointsDisplayWidgetUI : BasicBody
 
     protected override void OnInitialize()
     {
+        EnableBlur = true;
         BorderRadius = new Vector4(4f, 4f, 4f, 4f);
         Border = 2f;
         BorderColor = SUIColor.Border * 0.75f;
@@ -70,11 +71,11 @@ public class PointsDisplayWidgetUI : BasicBody
             {
                 if (PointShopUI.CurrentEnvironmentName == environment.Name)
                 {
-                    PointShopUI.ShowUI = !PointShopUI.ShowUI;
+                    PointShopUI.IsShow = !PointShopUI.IsShow;
                     return;
                 }
 
-                PointShopUI.ShowUI = true;
+                PointShopUI.IsShow = true;
                 PointShopUI.CurrentEnvironmentName = environment.Name;
             };
 
@@ -117,14 +118,8 @@ public class PointsDisplayWidgetUI : BasicBody
 
     protected override void UpdateStatus(GameTime gameTime)
     {
-        if (Main.playerInventory)
-        {
-            OpenInvTimer.StartUpdate();
-        }
-        else
-        {
-            OpenInvTimer.StartReverseUpdate();
-        }
+        if (Main.playerInventory) OpenInvTimer.StartUpdate();
+        else OpenInvTimer.StartReverseUpdate();
 
         OpenInvTimer.Update(gameTime);
         base.UpdateStatus(gameTime);
@@ -135,20 +130,6 @@ public class PointsDisplayWidgetUI : BasicBody
 
     protected override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        if (BlurMakeSystem.BlurAvailable)
-        {
-            if (BlurMakeSystem.SingleBlur)
-            {
-                var batch = Main.spriteBatch;
-                batch.End();
-                BlurMakeSystem.KawaseBlur();
-                batch.Begin(SpriteSortMode.Deferred, null, null, null, SilkyUI.RasterizerStateForOverflowHidden, null, SilkyUI.TransformMatrix);
-            }
-
-            SDFRectangle.SampleVersion(BlurMakeSystem.BlurRenderTarget,
-                Bounds.Position * Main.UIScale, Bounds.Size * Main.UIScale, BorderRadius * Main.UIScale, Matrix.Identity);
-        }
-
         base.Draw(gameTime, spriteBatch);
     }
 }

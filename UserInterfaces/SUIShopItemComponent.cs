@@ -4,6 +4,7 @@ using SilkyUIFramework.BasicComponents;
 using SilkyUIFramework.Extensions;
 using SilkyUIFramework.UserInterfaces;
 using Terraria.GameContent.UI;
+using Terraria.ModLoader.UI;
 
 namespace PointShop.UserInterfaces;
 
@@ -150,7 +151,7 @@ public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
         base.Draw(gameTime, spriteBatch);
 
         if (BuyButton.IsMouseHovering)
-            Main.hoverItemName = LanguageHelper.GetTextByPointShop("Buy").Value;
+            UICommon.TooltipMouseText(LanguageHelper.GetTextByPointShop("Buy").Value);
     }
 }
 
@@ -257,7 +258,7 @@ public class SUICoverView : UIElementGroup
 
         if (IsMouseHovering && !string.IsNullOrWhiteSpace(Description))
         {
-            Main.hoverItemName = Description;
+            UICommon.TooltipMouseText(Description);
         }
     }
 }

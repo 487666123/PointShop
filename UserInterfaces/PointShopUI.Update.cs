@@ -61,6 +61,8 @@ public partial class PointShopUI
     /// </summary>
     public void UpdateShopItemTable()
     {
+        if (!ShopItemTableIsDirty) return;
+        ShopItemTableIsDirty = false;
         if (!PointShopSystem.TryGetGameEnvironment(CurrentEnvironmentName, out var environment)) return;
 
         ShopItemTableScrollView.Container.RemoveAllChildren();

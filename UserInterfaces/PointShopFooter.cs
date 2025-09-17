@@ -24,7 +24,6 @@ public class PointShopFooter : UIElementGroup
         MainAlignment = MainAlignment.Start;
 
         BackgroundColor = Color.Black * 0.25f;
-        BorderRadius = new Vector4(0f, 0f, 6f, 6f);
 
         SetGap(8f);
         SetSize(0f, 30f, 1f);

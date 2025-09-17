@@ -1,16 +1,12 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
-using SilkyUIFramework.Graphics2D;
 
 namespace PointShop.UserInterfaces;
 
 [RegisterUI("Vanilla: Radial Hotbars", "PointShop: PointShopUI")]
 public partial class PointShopUI : BasicBody
 {
-    /// <summary>
-    /// 显示 UI，状态控制
-    /// </summary>
-    public static bool ShowUI { get; set; }
+    public static bool IsShow { get; set; }
 
     /// <summary>
     /// 是否启用，包括事件与绘制
@@ -19,10 +15,10 @@ public partial class PointShopUI : BasicBody
     {
         get
         {
-            if (ShowUI) return true;
+            if (IsShow) return true;
             return !SwitchTimer.IsReverseCompleted;
         }
-        set => ShowUI = value;
+        set => IsShow = value;
     }
 
     /// <summary>
@@ -30,8 +26,7 @@ public partial class PointShopUI : BasicBody
     /// </summary>
     public static string CurrentEnvironmentName
     {
-        get;
-        set
+        get; set
         {
             if (field == value) return;
             field = value;
@@ -39,15 +34,16 @@ public partial class PointShopUI : BasicBody
         }
     } = "Forest";
 
-    /// <summary>
-    /// 是否可交互（不影响绘制）
-    /// </summary>
+    /// <summary> 是否可交互 (不影响绘制) </summary>
     public override bool IsInteractable => SwitchTimer.IsCompleted;
 
     protected override void OnInitialize()
     {
+        EnableBlur = true;
         BorderColor = SUIColor.Border;
         BackgroundColor = SUIColor.Background * 0.75f;
+        OverflowHidden = true;
+        IndependentRenderTarget = true;
 
         InitializeComponent();
 
@@ -89,47 +85,25 @@ public partial class PointShopUI : BasicBody
 
     protected override void UpdateStatus(GameTime gameTime)
     {
-        if (ShowUI) SwitchTimer.StartUpdate();
+        base.UpdateStatus(gameTime);
+
+        if (IsShow) SwitchTimer.StartUpdate();
         else SwitchTimer.StartReverseUpdate();
-
         SwitchTimer.Update(gameTime);
-
-        if (ShopItemTableIsDirty)
-        {
-            UpdateShopItemTable();
-            ShopItemTableIsDirty = false;
-        }
-
         UseRenderTarget = SwitchTimer.IsUpdating;
-        Opacity = SwitchTimer.Lerp(0f, 1f);
 
+        UpdateShopItemTable();
+    }
+
+    protected override void UseRenderTargetDraw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        Opacity = SwitchTimer.Lerp(0f, 1f);
         var center = Bounds.Center * Main.UIScale;
         RenderTargetMatrix =
             Matrix.CreateTranslation(-center.X, -center.Y, 0) *
             Matrix.CreateScale(SwitchTimer.Lerp(0.95f, 1f), SwitchTimer.Lerp(0.95f, 1f), 1) *
             Matrix.CreateTranslation(center.X, center.Y, 0);
 
-        base.UpdateStatus(gameTime);
-    }
-
-    protected override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-    {
-        if (BlurMakeSystem.BlurAvailable)
-        {
-            if (BlurMakeSystem.SingleBlur)
-            {
-                var batch = Main.spriteBatch;
-                batch.End();
-                BlurMakeSystem.KawaseBlur();
-                batch.Begin(SpriteSortMode.Deferred, null, null, null, SilkyUI.RasterizerStateForOverflowHidden, null,
-                    SilkyUI.TransformMatrix);
-            }
-
-            SDFRectangle.SampleVersion(BlurMakeSystem.BlurRenderTarget,
-                Bounds.Position * Main.UIScale, Bounds.Size * Main.UIScale, BorderRadius * Main.UIScale,
-                Matrix.Identity);
-        }
-
-        base.Draw(gameTime, spriteBatch);
+        base.UseRenderTargetDraw(gameTime, spriteBatch);
     }
 }

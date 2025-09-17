@@ -24,7 +24,7 @@ public class KeybindPlayer : ModPlayer
     {
         if (PointShopUIKeybind.JustPressed)
         {
-            PointShopUI.ShowUI = !PointShopUI.ShowUI;
+            PointShopUI.IsShow = !PointShopUI.IsShow;
         }
     }
 }
