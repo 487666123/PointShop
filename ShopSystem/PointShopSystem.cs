@@ -1,6 +1,4 @@
-﻿using SilkyUIFramework.Helper;
-
-namespace PointShop.ShopSystem;
+﻿namespace PointShop.ShopSystem;
 
 public class PointShopSystem : ModSystem
 {

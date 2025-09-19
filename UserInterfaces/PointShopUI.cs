@@ -3,8 +3,8 @@ using SilkyUIFramework.Attributes;
 
 namespace PointShop.UserInterfaces;
 
-[RegisterUI("Vanilla: Radial Hotbars", "PointShop: PointShopUI")]
-public partial class PointShopUI : BasicBody
+[RegisterUI]
+public partial class PointShopUI : BaseBody
 {
     public static bool IsShow { get; set; }
 
@@ -49,6 +49,8 @@ public partial class PointShopUI : BasicBody
 
         Header.ControlTarget = this;
         Header.Title.Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")}";
+
+        Header.CloseButton.LeftMouseDown += delegate { IsShow = false; };
 
         MenuListScrollView.Mask.Border = 2;
         MenuListScrollView.Mask.BorderRadius = new Vector4(4);

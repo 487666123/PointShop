@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PointShop.Items;
-using SilkyUIFramework.BasicComponents;
 using SilkyUIFramework.Extensions;
 using SilkyUIFramework.UserInterfaces;
 using Terraria.GameContent.UI;

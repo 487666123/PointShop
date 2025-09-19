@@ -27,28 +27,5 @@ public partial class SUICommonHeader : SUIDraggableView
         CloseButton.CrossBackgroundColor = SUIColor.Warn * 0.75f;
         CloseButton.CrossBorderHoverColor = SUIColor.Highlight;
         CloseButton.CrossBackgroundHoverColor = SUIColor.Warn;
-        CloseButton.LeftMouseDown += delegate { PointShopUI.IsShow = false; };
     }
 }
-
-
-//public interface IUpdateTask
-//{
-//    bool IsCompleted { get; }
-
-//    event UpdateTaskHandler OnUpdate;
-
-//    void Update(GameTime gameTime);
-//}
-
-//public interface IUpdateTaskManager
-//{
-//    void Add(IUpdateTask updateTask);
-
-//    void Remove(IUpdateTask updateTask);
-
-//    void Update(GameTime gameTime);
-//}
-
-
-//public delegate void UpdateTaskHandler(IUpdateTask sender);

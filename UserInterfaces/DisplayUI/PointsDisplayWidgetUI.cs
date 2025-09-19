@@ -1,12 +1,11 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Extensions;
-using SilkyUIFramework.Graphics2D;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 
-[RegisterUI("Vanilla: Radial Hotbars", "PointShop: PointsDisplayWidget")]
-public class PointsDisplayWidgetUI : BasicBody
+[RegisterUI]
+public class PointsDisplayWidgetUI : BaseBody
 {
     public static bool Display { get; set; }
 

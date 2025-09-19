@@ -1,5 +1,4 @@
-﻿using SilkyUIFramework.BasicComponents;
-using SilkyUIFramework.Extensions;
+﻿using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 

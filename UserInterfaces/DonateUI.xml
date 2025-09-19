@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Body Class="PointShop.UserInterfaces.DonateUI"
+    FitWidth="false" FitHeight="true" Width="300px" Left="50#" Top="50#" Gap="0" BorderRadius="8">
+	<CommonHeader Name="Header" />
+	<HR/>
+	<ElementGroup Width="100%" FitHeight="true" Padding="8" Gap="8">
+		<LinkButton Name="Kofi"/>
+		<LinkButton Name="AFDian"/>
+	</ElementGroup>
+</Body>

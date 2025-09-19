@@ -1,7 +1,5 @@
-﻿using Terraria;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 using Terraria.DataStructures;
-using tModPorter;
 
 namespace PointShop.Items;
 

@@ -1,6 +1,8 @@
-﻿using PointShop.Items;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PointShop.Items;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Extensions;
+using Terraria.ModLoader.UI;
 
 namespace PointShop.UserInterfaces;
 
@@ -15,7 +17,7 @@ public class PointShopFooter : UIElementGroup
     public UIView Support { get; }
     public UITextView OfficialGroupLink { get; }
     public UITextView OnlineGroupLink { get; }
-    public UITextView DonationLink { get; }
+    public UITextView OpenDonateUI { get; }
 
     public PointShopFooter()
     {
@@ -74,28 +76,32 @@ public class PointShopFooter : UIElementGroup
         }.Join(this);
         Support.SetHeight(0f, 1f);
 
+        OpenDonateUI = new UITextView
+        {
+            Text = $"捐赠",
+            TextScale = 0.75f,
+            TextAlign = new Vector2(0f, 0.5f),
+            FitHeight = false,
+        }.Join(this);
+        OpenDonateUI.SetHeight(0, 1f);
+        OpenDonateUI.OnUpdateStatus += delegate
+        {
+            OpenDonateUI.TextBorderColor = OpenDonateUI.HoverTimer.Lerp(Color.Black, SUIColor.Highlight);
+        };
+        OpenDonateUI.LeftMouseDown += delegate
+        {
+            if (SilkyUISystem.ServiceProvider.GetService<SilkyUIManager>() is not { } manager) return;
+            if (!manager.TryGetInstance<DonateUI>(out var donateUI)) return;
+
+            donateUI.Enabled = !donateUI.Enabled;
+        };
+        OpenDonateUI.DrawAction += delegate
+        {
+            if (OpenDonateUI.IsMouseHovering) UICommon.TooltipMouseText("Donate to me.");
+        };
+
         if (DisplayLinks && bool.TryParse(LanguageHelper.GetTextByPointShop("ShowGroupLinks").Value, out var showGroupLinks) && showGroupLinks)
         {
-            DonationLink = new UITextView
-            {
-                Text = $"爱发电",
-                TextScale = 0.75f,
-                TextAlign = new Vector2(0f, 0.5f),
-                FitHeight = false,
-            }.Join(this);
-            DonationLink.SetHeight(0, 1f);
-            DonationLink.OnUpdateStatus += delegate
-            {
-                DonationLink.TextBorderColor = DonationLink.HoverTimer.Lerp(Color.Black, SUIColor.Highlight);
-            };
-            DonationLink.DrawAction += delegate
-            {
-                if (DonationLink.IsMouseHovering) Main.hoverItemName = "可在配置中关闭显示";
-            };
-            DonationLink.LeftMouseDown += delegate
-            {
-                Utils.OpenToURL("https://afdian.com/a/tMLZero");
-            };
 
             OnlineGroupLink = new UITextView
             {
@@ -111,7 +117,7 @@ public class PointShopFooter : UIElementGroup
             };
             OnlineGroupLink.DrawAction += delegate
             {
-                if (OnlineGroupLink.IsMouseHovering) Main.hoverItemName = "可在配置中关闭显示";
+                if (OnlineGroupLink.IsMouseHovering) UICommon.TooltipMouseText("可在配置中关闭显示");
             };
             OnlineGroupLink.LeftMouseDown += delegate
             {
@@ -132,7 +138,7 @@ public class PointShopFooter : UIElementGroup
             };
             OfficialGroupLink.DrawAction += delegate
             {
-                if (OfficialGroupLink.IsMouseHovering) Main.hoverItemName = "可在配置中关闭显示";
+                if (OfficialGroupLink.IsMouseHovering) UICommon.TooltipMouseText("可在配置中关闭显示");
             };
             OfficialGroupLink.LeftMouseDown += delegate
             {
