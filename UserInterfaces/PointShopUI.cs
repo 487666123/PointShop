@@ -67,6 +67,7 @@ public partial class PointShopUI : BaseBody
         SearchLeftText.Text = $"{LanguageHelper.GetTextByPointShop("NameFilter")}";
         SearchLeftText.BackgroundColor = SUIColor.Background * 0.5f;
 
+        SearchBox.Placeholder = LanguageHelper.GetTextByPointShop("ItemSearchTips").Value;
         SearchBox.BackgroundColor = SUIColor.Border * 0.25f;
         SearchBox.CursorFlashColor = Color.White;
         SearchBox.ContentChanged += (sender, e) =>
@@ -88,6 +89,7 @@ public partial class PointShopUI : BaseBody
     protected override void UpdateStatus(GameTime gameTime)
     {
         base.UpdateStatus(gameTime);
+
 
         if (IsShow) SwitchTimer.StartUpdate();
         else SwitchTimer.StartReverseUpdate();

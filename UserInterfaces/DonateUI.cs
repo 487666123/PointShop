@@ -21,7 +21,7 @@ public partial class DonateUI : BaseBody
 
         InitializeComponent();
 
-        Header.Title.Text = "捐赠 Donate";
+        Header.Title.Text = $"{LanguageHelper.GetTextByPointShop("Donate")}";
         Header.CloseButton.LeftMouseDown += delegate { Enabled = false; };
 
         Kofi.Icon.Texture2D = ModAsset.kofi;
@@ -62,12 +62,27 @@ public class UILinkButton : UIElementGroup
 
     public UILinkButton()
     {
+        MainAlignment = MainAlignment.Center;
+        CrossAlignment = CrossAlignment.Center;
+
+        FitHeight = true;
+        FlexGrow = 1f;
+
+        SetGap(12f);
+        SetPadding(0f, 24f);
+
+        Border = 2f;
+        BorderRadius = new Vector4(4f);
+
+        FlexDirection = FlexDirection.Column;
+        BorderColor = Color.Black * 0.5f;
+
         Icon = new SUIImage()
         {
             FitWidth = false,
             FitHeight = false,
-            Width = new Dimension(32f),
-            Height = new Dimension(32f),
+            Width = new Dimension(38f),
+            Height = new Dimension(38f),
             ImageAlign = new Vector2(0.5f),
         }.Join(this);
 
@@ -78,27 +93,11 @@ public class UILinkButton : UIElementGroup
             TextScale = 0.4f,
         }.Join(this);
         Name.UseDeathText();
-
-        MainAlignment = MainAlignment.Center;
-        CrossAlignment = CrossAlignment.Center;
-
-        FlexGrow = 1f;
-
-        FitHeight = true;
-        Padding = new Margin(0f, 28f);
-
-        Border = 2f;
-        BorderRadius = new Vector4(4f);
-
-        FlexDirection = FlexDirection.Column;
-        Gap = 8;
     }
 
     protected override void UpdateStatus(GameTime gameTime)
     {
         base.UpdateStatus(gameTime);
-
-        BorderColor = HoverTimer.Lerp(Color.Black * 0.5f, SUIColor.Highlight);
-        //BackgroundColor = Color.Lerp(Color.Black * 0.25f, SUIColor.Highlight * 0.75f, HoverTimer.Schedule * 0.25f);
+        BackgroundColor = Color.Black * HoverTimer.Lerp(0.2f, 0.3f);
     }
 }

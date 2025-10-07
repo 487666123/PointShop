@@ -9,6 +9,7 @@ global using ReLogic.Content;
 global using SilkyUIFramework;
 global using SilkyUIFramework.Elements;
 global using SilkyUIFramework.Helper;
+global using SilkyUIFramework.Layout;
 global using Terraria;
 global using Terraria.GameContent;
 global using Terraria.ID;

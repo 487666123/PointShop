@@ -78,7 +78,7 @@ public class PointShopFooter : UIElementGroup
 
         OpenDonateUI = new UITextView
         {
-            Text = $"捐赠",
+            Text = $"{LanguageHelper.GetTextByPointShop("Donate")}",
             TextScale = 0.75f,
             TextAlign = new Vector2(0f, 0.5f),
             FitHeight = false,
