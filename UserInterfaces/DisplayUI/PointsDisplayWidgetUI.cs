@@ -44,7 +44,7 @@ public class PointsDisplayWidgetUI : BaseBody
         Title.SetPadding(0f, 2f);
         Title.SetWidth(0f, 1f);
 
-        Title.AppendChild(new UITextView
+        Title.AddChild(new UITextView
         {
             Text = LanguageHelper.GetTextByPointShop("DisplayName").Value,
             TextScale = 0.75f,

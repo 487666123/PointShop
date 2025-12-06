@@ -118,7 +118,7 @@ public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
                 }
                 else
                 {
-                    if (!HasChild(CoverView)) AppendChild(CoverView);
+                    if (!HasChild(CoverView)) AddChild(CoverView);
                 }
             });
         }

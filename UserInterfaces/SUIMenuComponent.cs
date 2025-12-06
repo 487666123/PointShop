@@ -39,9 +39,10 @@ public class SUIMenuComponent : UIElementGroup
         Text.SetHeight(0f, 1f);
     }
 
-    public override void HandleUpdateStatus(GameTime gameTime)
+
+    protected override void UpdateStatus(GameTime gameTime)
     {
+        base.UpdateStatus(gameTime);
         BackgroundColor = Color.Black * HoverTimer.Lerp(0.25f, 0.4f);
-        base.HandleUpdateStatus(gameTime);
     }
 }
