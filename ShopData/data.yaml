@@ -807,16 +807,6 @@ EnvironmentShopItems:
       Prices: 5000
       UnlockCondition: Hardmode
     #
-    - Type: 1521
-      Quantity: 1
-      Prices: 15000
-      UnlockCondition: Hardmode
-    #
-    - Type: 1611
-      Quantity: 1
-      Prices: 15000
-      UnlockCondition: Hardmode
-    #
     - Type: 1533
       Quantity: 1
       Prices: 15000
@@ -826,6 +816,16 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 15000
       UnlockCondition: Hardmode
+    # 褴褛蜜蜂之翼
+    - Type: 1521
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: DownedMechBossAny
+    # 蝴蝶尘
+    - Type: 1611
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: DownedMechBossAny
     # 生命果
     - Type: 1291
       Quantity: 1

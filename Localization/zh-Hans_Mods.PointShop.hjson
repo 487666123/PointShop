@@ -4,6 +4,10 @@ Clear: 清空
 Buy: 购买
 ItemSearchTips: 请输入物品名
 Donate: 捐赠
+About: 关于模组
+SupportTheAuthor: 支持作者
+DonorList: 捐赠者列表
+Acknowledgments: 感谢所有游玩者的支持
 
 Configs: {
 	PointShopConfig: {
@@ -50,4 +54,4 @@ ShopItem: {
 
 // Mods.PointShop.Keybin.SuperVault.DisplayName: Mods.PointShop.Keybinds.Mods.PointShop.Keybin.SuperVault.DisplayName
 Keybinds.PointShopUIKeybind.DisplayName: 积分商店 UI 开关
-// ShowGroupLinks: True
+ShowGroupLinks: True

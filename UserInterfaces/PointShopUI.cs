@@ -79,7 +79,7 @@ public partial class PointShopUI : BaseBody
         ClearSearchButton.Text = $"{LanguageHelper.GetTextByPointShop("Clear")}";
         ClearSearchButton.LeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
 
-        ShopItemTableScrollView.Container.Gap = new Vector2(4);
+        ShopItemTableScrollView.Container.SetGap(4);
 
         ShopItemTableIsDirty = true;
     }

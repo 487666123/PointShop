@@ -15,8 +15,8 @@ public class PointShopFooter : UIElementGroup
     public UITextView EnvironmentName { get; }
     public UITextView Balance { get; }
     public UIView Support { get; }
-    public UITextView OfficialGroupLink { get; }
-    public UITextView OnlineGroupLink { get; }
+    //public UITextView OfficialGroupLink { get; }
+    //public UITextView OnlineGroupLink { get; }
     public UITextView OpenDonateUI { get; }
 
     public PointShopFooter()
@@ -78,7 +78,7 @@ public class PointShopFooter : UIElementGroup
 
         OpenDonateUI = new UITextView
         {
-            Text = $"{LanguageHelper.GetTextByPointShop("Donate")}",
+            Text = $"{LanguageHelper.GetTextByPointShop("About")}",
             TextScale = 0.75f,
             TextAlign = new Vector2(0f, 0.5f),
             FitHeight = false,
@@ -100,51 +100,50 @@ public class PointShopFooter : UIElementGroup
             if (OpenDonateUI.IsMouseHovering) UICommon.TooltipMouseText("Donate to me.");
         };
 
-        if (DisplayLinks && bool.TryParse(LanguageHelper.GetTextByPointShop("ShowGroupLinks").Value, out var showGroupLinks) && showGroupLinks)
-        {
+        //if (DisplayLinks && bool.TryParse(LanguageHelper.GetTextByPointShop("ShowGroupLinks").Value, out var showGroupLinks) && showGroupLinks)
+        //{
+        //    OnlineGroupLink = new UITextView
+        //    {
+        //        Text = $"联机群",
+        //        TextScale = 0.75f,
+        //        TextAlign = new Vector2(0f, 0.5f),
+        //        FitHeight = false,
+        //    }.Join(this);
+        //    OnlineGroupLink.SetHeight(0, 1f);
+        //    OnlineGroupLink.OnUpdateStatus += delegate
+        //    {
+        //        OnlineGroupLink.TextBorderColor = OnlineGroupLink.HoverTimer.Lerp(Color.Black, SUIColor.Highlight);
+        //    };
+        //    OnlineGroupLink.DrawAction += delegate
+        //    {
+        //        if (OnlineGroupLink.IsMouseHovering) UICommon.TooltipMouseText("可在配置中关闭显示");
+        //    };
+        //    OnlineGroupLink.LeftMouseDown += delegate
+        //    {
+        //        Utils.OpenToURL("https://qm.qq.com/q/CQsK9QEW78");
+        //    };
 
-            OnlineGroupLink = new UITextView
-            {
-                Text = $"联机群",
-                TextScale = 0.75f,
-                TextAlign = new Vector2(0f, 0.5f),
-                FitHeight = false,
-            }.Join(this);
-            OnlineGroupLink.SetHeight(0, 1f);
-            OnlineGroupLink.OnUpdateStatus += delegate
-            {
-                OnlineGroupLink.TextBorderColor = OnlineGroupLink.HoverTimer.Lerp(Color.Black, SUIColor.Highlight);
-            };
-            OnlineGroupLink.DrawAction += delegate
-            {
-                if (OnlineGroupLink.IsMouseHovering) UICommon.TooltipMouseText("可在配置中关闭显示");
-            };
-            OnlineGroupLink.LeftMouseDown += delegate
-            {
-                Utils.OpenToURL("https://qm.qq.com/q/CQsK9QEW78");
-            };
-
-            OfficialGroupLink = new UITextView
-            {
-                Text = $"反馈群",
-                TextScale = 0.75f,
-                TextAlign = new Vector2(0f, 0.5f),
-                FitHeight = false,
-            }.Join(this);
-            OfficialGroupLink.SetHeight(0, 1f);
-            OfficialGroupLink.OnUpdateStatus += delegate
-            {
-                OfficialGroupLink.TextBorderColor = OfficialGroupLink.HoverTimer.Lerp(Color.Black, SUIColor.Highlight);
-            };
-            OfficialGroupLink.DrawAction += delegate
-            {
-                if (OfficialGroupLink.IsMouseHovering) UICommon.TooltipMouseText("可在配置中关闭显示");
-            };
-            OfficialGroupLink.LeftMouseDown += delegate
-            {
-                Utils.OpenToURL("https://qm.qq.com/q/Vz7DmEOaQe");
-            };
-        }
+        //    OfficialGroupLink = new UITextView
+        //    {
+        //        Text = $"反馈群",
+        //        TextScale = 0.75f,
+        //        TextAlign = new Vector2(0f, 0.5f),
+        //        FitHeight = false,
+        //    }.Join(this);
+        //    OfficialGroupLink.SetHeight(0, 1f);
+        //    OfficialGroupLink.OnUpdateStatus += delegate
+        //    {
+        //        OfficialGroupLink.TextBorderColor = OfficialGroupLink.HoverTimer.Lerp(Color.Black, SUIColor.Highlight);
+        //    };
+        //    OfficialGroupLink.DrawAction += delegate
+        //    {
+        //        if (OfficialGroupLink.IsMouseHovering) UICommon.TooltipMouseText("可在配置中关闭显示");
+        //    };
+        //    OfficialGroupLink.LeftMouseDown += delegate
+        //    {
+        //        Utils.OpenToURL("https://qm.qq.com/q/Vz7DmEOaQe");
+        //    };
+        //}
 
         // 版本号
         var versionText = new UITextView

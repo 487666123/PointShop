@@ -1,4 +1,4 @@
-﻿namespace PointShop;
+﻿namespace PointShop.Helpers;
 
 public static class LanguageHelper
 {

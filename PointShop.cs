@@ -15,25 +15,6 @@ public class PointShop : Mod
 
     public static PointShop Instance => ModContent.GetInstance<PointShop>();
 
-    //public enum MessageType : byte
-    //{
-    //    EarnPoint
-    //}
-
-    //public override void HandlePacket(BinaryReader reader, int whoAmI)
-    //{
-    //    var msgType = (MessageType)reader.ReadByte();
-    //    switch (msgType)
-    //    {
-    //        case MessageType.EarnPoint:
-    //            // PointShopHelper.BonusPoints(reader.ReadByte());
-    //            break;
-    //        default:
-    //            Logger.WarnFormat($"PointShop: Unknown Message type: {msgType}");
-    //            break;
-    //    }
-    //}
-
     public override object Call(params object[] args)
     {
         if (args.Length == 0) return null;
@@ -121,7 +102,7 @@ public class PointShop : Mod
 
     public static void AddShopItemByFile(object modObj, object yamlString)
     {
-        ShopItemsRegistrar.RegisterShopData(modObj as Mod, ShopItemsRegistrar.ConvertYamlStringToShopData(yamlString as string));
+        ShopItemsRegistrar.RegisterShopData(modObj as Mod, FileHelper.DeserializeYaml<SimpleShopData>(yamlString as string));
     }
 }
 

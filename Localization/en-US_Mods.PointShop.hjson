@@ -4,6 +4,10 @@ Clear: Clear
 Buy: Buy
 ItemSearchTips: Please enter the item name.
 Donate: Donate
+About: About Mods
+SupportTheAuthor: SupportTheAuthor
+DonorList: Donor List
+Acknowledgments: Thank you for the support of all players.
 
 Configs: {
 	PointShopConfig: {
@@ -50,4 +54,4 @@ ShopItem: {
 
 // Mods.PointShop.Keybin.SuperVault.DisplayName: Mods.PointShop.Keybinds.Mods.PointShop.Keybin.SuperVault.DisplayName
 Keybinds.PointShopUIKeybind.DisplayName: Points Shop UI Toggle
-ShowGroupLinks: True
+ShowGroupLinks: false

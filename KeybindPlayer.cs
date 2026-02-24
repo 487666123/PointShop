@@ -3,6 +3,9 @@ using Terraria.GameInput;
 
 namespace PointShop;
 
+/// <summary>
+/// 也许可以写一个快捷键源生成器？自动注册和清理引用 [?]
+/// </summary>
 public class KeybindPlayer : ModPlayer
 {
     /// <summary>
