@@ -87,6 +87,7 @@ public class PointShopFooter : UIElementGroup
         OpenDonateUI.OnUpdateStatus += delegate
         {
             OpenDonateUI.TextBorderColor = OpenDonateUI.HoverTimer.Lerp(Color.Black, SUIColor.Highlight);
+            if (OpenDonateUI.IsMouseHovering) UICommon.TooltipMouseText("Donate to me.");
         };
         OpenDonateUI.LeftMouseDown += delegate
         {
@@ -94,10 +95,6 @@ public class PointShopFooter : UIElementGroup
             if (!manager.TryGetInstance<DonateUI>(out var donateUI)) return;
 
             donateUI.Enabled = !donateUI.Enabled;
-        };
-        OpenDonateUI.DrawAction += delegate
-        {
-            if (OpenDonateUI.IsMouseHovering) UICommon.TooltipMouseText("Donate to me.");
         };
 
         //if (DisplayLinks && bool.TryParse(LanguageHelper.GetTextByPointShop("ShowGroupLinks").Value, out var showGroupLinks) && showGroupLinks)

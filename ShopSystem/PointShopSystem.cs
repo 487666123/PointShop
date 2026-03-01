@@ -119,8 +119,14 @@ public class PointShopSystem : ModSystem
     {
         On_Main.Update += (orig, self, gameTime) =>
         {
-            RuntimeSafeHelper.SafeInvoke(() => Update(gameTime));
-            orig(self, gameTime);
+            try
+            {
+                Update(gameTime);
+            }
+            finally
+            {
+                orig(self, gameTime);
+            }
         };
     }
 }

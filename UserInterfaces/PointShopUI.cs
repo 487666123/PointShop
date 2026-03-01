@@ -99,7 +99,7 @@ public partial class PointShopUI : BaseBody
         UpdateShopItemTable();
     }
 
-    protected override void UseRenderTargetDraw(GameTime gameTime, SpriteBatch spriteBatch)
+    protected override void DrawWithRenderTarget(GameTime gameTime, SpriteBatch spriteBatch)
     {
         Opacity = SwitchTimer.Lerp(0f, 1f);
         var center = Bounds.Center * Main.UIScale;
@@ -108,6 +108,6 @@ public partial class PointShopUI : BaseBody
             Matrix.CreateScale(SwitchTimer.Lerp(0.95f, 1f), SwitchTimer.Lerp(0.95f, 1f), 1) *
             Matrix.CreateTranslation(center.X, center.Y, 0);
 
-        base.UseRenderTargetDraw(gameTime, spriteBatch);
+        base.DrawWithRenderTarget(gameTime, spriteBatch);
     }
 }
