@@ -37,6 +37,7 @@ public partial class PointShopUI
         {
             var environment = environments[i];
             var button = new SUIMenuComponent(environment).Join(MenuListScrollView.Container);
+            button.OnEnvironmentChanged(null, CurrentEnvironmentName);
 
             button.LeftMouseDown += (_, _) =>
             {
@@ -52,7 +53,6 @@ public partial class PointShopUI
 
     private string _keywords = "";
     private bool ShopItemFilters(ShopItem shopItem) => shopItem.DisplayName.Contains(_keywords.Trim());
-
     public static bool ShopItemTableIsDirty { get; set; } = true;
 
     /// <summary>

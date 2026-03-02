@@ -21,6 +21,8 @@ public partial class PointShopUI : BaseBody
         set => IsShow = value;
     }
 
+    public static event EventHandler<string> EnvironmentNameChanged;
+
     /// <summary>
     /// 商店 UI 中当前显示的环境商店内部名称
     /// </summary>
@@ -31,6 +33,7 @@ public partial class PointShopUI : BaseBody
             if (field == value) return;
             field = value;
             ShopItemTableIsDirty = true;
+            EnvironmentNameChanged?.Invoke(null, field);
         }
     } = "Forest";
 

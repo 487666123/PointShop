@@ -39,6 +39,29 @@ public class SUIMenuComponent : UIElementGroup
         Text.SetHeight(0f, 1f);
     }
 
+    protected override void OnEnterTree()
+    {
+        base.OnEnterTree();
+        PointShopUI.EnvironmentNameChanged += OnEnvironmentChanged;
+    }
+
+    protected override void OnExitTree()
+    {
+        base.OnExitTree();
+        PointShopUI.EnvironmentNameChanged -= OnEnvironmentChanged;
+    }
+
+    public void OnEnvironmentChanged(object _, string environmentName)
+    {
+        if (string.Equals(environmentName, GameEnvironment.Name))
+        {
+            Text.TextColor = GameEnvironment.UniqueColor;
+        }
+        else
+        {
+            Text.TextColor = Color.White;
+        }
+    }
 
     protected override void UpdateStatus(GameTime gameTime)
     {
