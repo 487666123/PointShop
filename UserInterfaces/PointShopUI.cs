@@ -42,13 +42,13 @@ public partial class PointShopUI : BaseBody
 
     protected override void OnInitialize()
     {
+        InitializeComponent();
+
         EnableBlur = true;
         BorderColor = SUIColor.Border;
         BackgroundColor = SUIColor.Background * 0.75f;
         OverflowHidden = true;
         IndependentRenderTarget = true;
-
-        InitializeComponent();
 
         Header.ControlTarget = this;
         Header.Title.Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")}";
@@ -92,7 +92,6 @@ public partial class PointShopUI : BaseBody
     protected override void UpdateStatus(GameTime gameTime)
     {
         base.UpdateStatus(gameTime);
-
 
         if (IsShow) SwitchTimer.StartUpdate();
         else SwitchTimer.StartReverseUpdate();
