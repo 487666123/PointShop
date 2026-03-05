@@ -12,3 +12,34 @@ Donors:
       Donations:
         - Date: 2026-02-23
           Amount: 1.63
+    # 彩虹效果
+    - Name: 银月
+      Effect: RainbowText
+      Donations:
+        - Date: 2026-03-04
+          Amount: 10
+    - Name: Kaelis
+      Donations:
+        - Date: 2026-03-04
+          Amount: 20
+    - Name: 鸭头（无所谓）
+      Donations:
+        - Date: 2026-03-04
+          Amount: 38.8
+    # 风车旋转效果
+    - Name: 地狱摇摇车
+      Donations:
+        - Date: 2026-03-04
+          Amount: 20
+    - Name: 火花（wasted）
+      Donations:
+        - Date: 2026-03-04
+          Amount: 25
+    - Name: 南京盐水鸭
+      Donations:
+        - Date: 2026-03-05
+          Amount: 19.5
+    - Name: 住
+      Donations:
+        - Date: 0001-01-01
+          Amount: -666

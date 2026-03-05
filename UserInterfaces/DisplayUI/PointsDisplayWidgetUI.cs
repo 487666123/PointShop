@@ -86,6 +86,7 @@ public class PointsDisplayWidgetUI : BaseBody
     public void UpdateList()
     {
         if (PointShopPlayer.Local is not { } player) return;
+        if (ScrollView is null) return;
 
         ScrollView.Container.RemoveAllChildren();
 

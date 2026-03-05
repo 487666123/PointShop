@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Body Class="PointShop.UserInterfaces.DonateUI"
-    FitWidth="false" FitHeight="true" Width="325px" Left="50#" Top="50#" Gap="0" BorderRadius="8">
+    FitWidth="false" FitHeight="true" Width="350px" Left="50#" Top="50#" Gap="0" BorderRadius="8">
 	<CommonHeader Name="Header" />
 	<HR/>
 	<ElementGroup Width="100%" FitHeight="true" FlexDirection="Column" Padding="8" Gap="8">
@@ -18,7 +18,7 @@
 		</ElementGroup>
 		<TextView Name="DonorList" Padding="2" TextScale="0.8" Text="捐赠者列表" TextColor="#3399ff"/>
 		<ScrollView Name="Donors" Width="100%" FitHeight="true" CrossAlignment="Stretch" Gap="4">
-			<M.Mask FitHeight="true" MaxHeight="125px" />
+			<M.Mask FitHeight="true" MaxHeight="150px" />
 			<M.Container FlexDirection="Column" FitHeight="true" CrossAlignment="Stretch" Gap="4" />
 		</ScrollView>
 		<TextView Name="Acknowledgments" Padding="2" TextScale="0.8" Text="感谢所有游玩者的支持！" TextColor="#993333"/>

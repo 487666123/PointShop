@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using PointShop.ShopData;
+using PointShop.UserInterfaces.Components;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Extensions;
 using SilkyUIFramework.Graphics2D;
@@ -68,10 +69,24 @@ public partial class DonateUI : BaseBody
 
         foreach (var dornor in dornorData.Donors)
         {
-            var dornorItem = new UIDonateItem();
-            dornorItem.Name.Text = dornor.Name;
+            if (dornor.Effect.Equals("RainbowText"))
+            {
+                new SUIRainbowTextItem()
+                {
+                    Name = {
+                        Text = dornor.Name,
+                    }
+                }.Join(Donors.Container);
 
-            Donors.Container.AddChild(dornorItem);
+                continue;
+            }
+
+            new SUIDonateItem()
+            {
+                Name = {
+                    Text = dornor.Name,
+                }
+            }.Join(Donors.Container);
         }
 
         Support.Text = LanguageHelper.GetTextByPointShop("SupportTheAuthor").Value;
@@ -105,12 +120,11 @@ public partial class DonateUI : BaseBody
     }
 }
 
-[XmlElementMapping("DonateItem")]
-public class UIDonateItem : UIElementGroup
+public class SUIDonateItem : UIElementGroup
 {
     public UITextView Name { get; }
 
-    public UIDonateItem()
+    public SUIDonateItem()
     {
         FitHeight = true;
         SetPadding(6, 4);
@@ -123,6 +137,21 @@ public class UIDonateItem : UIElementGroup
             Padding = new Margin(2),
             Text = "Defaule.Text"
         }.Join(this);
+    }
+}
+
+public class SUIRainbowTextItem : SUIDonateItem
+{
+    private readonly RainbowTextEffect Rainbow = RainbowTextEffect.Default;
+
+    protected override void UpdateStatus(GameTime gameTime)
+    {
+        base.UpdateStatus(gameTime);
+
+        //Main.NewText($"123");
+
+        var amount = gameTime.TotalGameTime.TotalSeconds % 2;
+        Name.TextColor = Rainbow.GetColorClamped((float)amount / 2);
     }
 }
 

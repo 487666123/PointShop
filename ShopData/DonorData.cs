@@ -30,6 +30,11 @@ internal record Donor
     /// 该捐赠者的捐赠记录。
     /// </summary>
     public Donation[] Donations { get; init; } = [];
+
+    /// <summary>
+    /// 效果
+    /// </summary>
+    public string Effect { get; set; } = string.Empty;
 }
 
 /// <summary>
