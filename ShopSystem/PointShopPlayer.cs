@@ -5,8 +5,6 @@
 /// </summary>
 public partial class PointShopPlayer : ModPlayer
 {
-    public static PointShopPlayer Local => Main.LocalPlayer?.GetModPlayer<PointShopPlayer>();
-
     public readonly List<GameEnvironment> CurrentEnvironments = [];
     public readonly List<GameEnvironment> AverageEnvironments = [];
 

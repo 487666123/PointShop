@@ -54,4 +54,4 @@ ShopItem: {
 
 // Mods.PointShop.Keybin.SuperVault.DisplayName: Mods.PointShop.Keybinds.Mods.PointShop.Keybin.SuperVault.DisplayName
 Keybinds.PointShopUIKeybind.DisplayName: Points Shop UI Toggle
-ShowGroupLinks: false
+ShowGroupLinks: True

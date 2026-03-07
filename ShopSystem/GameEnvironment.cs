@@ -101,7 +101,7 @@ public class GameEnvironment(
     /// <param name="shopItem">要购买的商品</param>
     public bool PurchaseItems(ShopItem shopItem, int quantity = 1)
     {
-        if (shopItem is null || PointShopPlayer.Local is not { } player) return false;
+        if (shopItem is null || !Main.LocalPlayer.TryGetModPlayer<PointShopPlayer>(out var player)) return false;
 
         // 商品属于环境, 已解锁, 并且支付成功
         if (_shopItemList.Contains(shopItem))
@@ -129,10 +129,8 @@ public class GameEnvironment(
 
     public virtual double GetPlayerPoints()
     {
-        if (PointShopPlayer.Local is { } player)
-        {
+        if (Main.LocalPlayer.TryGetModPlayer<PointShopPlayer>(out var player))
             return player.GetPoint(Name);
-        }
 
         return 0;
     }

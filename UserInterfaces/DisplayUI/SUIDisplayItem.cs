@@ -19,11 +19,12 @@ public class SUIDisplayItem : UIElementGroup
     public SUIDisplayItem(GameEnvironment environment)
     {
         BorderRadius = new Vector4(2f);
+        OverflowHidden = true;
 
         FlexGrow = 1f;
         SetWidth(80f, 0f);
         SetHeight(32f, 0f);
-        Gap = new Vector2(4f);
+        Gap = new Vector2(2f);
         GameEnvironment = environment;
         CrossAlignment = CrossAlignment.Center;
         CrossContentAlignment = CrossContentAlignment.Center;
@@ -35,13 +36,14 @@ public class SUIDisplayItem : UIElementGroup
             ImageScale = new Vector2(0.75f),
             ImageAlign = new Vector2(0.5f),
         }.Join(this);
-        Icon.SetSize(32, 0f, 0f, 1f);
+        Icon.SetSize(30, 0f, 0f, 1f);
 
         PointsText = new UITextView
         {
             Text = $"{environment.GetPlayerPoints():#,##0}",
             TextScale = 0.75f,
             FlexGrow = 1f,
+            FlexShrink = 1f,
             FitHeight = false,
             TextAlign = new Vector2(0f, 0.5f),
         }.Join(this);
@@ -51,10 +53,11 @@ public class SUIDisplayItem : UIElementGroup
     protected override void Update(GameTime gameTime)
     {
         Border = 2f;
-        BorderColor = Color.Black * HoverTimer.Lerp(0.25f, 0.4f);
+        BorderColor = Color.Black * HoverTimer.Lerp(0.4f, 1f);
         BackgroundColor = Color.Black * HoverTimer.Lerp(0.25f, 0.4f);
 
         PointsText.Text = $"{GameEnvironment.GetPlayerPoints():#,##0}";
+
 
         base.Update(gameTime);
     }

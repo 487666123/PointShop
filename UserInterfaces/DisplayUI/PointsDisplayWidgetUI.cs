@@ -83,9 +83,16 @@ public class PointsDisplayWidgetUI : BaseBody
         }
     }
 
-    public void UpdateList()
+    protected override void Update(GameTime gameTime)
     {
-        if (PointShopPlayer.Local is not { } player) return;
+        base.Update(gameTime);
+
+        Update();
+    }
+
+    private void Update()
+    {
+        if (!Main.LocalPlayer.TryGetModPlayer<PointShopPlayer>(out var player)) return;
         if (ScrollView is null) return;
 
         ScrollView.Container.RemoveAllChildren();
@@ -108,12 +115,6 @@ public class PointsDisplayWidgetUI : BaseBody
         {
             displayItem.Join(ScrollView.Container);
         }
-    }
-
-    protected override void Update(GameTime gameTime)
-    {
-        UpdateList();
-        base.Update(gameTime);
     }
 
     protected override void UpdateStatus(GameTime gameTime)

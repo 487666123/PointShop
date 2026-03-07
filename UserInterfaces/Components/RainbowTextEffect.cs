@@ -3,7 +3,7 @@
 /// <summary>
 /// 提供彩虹文本的颜色插值能力，根据归一化进度返回对应的渐变颜色。
 /// </summary>
-internal class RainbowTextEffect
+class RainbowTextEffect
 {
     /// <summary>
     /// 按顺序定义彩虹渐变的关键颜色列表，至少包含一个颜色。
