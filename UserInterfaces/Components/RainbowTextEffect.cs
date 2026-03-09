@@ -6,6 +6,41 @@
 class RainbowTextEffect
 {
     /// <summary>
+    /// 默认彩虹效果配置（用于区间钳制算法），按赤橙黄绿青蓝紫排列，
+    /// 并在末尾回到赤色以形成首尾视觉连续。
+    /// </summary>
+    public static RainbowTextEffect Default => new()
+    {
+        RainbowColors = [
+            new(255, 0, 0),    // 赤
+            new(255, 127, 0),  // 橙
+            new(255, 255, 0),  // 黄
+            new(0, 255, 0),    // 绿
+            new(0, 255, 255),  // 青
+            new(0, 0, 255),    // 蓝
+            new(148, 0, 211),  // 紫
+            new(255, 0, 0),    // 赤（末尾重复以保证视觉连续）
+        ]
+    };
+
+    /// <summary>
+    /// 闭环算法推荐配置（用于 <see cref="GetColorLooped(float)"/>），
+    /// 不需要在末尾重复第一个颜色。
+    /// </summary>
+    public static RainbowTextEffect LoopedDefault => new()
+    {
+        RainbowColors = [
+            new(255, 0, 0),    // 赤
+            new(255, 127, 0),  // 橙
+            new(255, 255, 0),  // 黄
+            new(0, 255, 0),    // 绿
+            new(0, 255, 255),  // 青
+            new(0, 0, 255),    // 蓝
+            new(148, 0, 211),  // 紫
+        ]
+    };
+
+    /// <summary>
     /// 按顺序定义彩虹渐变的关键颜色列表，至少包含一个颜色。
     /// </summary>
     /// <exception cref="ArgumentException">当颜色列表为空时抛出。</exception>
@@ -66,39 +101,4 @@ class RainbowTextEffect
 
         return Color.Lerp(colors[startIndex], colors[endIndex], scaled - startIndex);
     }
-
-    /// <summary>
-    /// 默认彩虹效果配置（用于区间钳制算法），按赤橙黄绿青蓝紫排列，
-    /// 并在末尾回到赤色以形成首尾视觉连续。
-    /// </summary>
-    public static RainbowTextEffect Default => new()
-    {
-        RainbowColors = [
-            new(255, 0, 0),    // 赤
-            new(255, 127, 0),  // 橙
-            new(255, 255, 0),  // 黄
-            new(0, 255, 0),    // 绿
-            new(0, 255, 255),  // 青
-            new(0, 0, 255),    // 蓝
-            new(148, 0, 211),  // 紫
-            new(255, 0, 0),    // 赤（末尾重复以保证视觉连续）
-        ]
-    };
-
-    /// <summary>
-    /// 闭环算法推荐配置（用于 <see cref="GetColorLooped(float)"/>），
-    /// 不需要在末尾重复第一个颜色。
-    /// </summary>
-    public static RainbowTextEffect LoopedDefault => new()
-    {
-        RainbowColors = [
-            new(255, 0, 0),    // 赤
-            new(255, 127, 0),  // 橙
-            new(255, 255, 0),  // 黄
-            new(0, 255, 0),    // 绿
-            new(0, 255, 255),  // 青
-            new(0, 0, 255),    // 蓝
-            new(148, 0, 211),  // 紫
-        ]
-    };
 }

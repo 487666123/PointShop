@@ -28,6 +28,7 @@ Donors:
           Amount: 38.8
     # 风车旋转效果
     - Name: 地狱摇摇车
+      Effect: Windmill
       Donations:
         - Date: 2026-03-04
           Amount: 20
