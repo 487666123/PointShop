@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using PointShop.ShopData;
-using PointShop.UserInterfaces.Components;
+﻿using PointShop.ShopData;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Extensions;
 using SilkyUIFramework.Graphics2D;
