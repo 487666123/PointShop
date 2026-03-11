@@ -251,7 +251,7 @@ public class SUICoverView : UIElementGroup
     {
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null,
-            SilkyUI.RasterizerStateForOverflowHidden, null, SilkyUI.TransformMatrix);
+            SilkyUI.ScissorRasterizerState, null, SilkyUI.TransformMatrix);
 
         base.Draw(gameTime, spriteBatch);
 
