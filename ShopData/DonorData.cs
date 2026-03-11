@@ -34,7 +34,9 @@ internal record Donor
     /// <summary>
     /// 效果
     /// </summary>
-    public string Effect { get; set; } = string.Empty;
+    public string Effect { get; init; } = string.Empty;
+
+    public bool Visible { get; init; } = true;
 }
 
 /// <summary>

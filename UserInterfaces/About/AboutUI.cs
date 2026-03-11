@@ -10,7 +10,7 @@ namespace PointShop.UserInterfaces.About;
 /// 展示作者支持入口（Ko-Fi、爱发电）以及捐赠者列表区域。
 /// </summary>
 [RegisterUI(priority: 1)]
-public partial class DonateUI : BaseBody
+public partial class AboutUI : BaseBody
 {
     /// <summary>
     /// Ko-Fi 支持链接。
@@ -86,29 +86,35 @@ public partial class DonateUI : BaseBody
 
         foreach (var dornor in dornorData.Donors)
         {
-            if (dornor.Effect.Equals("RainbowText"))
+            if (!dornor.Visible) continue;
+
+            switch (dornor.Effect)
             {
-                new SUIRainbowTextItem()
+                case "RainbowText":
                 {
-                    NameView = { Text = dornor.Name, }
-                }.Join(Donors.Container);
-
-                continue;
-            }
-            else if (dornor.Effect.Equals("Windmill"))
-            {
-                new SUIWindmillItem()
+                    new SUIRainbowTextItem()
+                    {
+                        NameView = { Text = dornor.Name, }
+                    }.Join(Donors.Container);
+                    break;
+                }
+                case "Windmill":
                 {
-                    NameView = { Text = dornor.Name, }
-                }.Join(Donors.Container);
-
-                continue;
+                    new SUIWindmillItem()
+                    {
+                        NameView = { Text = dornor.Name, }
+                    }.Join(Donors.Container);
+                    break;
+                }
+                default:
+                {
+                    new SUIDonateItem()
+                    {
+                        NameView = { Text = dornor.Name, }
+                    }.Join(Donors.Container);
+                    break;
+                }
             }
-
-            new SUIDonateItem()
-            {
-                NameView = { Text = dornor.Name, }
-            }.Join(Donors.Container);
         }
     }
 

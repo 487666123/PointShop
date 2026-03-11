@@ -19,6 +19,7 @@ Donors:
         - Date: 2026-03-04
           Amount: 10
     - Name: Kaelis
+      Effect: RainbowText
       Donations:
         - Date: 2026-03-04
           Amount: 20
@@ -41,6 +42,7 @@ Donors:
         - Date: 2026-03-05
           Amount: 19.5
     - Name: 住
+      Visible: false
       Donations:
         - Date: 0001-01-01
           Amount: -666

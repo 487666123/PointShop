@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Body Class="PointShop.UserInterfaces.About.DonateUI"
+<Body Class="PointShop.UserInterfaces.About.AboutUI"
     FitWidth="false" FitHeight="true" Width="300px" Left="50#" Top="50#" Gap="0" Border="0" BackgroundColor="#00000000">
 	<ElementGroup Name="MainPanel" FlexDirection="Column"
 				  FitHeight="true" Width="100%" Gap="0" Border="2" BorderRadius="8">

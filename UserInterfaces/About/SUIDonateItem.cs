@@ -23,6 +23,9 @@ public class SUIDonateItem : UIElementGroup
     }
 }
 
+/// <summary>
+/// 彩虹文字
+/// </summary>
 public class SUIRainbowTextItem : SUIDonateItem
 {
     private readonly RainbowTextEffect Rainbow = RainbowTextEffect.Default;
@@ -38,6 +41,9 @@ public class SUIRainbowTextItem : SUIDonateItem
     }
 }
 
+/// <summary>
+/// 大风车
+/// </summary>
 public class SUIWindmillItem : SUIDonateItem
 {
     public SUIWindmillItem() : base()
