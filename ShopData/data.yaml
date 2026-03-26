@@ -270,14 +270,20 @@ EnvironmentShopItems:
     - Type: 320
       Quantity: 1
       Prices: 1000
-    # 红气球
+    # 星怒
     - Type: 65
       Quantity: 1
       Prices: 10000
+    # 红气球
     - Type: 159
       Quantity: 1
       Prices: 5000
+      # 雏翼
     - Type: 4978
+      Quantity: 1
+      Prices: 5000
+    # 马蹄铁
+    - Type: 158
       Quantity: 1
       Prices: 5000
     # 天磨
@@ -293,7 +299,7 @@ EnvironmentShopItems:
     - Type: 1516
       Quantity: 1
       Prices: 10000
-      UnlockCondition: Hardmode
+    # 飞龙风筝
     - Type: 4379
       Quantity: 1
       Prices: 2500
