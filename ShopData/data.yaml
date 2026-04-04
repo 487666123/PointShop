@@ -262,14 +262,27 @@ EnvironmentShopItems:
     # 手机
     - Type: 3124
       Quantity: 1
+      Prices: 20000
+    # 贝壳电话
+    - Type: 5437
+      Quantity: 1
       Prices: 25000
-      UnlockCondition: Hardmode
+      UnlockCondition: DownedSkeletron
+    # 十字章护符
+    - Type: 1612
+      Quantity: 1
+      Prices: 100000
+      UnlockCondition: DownedMechBossAny
   # 天空
   Sky:
     # 羽毛
     - Type: 320
       Quantity: 1
       Prices: 1000
+    # 天界磁石
+    - Type: 2219
+      Quantity: 1
+      Prices: 5000
     # 星怒
     - Type: 65
       Quantity: 1
@@ -592,11 +605,11 @@ EnvironmentShopItems:
     - Type: 5097
       Quantity: 1
       Prices: 5000
-    #
+    # 熔岩护身符
     - Type: 906
       Quantity: 1
       Prices: 15000
-    #
+    # 岩浆石
     - Type: 1322
       Quantity: 1
       Prices: 15000
@@ -608,6 +621,11 @@ EnvironmentShopItems:
     - Type: 4819
       Quantity: 1
       Prices: 15000
+    # 熔线钓钩
+    - Type: 2422
+      Quantity: 1
+      Prices: 15000
+      UnlockCondition: Hardmode
     # 火之花
     - Type: 112
       Quantity: 1
@@ -875,6 +893,10 @@ EnvironmentShopItems:
     - Type: 3096
       Quantity: 1
       Prices: 5000
+    # 金鱼竿
+    - Type: 2294
+      Quantity: 1
+      Prices: 15000
     #
     - Type: 863
       Quantity: 1
