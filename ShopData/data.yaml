@@ -43,7 +43,7 @@ EnvironmentShopItems:
     # 破布
     - Type: 362
       Quantity: 1
-      Prices: 1000
+      Prices: 500
     # 太阳花
     - Type: 313
       Quantity: 1
@@ -75,7 +75,7 @@ EnvironmentShopItems:
     # 金属带扣
     - Type: 285
       Quantity: 1
-      Prices: 5000
+      Prices: 2500
     # 攀爬爪
     - Type: 953
       Quantity: 1
@@ -100,17 +100,18 @@ EnvironmentShopItems:
     # 僵尸手臂
     - Type: 1304
       Quantity: 1
-      Prices: 5000
+      Prices: 2500
     # 镣铐
     - Type: 216
       Quantity: 1
-      Prices: 5000
+      Prices: 2500
+    # 生命木魔棒
     - Type: 832
       Quantity: 1
-      Prices: 5000
+      Prices: 2500
     - Type: 933
       Quantity: 1
-      Prices: 5000
+      Prices: 2500
     # 眼球风筝
     - Type: 4683
       Quantity: 1
@@ -397,7 +398,7 @@ EnvironmentShopItems:
     #
     - Type: 285
       Quantity: 1
-      Prices: 5000
+      Prices: 2500
     # 信号枪
     - Type: 930
       Quantity: 1
@@ -621,6 +622,11 @@ EnvironmentShopItems:
     - Type: 4819
       Quantity: 1
       Prices: 15000
+    # 火之花
+    - Type: 4881
+      Quantity: 1
+      Prices: 5000
+      UnlockCondition: DownedSkeletron
     # 熔线钓钩
     - Type: 2422
       Quantity: 1
@@ -897,6 +903,30 @@ EnvironmentShopItems:
     - Type: 2294
       Quantity: 1
       Prices: 15000
+    # 渔夫头
+    - Type: 2367
+      Quantity: 1
+      Prices: 2500
+    # 渔夫身
+    - Type: 2368
+      Quantity: 1
+      Prices: 2500
+    # 渔夫腿
+    - Type: 2369
+      Quantity: 1
+      Prices: 2500
+    # 渔夫耳环
+    - Type: 2373
+      Quantity: 1
+      Prices: 2500
+    # 渔夫腿
+    - Type: 2374
+      Quantity: 1
+      Prices: 2500
+    # 钓鱼箱
+    - Type: 2375
+      Quantity: 1
+      Prices: 2500
     #
     - Type: 863
       Quantity: 1
@@ -1756,6 +1786,11 @@ EnvironmentShopItems:
       Quantity: 1
       Prices: 10000
       UnlockCondition: DownedSkeletron
+    # 灵气
+    - Type: 1508
+      Quantity: 1
+      Prices: 1000
+      UnlockCondition: DownedPlantera
     # 钥匙剑
     - Type: 671
       Quantity: 1

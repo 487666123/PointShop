@@ -40,7 +40,7 @@ Items: {
 		Tooltip:
 			'''
 			[c/22cc22:Drops when an enemy dies]
-			[c/cc22cc:Converts to points when entering the inventory]
+			[c/cc22cc:Converts to approximately 100 points when entering the inventory]
 			[c/cccc22:Affected by player's luck and enemy rarity]
 			'''
 	}
