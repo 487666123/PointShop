@@ -28,14 +28,17 @@ public class PointCoin : ModItem
         Item.rare = ItemRarityID.Red;
     }
 
-    public override void Update(ref float gravity, ref float maxFallSpeed) =>
-        Lighting.AddLight(Item.Center, Color.Yellow.ToVector3() * 0.5f);
+    public override void Update(WorldItem item, ref float gravity, ref float maxFallSpeed)
+    {
+        Lighting.AddLight(item.Center, Color.Yellow.ToVector3() * 0.5f);
+    }
 
-    public override bool OnPickup(Player player)
+    public override bool OnPickup(WorldItem item, Player player)
     {
         if (!player.TryGetModPlayer<PointShopPlayer>(out var shopPlayer)) return true;
 
         var points = Points * Item.stack;
+        item.TurnToAir();
 
         var min = Math.Clamp(player.luck, -0.25f, 0f) + 0.75f;
         var max = Math.Max(player.luck, 0f) + 1.25f;
@@ -62,12 +65,12 @@ public class PointCoin : ModItem
         return false;
     }
 
-    public override void GrabRange(Player player, ref int grabRange) => grabRange += 16 * 30;
+    public override void GrabRange(WorldItem item, Player player, ref int grabRange) => grabRange += 16 * 30;
 
-    public override bool GrabStyle(Player player)
+    public override bool GrabStyle(WorldItem item, Player player)
     {
-        var dir = Vector2.Normalize(player.Center - Item.Center) * 20f;
-        Item.velocity = (Item.velocity * 9 + dir) / 10;
+        var dir = Vector2.Normalize(player.Center - item.Center) * 20f;
+        item.velocity = (item.velocity * 9 + dir) / 10;
 
         return false;
     }

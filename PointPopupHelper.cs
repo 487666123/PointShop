@@ -8,7 +8,7 @@ public static class PointPopupHelper
     public static PointPopup FindFirstPointPopupByEnvironment(GameEnvironment gameEnvironment)
     {
         // 原版会复用, 要检测 .name 是否等于 DisplayName
-        foreach (var popupText in Main.popupText)
+        foreach (var popupText in PopupText.popupText)
         {
             if (popupText is PointPopup { active: true } pointPopup &&
                 pointPopup.GameEnvironment == gameEnvironment &&
@@ -53,15 +53,16 @@ public static class PointPopupHelper
             Vector2 textSize = FontAssets.MouseText.Value.MeasureString(request.Text);
 
             // 找到的改为 PointPopup
-            if (Main.popupText[index] is not PointPopup popup)
+            if (PopupText.popupText[index] is not PointPopup popup)
             {
                 popup = new(environment, points);
-                Main.popupText[index] = popup;
+                PopupText.popupText[index] = popup;
             }
             PopupText.ResetText(popup);
             popup.SetNameAndPoints(environment, points);
             popup.active = true;
             popup.position = position - textSize / 2f;
+            popup.displayText = request.Text;
             popup.name = request.Text;
             popup.stack = 1L;
             popup.velocity = request.Velocity;
@@ -80,9 +81,9 @@ public static class PointPopupHelper
     public static int FindInactiveOrBottom()
     {
         var index = -1;
-        for (var i = 0; i < Main.popupText.Length; i++)
+        for (var i = 0; i < PopupText.popupText.Length; i++)
         {
-            if (Main.popupText[i] != null && Main.popupText[i].active) continue;
+            if (PopupText.popupText[i] != null && PopupText.popupText[i].active) continue;
             index = i;
             break;
         }
@@ -93,10 +94,10 @@ public static class PointPopupHelper
             double bottom = Main.bottomWorld;
             for (var i = 0; i < 20; i++)
             {
-                if (bottom > Main.popupText[i].position.Y)
+                if (bottom > PopupText.popupText[i].position.Y)
                 {
                     index = i;
-                    bottom = Main.popupText[i].position.Y;
+                    bottom = PopupText.popupText[i].position.Y;
                 }
             }
         }

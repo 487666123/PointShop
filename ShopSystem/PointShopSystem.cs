@@ -1,4 +1,6 @@
-﻿namespace PointShop.ShopSystem;
+﻿using MonoMod.Cil;
+
+namespace PointShop.ShopSystem;
 
 public class PointShopSystem : ModSystem
 {
@@ -117,16 +119,13 @@ public class PointShopSystem : ModSystem
 
     public override void Load()
     {
-        On_Main.Update += (orig, self, gameTime) =>
+        IL_Main.Update += static (context) =>
         {
-            try
+            var c = new ILCursor(context);
+            c.EmitDelegate(() =>
             {
-                Update(gameTime);
-            }
-            finally
-            {
-                orig(self, gameTime);
-            }
+                Update(Main.gameTimeCache);
+            });
         };
     }
 }
