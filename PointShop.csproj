@@ -5,13 +5,14 @@
 		<AssemblyName>PointShop</AssemblyName>
 		<LangVersion>preview</LangVersion>
 		<TargetFramework>net10.0</TargetFramework>
+		<DebugMod>;</DebugMod>
 	</PropertyGroup>
 
 	<ItemGroup>
-        <ProjectReference Include="..\SilkyUIAnalyzer\SilkyUIAnalyzer.csproj">
-            <OutputItemType>Analyzer</OutputItemType>
-            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-        </ProjectReference>
+		<ProjectReference Include="..\SilkyUIAnalyzer\SilkyUIAnalyzer.csproj">
+			<OutputItemType>Analyzer</OutputItemType>
+			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+		</ProjectReference>
 		<ProjectReference Include="..\SilkyUIFramework\SilkyUIFramework.csproj"></ProjectReference>
 	</ItemGroup>
 
