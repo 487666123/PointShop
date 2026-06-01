@@ -25,9 +25,7 @@ public class KeybindPlayer : ModPlayer
 
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
-        if (PointShopUIKeybind.JustPressed)
-        {
-            PointShopUI.IsShow = !PointShopUI.IsShow;
-        }
+        if (!PointShopUIKeybind.JustPressed) return;
+        PointShopUI.Toggle();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Extensions;
+using SilkyUIFramework.Tweening;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 
@@ -70,11 +71,14 @@ public class PointsDisplayWidgetUI : BaseBody
             {
                 if (PointShopUI.CurrentEnvironmentName == environment.Name)
                 {
-                    PointShopUI.IsShow = !PointShopUI.IsShow;
+                    PointShopUI.Toggle();
                     return;
                 }
 
-                PointShopUI.IsShow = true;
+                if (SilkyUIManager.Instance.TryGetInstance<PointShopUI>(out var ui))
+                {
+                    ui.Open();
+                }
                 PointShopUI.CurrentEnvironmentName = environment.Name;
             };
 
@@ -117,17 +121,50 @@ public class PointsDisplayWidgetUI : BaseBody
         }
     }
 
-    protected override void UpdateStatus(GameTime gameTime)
-    {
-        if (Main.playerInventory) OpenInvTimer.StartUpdate();
-        else OpenInvTimer.StartReverseUpdate();
+    // === 状态 ===
+    bool _isOpen;
+    Tween _animTween;
 
-        OpenInvTimer.Update(gameTime);
-        base.UpdateStatus(gameTime);
-        SetTop(OpenInvTimer.Lerp(-20f, 20f), OpenInvTimer.Lerp(-1f, 0f), OpenInvTimer.Lerp(1f, 0f));
+    void AnimateUI(Anchor panelTarget, Anchor childTarget, EaseType ease)
+    {
+        _animTween?.Kill();
+        _animTween = CreateTween().Parallel();
+
+        _animTween.TweenProperty(top => Top = top, () => Top, panelTarget, 0.2f, Anchor.Lerp)
+            .SetTrans(TransitionType.Back).SetEase(ease);
+
+        if (ScrollView?.Container is { } container)
+        {
+            _animTween.TweenProperty(top => container.Top = top, () => container.Top, childTarget, 0.2f, Anchor.Lerp)
+                .SetTrans(TransitionType.Back).SetEase(ease).SetDelay(0.05f);
+        }
     }
 
-    public AnimationTimer OpenInvTimer = new(3);
+    void OpenInventory()
+    {
+        AnimateUI(new(20, 0f, 0f), new(0f, 0f, 0f), EaseType.Out);
+    }
+
+    void CloseInventory()
+    {
+        AnimateUI(new(-10, -1f, 1f), new(50f, 0f, 0f), EaseType.In);
+    }
+
+    protected override void UpdateStatus(GameTime gameTime)
+    {
+        base.UpdateStatus(gameTime);
+
+        if (Main.playerInventory)
+        {
+            if (_isOpen) return; _isOpen = true;
+            OpenInventory();
+        }
+        else
+        {
+            if (!_isOpen) return; _isOpen = false;
+            CloseInventory();
+        }
+    }
 
     protected override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {

@@ -1,25 +1,13 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
+using SilkyUIFramework.Tweening;
 
 namespace PointShop.UserInterfaces;
 
 [RegisterUI]
 public partial class PointShopUI : BaseBody
 {
-    public static bool IsShow { get; set; }
-
-    /// <summary>
-    /// 是否启用，包括事件与绘制
-    /// </summary>
-    public override bool Enabled
-    {
-        get
-        {
-            if (IsShow) return true;
-            return !SwitchTimer.IsReverseCompleted;
-        }
-        set => IsShow = value;
-    }
+    public override bool Enabled { get; set; }
 
     public static event EventHandler<string> EnvironmentNameChanged;
 
@@ -38,7 +26,14 @@ public partial class PointShopUI : BaseBody
     } = "Forest";
 
     /// <summary> 是否可交互 (不影响绘制) </summary>
-    public override bool IsInteractable => SwitchTimer.IsCompleted;
+    public override bool IsInteractable
+    {
+        get
+        {
+            if (_animTween is null) return true;
+            return _animTween.IsFinished;
+        }
+    }
 
     protected override void OnInitialize()
     {
@@ -53,7 +48,7 @@ public partial class PointShopUI : BaseBody
         Header.ControlTarget = this;
         Header.Title.Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")}";
 
-        Header.CloseButton.LeftMouseDown += delegate { IsShow = false; };
+        Header.CloseButton.LeftMouseDown += delegate { Close(); };
 
         MenuListScrollView.Mask.Border = 2;
         MenuListScrollView.Mask.BorderRadius = new Vector4(4);
@@ -87,27 +82,65 @@ public partial class PointShopUI : BaseBody
         ShopItemTableIsDirty = true;
     }
 
-    public readonly AnimationTimer SwitchTimer = new(3);
+    private Tween _animTween;
+
+    public static void Toggle()
+    {
+        if (!SilkyUIManager.Instance.TryGetInstance<PointShopUI>(out var ui)) return;
+
+        if (ui.IsOpen) ui.Close();
+        else ui.Open();
+    }
+
+    public bool IsOpen { get; set; }
+
+    public void Open()
+    {
+        IsOpen = true;
+        Enabled = true;
+        UseRenderTarget = true;
+
+        _animTween?.Kill();
+        _animTween = CreateTween().Parallel();
+        _animTween.TweenProperty(opacity => Opacity = opacity, () => Opacity, 1f, 0.2f, MathHelper.Lerp)
+            .SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
+        _animTween.TweenProperty(renderScale => _renderScale = renderScale, () => _renderScale, 1f, 0.2f, MathHelper.Lerp)
+            .SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
+        _animTween.OnFinished += () => UseRenderTarget = false;
+    }
+
+    public void Close()
+    {
+        IsOpen = false;
+        UseRenderTarget = true;
+
+        _animTween?.Kill();
+        _animTween = CreateTween().Parallel();
+        _animTween.TweenProperty(opacity => Opacity = opacity, () => Opacity, 0f, 0.2f, MathHelper.Lerp)
+            .SetTrans(TransitionType.Quint).SetEase(EaseType.Out);
+        _animTween.TweenProperty(renderScale => _renderScale = renderScale, () => _renderScale, 0.9f, 0.2f, MathHelper.Lerp)
+            .SetTrans(TransitionType.Quint).SetEase(EaseType.Out);
+        _animTween.OnFinished += () =>
+        {
+            Enabled = false;
+            UseRenderTarget = false;
+        };
+    }
 
     protected override void UpdateStatus(GameTime gameTime)
     {
         base.UpdateStatus(gameTime);
 
-        if (IsShow) SwitchTimer.StartUpdate();
-        else SwitchTimer.StartReverseUpdate();
-        SwitchTimer.Update(gameTime);
-        UseRenderTarget = SwitchTimer.IsUpdating;
-
         UpdateShopItemTable();
     }
 
+    private float _renderScale;
     protected override void DrawWithRenderTarget(GameTime gameTime, SpriteBatch spriteBatch)
     {
-        Opacity = SwitchTimer.Lerp(0f, 1f);
         var center = Bounds.Center * Main.UIScale;
         RenderTargetMatrix =
             Matrix.CreateTranslation(-center.X, -center.Y, 0) *
-            Matrix.CreateScale(SwitchTimer.Lerp(0.95f, 1f), SwitchTimer.Lerp(0.95f, 1f), 1) *
+            Matrix.CreateScale(_renderScale, _renderScale, 1) *
             Matrix.CreateTranslation(center.X, center.Y, 0);
 
         base.DrawWithRenderTarget(gameTime, spriteBatch);
