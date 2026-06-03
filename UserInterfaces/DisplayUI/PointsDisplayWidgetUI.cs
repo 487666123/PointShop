@@ -1,7 +1,7 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
+using SilkyUIFramework.Common.Tweening;
 using SilkyUIFramework.Extensions;
-using SilkyUIFramework.Tweening;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 
@@ -85,6 +85,13 @@ public class PointsDisplayWidgetUI : BaseBody
 
             DisplayItemTable[environment] = displayItem;
         }
+
+        Top = new(-10, -1f, 1f);
+
+        if (ScrollView?.Container is { } container)
+        {
+            container.Top = new(50f, 0f, 0f);
+        }
     }
 
     protected override void Update(GameTime gameTime)
@@ -119,6 +126,7 @@ public class PointsDisplayWidgetUI : BaseBody
         {
             displayItem.Join(ScrollView.Container);
         }
+
     }
 
     // === 状态 ===

@@ -1,6 +1,6 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
-using SilkyUIFramework.Tweening;
+using SilkyUIFramework.Common.Tweening;
 
 namespace PointShop.UserInterfaces;
 
@@ -97,10 +97,11 @@ public partial class PointShopUI : BaseBody
     public void Open()
     {
         IsOpen = true;
+        _animTween?.Kill();
+
         Enabled = true;
         UseRenderTarget = true;
 
-        _animTween?.Kill();
         _animTween = CreateTween().Parallel();
         _animTween.TweenProperty(opacity => Opacity = opacity, () => Opacity, 1f, 0.2f, MathHelper.Lerp)
             .SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
@@ -112,9 +113,10 @@ public partial class PointShopUI : BaseBody
     public void Close()
     {
         IsOpen = false;
+        _animTween?.Kill();
+
         UseRenderTarget = true;
 
-        _animTween?.Kill();
         _animTween = CreateTween().Parallel();
         _animTween.TweenProperty(opacity => Opacity = opacity, () => Opacity, 0f, 0.2f, MathHelper.Lerp)
             .SetTrans(TransitionType.Quint).SetEase(EaseType.Out);

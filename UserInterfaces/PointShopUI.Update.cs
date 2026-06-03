@@ -1,4 +1,5 @@
-﻿using SilkyUIFramework.Extensions;
+﻿using SilkyUIFramework.Common.Tweening;
+using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces;
 
@@ -62,26 +63,26 @@ public partial class PointShopUI
     {
         if (!ShopItemTableIsDirty) return;
         ShopItemTableIsDirty = false;
+
         if (!PointShopSystem.TryGetGameEnvironment(CurrentEnvironmentName, out var environment)) return;
 
         ShopItemTableScrollView.Container.RemoveAllChildren();
 
         var items = environment.ShopItemList;
 
-        foreach (var item in items)
+        var tween = CreateTween().Parallel();
+        var delay = 0f;
+        foreach (var item in items.Where(ShopItemFilters))
         {
-            if (!ShopItemFilters(item)) continue;
+            var view = (item is SimpleShopItem simpleShopItem) ?
+                new SUISimpleShopItem(simpleShopItem) :
+                new SUIShopItemComponent(item);
 
-            if (item is SimpleShopItem simpleShopItem)
-            {
-                ShopItemTableScrollView.Container.AddChild(new SUISimpleShopItem(simpleShopItem));
-                //new SUISimpleShopItem(simpleShopItem).Join(ShopItemTable.Container);
-            }
-            else
-            {
-                ShopItemTableScrollView.Container.AddChild(new SUIShopItemComponent(item));
-                // new SUIShopItemComponent(item).Join(ShopItemTable.Container);
-            }
+            ShopItemTableScrollView.Container.AddChild(view);
+
+            tween.TweenProperty(top => view.Top = view.Top.With(top), () => 50f, 0, 0.2f, MathHelper.Lerp)
+                .SetTrans(TransitionType.Back).SetEase(EaseType.Out).SetDelay(delay);
+            delay += 0.02f;
         }
     }
 }
