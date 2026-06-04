@@ -1,6 +1,7 @@
 ﻿using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Common.Tweening;
+using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces;
 
@@ -88,40 +89,37 @@ public partial class PointShopUI : BaseBody
     {
         if (!SilkyUIManager.Instance.TryGetInstance<PointShopUI>(out var ui)) return;
 
-        if (ui.IsOpen) ui.Close();
+        if (ui._expanded) ui.Close();
         else ui.Open();
     }
 
-    public bool IsOpen { get; set; }
+    // 是否展开
+    private bool _expanded;
 
     public void Open()
     {
-        IsOpen = true;
+        _expanded = true;
         _animTween?.Kill();
 
         Enabled = true;
         UseRenderTarget = true;
 
-        _animTween = CreateTween().Parallel();
-        _animTween.TweenProperty(opacity => Opacity = opacity, () => Opacity, 1f, 0.2f, MathHelper.Lerp)
-            .SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
-        _animTween.TweenProperty(renderScale => _renderScale = renderScale, () => _renderScale, 1f, 0.2f, MathHelper.Lerp)
-            .SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
+        _animTween = CreateTween().Parallel().SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
+        _animTween.FadeTo(this, 1f, 0.2f);
+        _animTween.MemberTo(this, nameof(_renderScale), 1f, 0.2f);
         _animTween.OnFinished += () => UseRenderTarget = false;
     }
 
     public void Close()
     {
-        IsOpen = false;
+        _expanded = false;
         _animTween?.Kill();
 
         UseRenderTarget = true;
 
-        _animTween = CreateTween().Parallel();
-        _animTween.TweenProperty(opacity => Opacity = opacity, () => Opacity, 0f, 0.2f, MathHelper.Lerp)
-            .SetTrans(TransitionType.Quint).SetEase(EaseType.Out);
-        _animTween.TweenProperty(renderScale => _renderScale = renderScale, () => _renderScale, 0.9f, 0.2f, MathHelper.Lerp)
-            .SetTrans(TransitionType.Quint).SetEase(EaseType.Out);
+        _animTween = CreateTween().Parallel().SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
+        _animTween.FadeTo(this, 0f, 0.2f);
+        _animTween.MemberTo(this, nameof(_renderScale), 0.9f, 0.2f);
         _animTween.OnFinished += () =>
         {
             Enabled = false;

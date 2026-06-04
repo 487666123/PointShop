@@ -70,7 +70,7 @@ public partial class PointShopUI
 
         var items = environment.ShopItemList;
 
-        var tween = CreateTween().Parallel();
+        var tween = CreateTween().Parallel().SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
         var delay = 0f;
         foreach (var item in items.Where(ShopItemFilters))
         {
@@ -80,9 +80,9 @@ public partial class PointShopUI
 
             ShopItemTableScrollView.Container.AddChild(view);
 
-            tween.TweenProperty(top => view.Top = view.Top.With(top), () => 50f, 0, 0.2f, MathHelper.Lerp)
-                .SetTrans(TransitionType.Back).SetEase(EaseType.Out).SetDelay(delay);
-            delay += 0.02f;
+            view.SetTop(pixels: 50f);
+            tween.MemberTo(view, nameof(view.Top), new Anchor(), 0.2f).SetDelay(delay);
+            delay += 0.005f;
         }
     }
 }

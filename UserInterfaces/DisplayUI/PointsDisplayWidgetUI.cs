@@ -1,4 +1,5 @@
-﻿using SilkyUIFramework.Animation;
+﻿using System.Linq.Expressions;
+using SilkyUIFramework.Animation;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Common.Tweening;
 using SilkyUIFramework.Extensions;
@@ -108,9 +109,6 @@ public class PointsDisplayWidgetUI : BaseBody
 
         ScrollView.Container.RemoveAllChildren();
 
-        //var list = DisplayItemTable.Keys.Where(
-        //    name => player.CurrentEnvironments.Any(env => env.Name.Equals(name)));
-
         if (player.CurrentEnvironments.Count > 0)
         {
             foreach (var item in player.CurrentEnvironments)
@@ -130,32 +128,33 @@ public class PointsDisplayWidgetUI : BaseBody
     }
 
     // === 状态 ===
-    bool _isOpen;
+    bool _isOpenInventory;
     Tween _animTween;
-
-    void AnimateUI(Anchor panelTarget, Anchor childTarget, EaseType ease)
-    {
-        _animTween?.Kill();
-        _animTween = CreateTween().Parallel();
-
-        _animTween.TweenProperty(top => Top = top, () => Top, panelTarget, 0.2f, Anchor.Lerp)
-            .SetTrans(TransitionType.Back).SetEase(ease);
-
-        if (ScrollView?.Container is { } container)
-        {
-            _animTween.TweenProperty(top => container.Top = top, () => container.Top, childTarget, 0.2f, Anchor.Lerp)
-                .SetTrans(TransitionType.Back).SetEase(ease).SetDelay(0.05f);
-        }
-    }
 
     void OpenInventory()
     {
-        AnimateUI(new(20, 0f, 0f), new(0f, 0f, 0f), EaseType.Out);
+        _animTween?.Kill();
+        _animTween = CreateTween().Parallel().SetTrans(TransitionType.Back).SetEase(EaseType.Out);
+
+        _animTween.MemberTo(this, "Top", new Anchor(20, 0f, 0f), 0.2f);
+
+        if (ScrollView?.Container is { } container)
+        {
+            _animTween.MemberTo(container, nameof(container.Top), new Anchor(0f, 0f, 0f), 0.2f);
+        }
     }
 
     void CloseInventory()
     {
-        AnimateUI(new(-10, -1f, 1f), new(50f, 0f, 0f), EaseType.In);
+        _animTween?.Kill();
+        _animTween = CreateTween().Parallel().SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
+
+        _animTween.MemberTo(this, "Top", new Anchor(-10, -1f, 1f), 0.2f);
+
+        if (ScrollView?.Container is { } container)
+        {
+            _animTween.MemberTo(container, "Top", new Anchor(50f, 0f, 0f), 0.2f);
+        }
     }
 
     protected override void UpdateStatus(GameTime gameTime)
@@ -164,18 +163,13 @@ public class PointsDisplayWidgetUI : BaseBody
 
         if (Main.playerInventory)
         {
-            if (_isOpen) return; _isOpen = true;
+            if (_isOpenInventory) return; _isOpenInventory = true;
             OpenInventory();
         }
         else
         {
-            if (!_isOpen) return; _isOpen = false;
+            if (!_isOpenInventory) return; _isOpenInventory = false;
             CloseInventory();
         }
-    }
-
-    protected override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-    {
-        base.Draw(gameTime, spriteBatch);
     }
 }
