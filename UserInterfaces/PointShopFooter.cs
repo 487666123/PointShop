@@ -92,7 +92,7 @@ public class PointShopFooter : UIElementGroup
         };
         OpenDonateUI.LeftMouseDown += delegate
         {
-            if (!SilkyUIRenderSystem.Instance.TryGetInstance<AboutUI>(out var donateUI)) return;
+            if (!UISceneManager.Instance.TryGetInstance<AboutUI>(out var donateUI)) return;
 
             donateUI.Enabled = !donateUI.Enabled;
         };

@@ -76,7 +76,7 @@ public class PointsDisplayWidgetUI : BaseBody
                     return;
                 }
 
-                if (SilkyUIRenderSystem.Instance.TryGetInstance<PointShopUI>(out var ui))
+                if (UISceneManager.Instance.TryGetInstance<PointShopUI>(out var ui))
                 {
                     ui.Open();
                 }

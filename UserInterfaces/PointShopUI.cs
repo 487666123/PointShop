@@ -87,7 +87,7 @@ public partial class PointShopUI : BaseBody
 
     public static void Toggle()
     {
-        if (!SilkyUIRenderSystem.Instance.TryGetInstance<PointShopUI>(out var ui)) return;
+        if (!UISceneManager.Instance.TryGetInstance<PointShopUI>(out var ui)) return;
 
         if (ui._expanded) ui.Close();
         else ui.Open();
