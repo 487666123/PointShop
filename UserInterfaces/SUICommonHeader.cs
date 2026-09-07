@@ -1,4 +1,6 @@
-﻿using SilkyUIFramework.Attributes;
+using SilkyUIFramework.Attributes;
+using SilkyUIFramework.Common.Tweening;
+using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces;
 
@@ -9,15 +11,26 @@ public partial class SUICommonHeader : SUIDraggableView
     {
         InitializeComponent();
         Title.UseDeathText();
+
+        var close = CloseButton;
+        close.CrossBorderColor = SUIColor.Border * 0.75f;
+        close.CrossBackgroundColor = SUIColor.Warn * 0.75f;
+        close.MouseEnter += (s, e) =>
+        {
+            var animTween = close.CreateTween().Parallel().SetTrans(TransitionType.Back).SetEase(EaseType.Out);
+            animTween.MemberTo(close, "CrossBorderColor", SUIColor.Highlight, 0.2f);
+            animTween.MemberTo(close, "CrossBackgroundColor", SUIColor.Warn, 0.2f);
+        };
+        close.MouseLeave += (s, e) =>
+        {
+            var animTween = close.CreateTween().Parallel().SetTrans(TransitionType.Back).SetEase(EaseType.Out);
+            animTween.MemberTo(close, "CrossBorderColor", SUIColor.Border * 0.75f, 0.2f);
+            animTween.MemberTo(close, "CrossBackgroundColor", SUIColor.Warn * 0.75f, 0.2f);
+        };
     }
 
     protected override void UpdateStatus(GameTime gameTime)
     {
-        var close = CloseButton;
-        var timer = close.HoverTimer;
-        close.CrossBorderColor = timer.Lerp(SUIColor.Border * 0.75f, SUIColor.Highlight);
-        close.CrossBackgroundColor = timer.Lerp(SUIColor.Warn * 0.75f, SUIColor.Warn);
-
         base.UpdateStatus(gameTime);
     }
 }

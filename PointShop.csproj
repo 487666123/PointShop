@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="**/*.xml" Exclude="bin/**/*;obj/**/*" Pack="true" ModPath="%(Identity)" />
+		<AdditionalFiles Include="**/*.sui.xml" Exclude="bin/**/*;obj/**/*" Pack="true" ModPath="%(Identity)" />
 		<AdditionalFiles Include="**/*.yaml;**/*.yml" Exclude="bin/**/*;obj/**/*" Pack="true" ModPath="%(Identity)" />
 	</ItemGroup>
 
