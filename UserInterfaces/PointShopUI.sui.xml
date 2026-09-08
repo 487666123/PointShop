@@ -11,7 +11,10 @@
         Width="100%" Height="450px" FlexWrap="false" Gap="0"
         FlexDirection="Row" CrossAlignment="Stretch" CrossContentAlignment="Stretch">
 		<!-- 菜单栏 -->
-		<ScrollView sui:Name="MenuListScrollView" Width="25%" Height="100%" Gap="4" Padding="4">
+		<ScrollView sui:Name="MenuListScrollView"
+					Width="25%" Height="100%" Gap="4" Padding="4">
+			<M.Mask Border="2" BorderRadius="4" BorderColor="rgba(0,0,0,0.75)" BackgroundColor="rgba(0,0,0,0.25)" />
+			<M.Container HiddenBox="Inner" Gap="0" />
 		</ScrollView>
 		<VR BackgroundColor="rgba(0,0,0,0.75)" />
 		<!-- RightContainer -->

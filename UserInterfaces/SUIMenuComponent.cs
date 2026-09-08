@@ -18,6 +18,7 @@ public class SUIMenuComponent : UIElementGroup
         MainAlignment = MainAlignment.Center;
         CrossAlignment = CrossAlignment.Center;
         CrossContentAlignment = CrossContentAlignment.Center;
+
         SetPadding(12f, 0f);
         SetSize(0f, 40f, 1f);
 
@@ -66,6 +67,6 @@ public class SUIMenuComponent : UIElementGroup
     protected override void UpdateStatus(GameTime gameTime)
     {
         base.UpdateStatus(gameTime);
-        BackgroundColor = Color.Black * HoverTimer.Lerp(0.25f, 0.4f);
+        BackgroundColor = HoverTimer.Lerp(Color.Transparent, Color.Black * 0.25f);
     }
 }

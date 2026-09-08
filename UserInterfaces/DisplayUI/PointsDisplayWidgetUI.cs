@@ -53,7 +53,7 @@ public class PointsDisplayWidgetUI : BaseBody
             TextAlign = new Vector2(0f, 0.5f),
         });
 
-        ScrollView = new SUIScrollView(Direction.Vertical)
+        ScrollView = new SUIScrollView(Orientation.Vertical)
         {
             Gap = new Vector2(4f),
             Container = { Gap = new Vector2(4f) }
@@ -102,10 +102,18 @@ public class PointsDisplayWidgetUI : BaseBody
         Update();
     }
 
+    private readonly List<GameEnvironment> _lastEnvironments = [];
+
     private void Update()
     {
-        if (!Main.LocalPlayer.TryGetModPlayer<PointShopPlayer>(out var player)) return;
         if (ScrollView is null) return;
+        if (!Main.LocalPlayer.TryGetModPlayer<PointShopPlayer>(out var player)) return;
+
+        // 只在变化时更新
+        if (_lastEnvironments.SequenceEqual(player.CurrentEnvironments)) return;
+
+        _lastEnvironments.Clear();
+        _lastEnvironments.AddRange(player.CurrentEnvironments);
 
         ScrollView.Container.RemoveAllChildren();
 
@@ -124,7 +132,6 @@ public class PointsDisplayWidgetUI : BaseBody
         {
             displayItem.Join(ScrollView.Container);
         }
-
     }
 
     // === 状态 ===

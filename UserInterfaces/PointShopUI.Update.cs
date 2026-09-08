@@ -67,6 +67,7 @@ public partial class PointShopUI
         if (!PointShopSystem.TryGetGameEnvironment(CurrentEnvironmentName, out var environment)) return;
 
         ShopItemTableScrollView.Container.RemoveAllChildren();
+        ShopItemTableScrollView.ScrollToStart(false);
 
         var items = environment.ShopItemList;
 

@@ -51,12 +51,6 @@ public partial class PointShopUI : BaseBody
 
         Header.CloseButton.LeftMouseDown += delegate { Close(); };
 
-        MenuListScrollView.Mask.Border = 2;
-        MenuListScrollView.Mask.BorderRadius = new Vector4(4);
-        MenuListScrollView.Mask.BorderColor = Color.Black * 0.75f;
-        MenuListScrollView.Container.HiddenBox = HiddenBox.Inner;
-        MenuListScrollView.Container.Gap = Size.Zero;
-
         UpdateMenuList();
 
         SearchBar.Border = 2;
