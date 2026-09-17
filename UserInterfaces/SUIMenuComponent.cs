@@ -1,4 +1,5 @@
 ﻿using SilkyUIFramework.Extensions;
+using SilkyUIFramework.StyleSystem;
 
 namespace PointShop.UserInterfaces;
 
@@ -38,6 +39,16 @@ public class SUIMenuComponent : UIElementGroup
             FlexGrow = 1f,
         }.Join(this);
         Text.SetHeight(0f, 1f);
+
+        StyleSheet.SetStyle(UIElementState.Normal, new StyleDefinition()
+        {
+            [nameof(BackgroundColor)] = Color.Transparent
+        });
+
+        StyleSheet.SetStyle(UIElementState.Hover, new StyleDefinition()
+        {
+            [nameof(BackgroundColor)] = Color.Black * 0.25f
+        });
     }
 
     protected override void OnEnterTree()
@@ -55,18 +66,7 @@ public class SUIMenuComponent : UIElementGroup
     public void OnEnvironmentChanged(object _, string environmentName)
     {
         if (string.Equals(environmentName, GameEnvironment.Name))
-        {
             Text.TextColor = GameEnvironment.UniqueColor;
-        }
-        else
-        {
-            Text.TextColor = Color.White;
-        }
-    }
-
-    protected override void UpdateStatus(GameTime gameTime)
-    {
-        base.UpdateStatus(gameTime);
-        BackgroundColor = HoverTimer.Lerp(Color.Transparent, Color.Black * 0.25f);
+        else Text.TextColor = Color.White;
     }
 }

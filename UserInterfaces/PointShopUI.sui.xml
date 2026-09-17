@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Body xmlns:sui="https://github.com/487666123/SilkyUIFramework"
+<Body
+	xmlns:sui="https://github.com/487666123/SilkyUIFramework"
     sui:Class="PointShop.UserInterfaces.PointShopUI"
-    FitWidth="false" FitHeight="true"
+    FitWidth="false" FitHeight="true" EnableBlur="true"
+	OverflowHidden="true" IndependentRenderTarget="true"
     Width="700px" Left="50#" Top="50#" Gap="0" BorderRadius="8">
 	<Header sui:Name="Header" />
 	<!-- 横向分界线 -->
@@ -33,7 +35,7 @@
 					<!-- 输入框 -->
 					<EditText sui:Name="SearchBox"
                         FlexGrow="1" FitWidth="false" FitHeight="false" Height="100%" Padding="8"
-                        TextScale="0.8" TextAlign="0 0.5" />
+                        TextScale="0.8" TextAlign="0 0.5" CursorFlashColor="#FFFFFF"/>
 					<VR BackgroundColor="rgba(0,0,0,0.75)" />
 					<!-- 清空按钮 -->
 					<TextView sui:Name="ClearSearchButton"
@@ -41,20 +43,22 @@
                         TextScale="0.8" TextAlign="0.5" FitWidth="true" FitHeight="false" FlexShrink="1" />
 				</ElementGroup>
 			</ElementGroup>
-			<ElementGroup sui:Name="FilterTable"
-						  FitHeight="true" Width="100%" Padding="4 4 4 0" Gap="4">
-				
-				<sui:Style sui:Name="Tag" sui:Target="SilkyUIFramework.Elements.UITextView"
-						   FlexGrow="1"
-						   TextScale="0.8" Padding="8 2" BackgroundColor="rgba(0,0,0,0.1)"
-						   FitWidth="false" Width="10px" TextAlign="0.5"
-						   FitHeight="true" Border="2" BorderRadius="4" BorderColor="rgba(0,0,0,0.5)"/>
-				
-				<TextView sui:Style="Tag" Text="全部" />
-				<TextView sui:Style="Tag" Text="武器" />
-				<TextView sui:Style="Tag" Text="装备" />
-				<TextView sui:Style="Tag" Text="小动物" />
-				<TextView sui:Style="Tag" Text="其他" />
+			<ElementGroup sui:Name="FilterTable" Invalid="true" FitHeight="true" Width="100%" Padding="4 4 4 0">
+				<ElementGroup sui:Name="TagContainer"
+							  Padding="4" BorderRadius="4" Border="2" BorderColor="rgba(0,0,0,0.75)"
+							  FitHeight="true" Width="100%" Gap="4" BackgroundColor="rgba(0,0,0,0.25)">
+					<sui:Style sui:Name="Tag" sui:Target="SilkyUIFramework.Elements.UITextView"
+							   FlexGrow="1"
+							   TextScale="0.8" Padding="8 2"
+							   FitWidth="false" Width="10px" TextAlign="0.5"
+							   FitHeight="true" Border="2" BorderRadius="4" BorderColor="rgba(0,0,0,0.5)"/>
+
+					<TextView sui:Style="Tag" Text="全部" />
+					<TextView sui:Style="Tag" Text="武器" />
+					<TextView sui:Style="Tag" Text="装备" />
+					<TextView sui:Style="Tag" Text="小动物" />
+					<TextView sui:Style="Tag" Text="其他" />
+				</ElementGroup>
 			</ElementGroup>
 			<!-- 商品表格 -->
 			<ScrollView sui:Name="ShopItemTableScrollView" Gap="4" FlexGrow="1" Padding="4" Width="100%">

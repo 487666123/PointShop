@@ -20,6 +20,16 @@ public class PointShopFooter : UIElementGroup
     //public UITextView OnlineGroupLink { get; }
     public UITextView OpenDonateUI { get; }
 
+    public double Point
+    {
+        get; set
+        {
+            if (field == value) return;
+            field = value;
+            Balance.Text = $"{value:#,##0}";
+        }
+    }
+
     public PointShopFooter()
     {
         LayoutType = LayoutType.Flexbox;
