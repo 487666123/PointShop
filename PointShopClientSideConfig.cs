@@ -17,7 +17,11 @@ public class PointShopClientSideConfig : ModConfig
 
     public override void OnChanged()
     {
-        PointShopFooter.DisplayLinks = DisplayLinks;
-        PointsDisplayWidgetUI.Display = PointsDisplayWidget;
+
+        if (UISceneManager.Instance.TryGetInstance(out PointsDisplayWidgetUI widget))
+        {
+            PointShopFooter.DisplayLinks = DisplayLinks;
+            widget.EnableBlur = DisplayLinks;
+        }
     }
 }

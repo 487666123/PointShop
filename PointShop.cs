@@ -10,7 +10,7 @@ public class PointShop : Mod
         /// 修改 DisplayName
         /// </summary>
         public override void OnLocalizationsLoaded() =>
-            Instance.DisplayName = LanguageHelper.GetTextByPointShop("DisplayName").Value;
+            Instance.DisplayName = PSHelper.GetTextByPointShop("DisplayName").Value;
     }
 
     public static PointShop Instance => ModContent.GetInstance<PointShop>();

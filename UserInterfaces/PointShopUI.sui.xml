@@ -3,7 +3,7 @@
     sui:Class="PointShop.UserInterfaces.PointShopUI"
     FitWidth="false" FitHeight="true"
     Width="700px" Left="50#" Top="50#" Gap="0" BorderRadius="8">
-	<CommonHeader sui:Name="Header" />
+	<Header sui:Name="Header" />
 	<!-- 横向分界线 -->
 	<HR BackgroundColor="rgba(0,0,0,0.75)" />
 	<!-- 内容容器 -->
@@ -18,7 +18,7 @@
 		</ScrollView>
 		<VR BackgroundColor="rgba(0,0,0,0.75)" />
 		<!-- RightContainer -->
-		<ElementGroup sui:Name="RightContainer" Height="100%" FlexDirection="Column" FlexGrow="1">
+		<ElementGroup Height="100%" FlexDirection="Column" FlexGrow="1">
 			<!-- 搜索容器 -->
 			<ElementGroup sui:Name="SearchContainer" Width="100%" Height="36px"
                 MainAlignment="Start" CrossAlignment="Center" CrossContentAlignment="Stretch"
@@ -40,6 +40,21 @@
                         Height="100%" Padding="12 0"
                         TextScale="0.8" TextAlign="0.5" FitWidth="true" FitHeight="false" FlexShrink="1" />
 				</ElementGroup>
+			</ElementGroup>
+			<ElementGroup sui:Name="FilterTable"
+						  FitHeight="true" Width="100%" Padding="4 4 4 0" Gap="4">
+				
+				<sui:Style sui:Name="Tag" sui:Target="SilkyUIFramework.Elements.UITextView"
+						   FlexGrow="1"
+						   TextScale="0.8" Padding="8 2" BackgroundColor="rgba(0,0,0,0.1)"
+						   FitWidth="false" Width="10px" TextAlign="0.5"
+						   FitHeight="true" Border="2" BorderRadius="4" BorderColor="rgba(0,0,0,0.5)"/>
+				
+				<TextView sui:Style="Tag" Text="全部" />
+				<TextView sui:Style="Tag" Text="武器" />
+				<TextView sui:Style="Tag" Text="装备" />
+				<TextView sui:Style="Tag" Text="小动物" />
+				<TextView sui:Style="Tag" Text="其他" />
 			</ElementGroup>
 			<!-- 商品表格 -->
 			<ScrollView sui:Name="ShopItemTableScrollView" Gap="4" FlexGrow="1" Padding="4" Width="100%">

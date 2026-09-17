@@ -1,64 +1,56 @@
-﻿using SilkyUIFramework.Extensions;
+﻿using SilkyUIFramework.Common.Tweening;
+using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 
-public class SUIDisplayItem : UIElementGroup
+public partial class SUIDisplayItem : UIElementGroup
 {
     public readonly GameEnvironment GameEnvironment;
 
-    /// <summary>
-    /// 环境图标
-    /// </summary>
-    public SUIImage Icon { get; private set; }
-
-    /// <summary>
-    /// 环境积分
-    /// </summary>
-    public UITextView PointsText { get; private set; }
-
     public SUIDisplayItem(GameEnvironment environment)
     {
-        BorderRadius = new Vector4(2f);
-        OverflowHidden = true;
+        InitializeComponent();
 
-        FlexGrow = 1f;
-        SetWidth(80f, 0f);
-        SetHeight(32f, 0f);
-        Gap = new Vector2(2f);
         GameEnvironment = environment;
-        CrossAlignment = CrossAlignment.Center;
-        CrossContentAlignment = CrossContentAlignment.Center;
 
-        Icon = new SUIImage(environment.Icon)
-        {
-            FitWidth = false,
-            FitHeight = false,
-            ImageScale = new Vector2(0.75f),
-            ImageAlign = new Vector2(0.5f),
-        }.Join(this);
-        Icon.SetSize(30, 0f, 0f, 1f);
+        Icon.Texture2D = environment.Icon;
 
-        PointsText = new UITextView
-        {
-            Text = $"{environment.GetPlayerPoints():#,##0}",
-            TextScale = 0.75f,
-            FlexGrow = 1f,
-            FlexShrink = 1f,
-            FitHeight = false,
-            TextAlign = new Vector2(0f, 0.5f),
-        }.Join(this);
-        PointsText.SetHeight(0f, 1f);
+        ToStyle(Color.Black * 0.25f, Color.Black * 0.5f);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        Border = 2f;
-        BorderColor = Color.Black * HoverTimer.Lerp(0.4f, 1f);
-        BackgroundColor = Color.Black * HoverTimer.Lerp(0.25f, 0.4f);
-
         PointsText.Text = $"{GameEnvironment.GetPlayerPoints():#,##0}";
-
-
         base.Update(gameTime);
+    }
+
+    public override void OnMouseEnter(UIMouseEvent evt)
+    {
+        base.OnMouseEnter(evt);
+        ToStyle(Color.Black * 0.375f, Color.Black * 0.75f);
+    }
+
+    public override void OnMouseLeave(UIMouseEvent evt)
+    {
+        base.OnMouseLeave(evt);
+        ToStyle(Color.Black * 0.25f, Color.Black * 0.5f);
+    }
+
+    private Tween Tween { get; set; }
+
+    public void ToStyle(Color background, Color borderColor, bool animation = true)
+    {
+        Tween?.Kill();
+
+        if (!animation)
+        {
+            BackgroundColor = background;
+            BorderColor = borderColor;
+            return;
+        }
+
+        var tween = Tween = CreateTween().Parallel().SetEase(EaseType.Out).SetTrans(TransitionType.Expo);
+        tween.BgColorTo(this, background, 0.2f);
+        tween.BorderColorTo(this, borderColor, 0.2f);
     }
 }

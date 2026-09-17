@@ -79,7 +79,7 @@ public class PointShopFooter : UIElementGroup
 
         OpenDonateUI = new UITextView
         {
-            Text = $"{LanguageHelper.GetTextByPointShop("About")}",
+            Text = $"{PSHelper.GetTextByPointShop("About")}",
             TextScale = 0.75f,
             TextAlign = new Vector2(0f, 0.5f),
             FitHeight = false,
@@ -145,7 +145,7 @@ public class PointShopFooter : UIElementGroup
         // 版本号
         var versionText = new UITextView
         {
-            Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")} {ModContent.GetInstance<PointShop>().Version}",
+            Text = $"{PSHelper.GetTextByPointShop("DisplayName")} {ModContent.GetInstance<PointShop>().Version}",
             TextScale = 0.75f,
             TextAlign = new Vector2(0f, 0.5f),
             FitHeight = false,

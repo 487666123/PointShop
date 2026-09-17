@@ -4,7 +4,7 @@
     FitWidth="false" FitHeight="true" Width="300px" Left="50#" Top="50#" Gap="0" Border="0" BackgroundColor="#00000000">
 	<ElementGroup sui:Name="MainPanel" FlexDirection="Column"
 				  FitHeight="true" Width="100%" Gap="0" Border="2" BorderRadius="8">
-		<CommonHeader sui:Name="Header" />
+		<Header sui:Name="Header" />
 		<HR/>
 		<ElementGroup Width="100%" FitHeight="true" FlexDirection="Column" Padding="8" Gap="8">
 			<ElementGroup Width="100%" Gap="8" sui:Name="FankuiContainer" FitHeight="true" FlexDirection="Column">

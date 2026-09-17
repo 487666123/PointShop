@@ -108,13 +108,13 @@ public class GameEnvironment(
         {
             if (!shopItem.IsUnlock)
             {
-                Main.NewText($"{LanguageHelper.GetTextByPointShop("ShopItem.Lock").Value}");
+                Main.NewText($"{PSHelper.GetTextByPointShop("ShopItem.Lock").Value}");
                 return false;
             }
 
             if (!player.PayPoints(Name, shopItem.Prices, quantity))
             {
-                Main.NewText($"{LanguageHelper.GetTextByPointShop("ShopItem.InsufficientPoints").Value}");
+                Main.NewText($"{PSHelper.GetTextByPointShop("ShopItem.InsufficientPoints").Value}");
                 return false;
             }
 
@@ -122,7 +122,7 @@ public class GameEnvironment(
             return true;
         }
 
-        Main.NewText($"{LanguageHelper.GetTextByPointShop("ShopItem.ShopItemError").Value}");
+        Main.NewText($"{PSHelper.GetTextByPointShop("ShopItem.ShopItemError").Value}");
 
         return false;
     }

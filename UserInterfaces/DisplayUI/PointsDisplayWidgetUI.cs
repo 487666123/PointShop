@@ -1,113 +1,58 @@
-﻿using System.Linq.Expressions;
-using SilkyUIFramework.Animation;
-using SilkyUIFramework.Attributes;
+﻿using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Common.Tweening;
 using SilkyUIFramework.Extensions;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 
 [RegisterUI]
-public class PointsDisplayWidgetUI : BaseBody
+public partial class PointsDisplayWidgetUI : BaseBody
 {
-    public static bool Display { get; set; }
-
     public Dictionary<GameEnvironment, SUIDisplayItem> DisplayItemTable = [];
-    public UIElementGroup Title { get; private set; }
-    public SUIScrollView ScrollView { get; private set; }
-
-    public override bool Enabled => Display;
 
     protected override void OnInitialize()
     {
-        EnableBlur = true;
-        BorderRadius = new Vector4(4f, 4f, 4f, 4f);
-        Border = 2f;
+        InitializeComponent();
+
         BorderColor = SUIColor.Border * 0.75f;
         BackgroundColor = SUIColor.Background * 0.5f;
-        CrossAlignment = CrossAlignment.Stretch;
-        CrossContentAlignment = CrossContentAlignment.Stretch;
 
-        FitWidth = true;
-        FitHeight = true;
+        TitleText.Text = PSHelper.GetTextByPointShop("DisplayName").Value;
 
-        SetLeft(0f, 0f, 0.5f);
-        SetTop(0f, 0f, 1f);
-        SetGap(4f);
-        SetPadding(4f);
-
-        Title = new UIElementGroup
-        {
-            BorderRadius = new Vector4(2f),
-            MainAlignment = MainAlignment.Center,
-            CrossAlignment = CrossAlignment.Center,
-            CrossContentAlignment = CrossContentAlignment.Center,
-            FitHeight = true,
-        }.Join(this);
-        Title.SetPadding(0f, 2f);
-        Title.SetWidth(0f, 1f);
-
-        Title.AddChild(new UITextView
-        {
-            Text = LanguageHelper.GetTextByPointShop("DisplayName").Value,
-            TextScale = 0.75f,
-            TextAlign = new Vector2(0f, 0.5f),
-        });
-
-        ScrollView = new SUIScrollView(Orientation.Vertical)
-        {
-            Gap = new Vector2(4f),
-            Container = { Gap = new Vector2(4f) }
-        }.Join(this);
-        ScrollView.SetPadding(0f);
-        ScrollView.SetWidth(245f, 0f);
-        ScrollView.SetHeight(140f, 0f);
+        var content = ScrollView.Container;
+        content.SetTemplateColumns([GridTrack.Fr(1f), GridTrack.Fr(1f)]);
+        content.SetAutoRows([GridTrack.Pixels(32f)]);
 
         var environments = PointShopSystem.Environments;
 
-        foreach (var environment in environments)
+        foreach (var env in environments)
         {
-            var displayItem = new SUIDisplayItem(environment);
+            var displayItem = new SUIDisplayItem(env);
             displayItem.Join(ScrollView.Container);
             displayItem.LeftMouseDown += (_, _) =>
             {
-                if (PointShopUI.CurrentEnvironmentName == environment.Name)
+                if (PointShopUI.CurrentEnvironmentName == env.Name)
                 {
                     PointShopUI.Toggle();
                     return;
                 }
 
-                if (UISceneManager.Instance.TryGetInstance<PointShopUI>(out var ui))
-                {
-                    ui.Open();
-                }
-                PointShopUI.CurrentEnvironmentName = environment.Name;
+                if (UISceneManager.Instance.TryGetInstance<PointShopUI>(out var ui)) ui.Open();
+                PointShopUI.CurrentEnvironmentName = env.Name;
             };
 
 
-            DisplayItemTable[environment] = displayItem;
-        }
-
-        Top = new(-10, -1f, 1f);
-
-        if (ScrollView?.Container is { } container)
-        {
-            container.Top = new(50f, 0f, 0f);
+            DisplayItemTable[env] = displayItem;
         }
     }
+
+    private readonly List<GameEnvironment> _lastEnvironments = [];
 
     protected override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
 
-        Update();
-    }
-
-    private readonly List<GameEnvironment> _lastEnvironments = [];
-
-    private void Update()
-    {
         if (ScrollView is null) return;
-        if (!Main.LocalPlayer.TryGetModPlayer<PointShopPlayer>(out var player)) return;
+        if (!Main.LocalPlayer.TryGetModPlayer(out PointShopPlayer player)) return;
 
         // 只在变化时更新
         if (_lastEnvironments.SequenceEqual(player.CurrentEnvironments)) return;
@@ -134,49 +79,30 @@ public class PointsDisplayWidgetUI : BaseBody
         }
     }
 
-    // === 状态 ===
-    bool _isOpenInventory;
-    Tween _animTween;
+    private Tween _tween;
 
-    void OpenInventory()
+    private bool IsOpenInventory
     {
-        _animTween?.Kill();
-        _animTween = CreateTween().Parallel().SetTrans(TransitionType.Back).SetEase(EaseType.Out);
-
-        _animTween.MemberTo(this, "Top", new Anchor(20, 0f, 0f), 0.2f);
-
-        if (ScrollView?.Container is { } container)
+        get;
+        set
         {
-            _animTween.MemberTo(container, nameof(container.Top), new Anchor(0f, 0f, 0f), 0.2f);
+            if (field == value) return;
+            field = value;
+            if (field) ToStyle(new Anchor(20, 0f, 0f));
+            else ToStyle(new Anchor(-10, -1f, 1f));
         }
     }
 
-    void CloseInventory()
+    private void ToStyle(Anchor target)
     {
-        _animTween?.Kill();
-        _animTween = CreateTween().Parallel().SetTrans(TransitionType.Expo).SetEase(EaseType.Out);
-
-        _animTween.MemberTo(this, "Top", new Anchor(-10, -1f, 1f), 0.2f);
-
-        if (ScrollView?.Container is { } container)
-        {
-            _animTween.MemberTo(container, "Top", new Anchor(50f, 0f, 0f), 0.2f);
-        }
+        _tween?.Kill();
+        _tween = CreateTween().Parallel().SetTrans(TransitionType.Back).SetEase(EaseType.Out);
+        _tween.MemberTo(this, nameof(Top), target, 0.1f);
     }
 
     protected override void UpdateStatus(GameTime gameTime)
     {
         base.UpdateStatus(gameTime);
-
-        if (Main.playerInventory)
-        {
-            if (_isOpenInventory) return; _isOpenInventory = true;
-            OpenInventory();
-        }
-        else
-        {
-            if (!_isOpenInventory) return; _isOpenInventory = false;
-            CloseInventory();
-        }
+        IsOpenInventory = Main.playerInventory;
     }
 }

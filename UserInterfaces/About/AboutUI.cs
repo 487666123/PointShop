@@ -47,7 +47,7 @@ public partial class AboutUI : BaseBody
         // 允许通过标题栏拖拽窗口。
         Header.ControlTarget = this;
 
-        Header.Title.Text = $"{LanguageHelper.GetTextByPointShop("About")}";
+        Header.Title.Text = $"{PSHelper.GetTextByPointShop("About")}";
         Header.CloseButton.LeftMouseDown += delegate { Enabled = false; };
 
         QQFankui.Icon.ImageScale = new Vector2(0.8f);
@@ -72,11 +72,11 @@ public partial class AboutUI : BaseBody
 
         InitializeDonors();
 
-        Support.Text = LanguageHelper.GetTextByPointShop("SupportTheAuthor").Value;
-        DonorList.Text = LanguageHelper.GetTextByPointShop("DonorList").Value;
-        Acknowledgments.Text = LanguageHelper.GetTextByPointShop("Acknowledgments").Value;
+        Support.Text = PSHelper.GetTextByPointShop("SupportTheAuthor").Value;
+        DonorList.Text = PSHelper.GetTextByPointShop("DonorList").Value;
+        Acknowledgments.Text = PSHelper.GetTextByPointShop("Acknowledgments").Value;
 
-        if (bool.TryParse(LanguageHelper.GetTextByPointShop("ShowGroupLinks").Value, out var showGroupLinks) && showGroupLinks) return;
+        if (bool.TryParse(PSHelper.GetTextByPointShop("ShowGroupLinks").Value, out var showGroupLinks) && showGroupLinks) return;
         FankuiContainer.Invalid = true;
     }
 

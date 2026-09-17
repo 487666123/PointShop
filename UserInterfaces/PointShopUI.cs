@@ -2,6 +2,7 @@
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Common.Tweening;
 using SilkyUIFramework.Extensions;
+using SilkyUIFramework.StyleSystem;
 
 namespace PointShop.UserInterfaces;
 
@@ -47,7 +48,7 @@ public partial class PointShopUI : BaseBody
         IndependentRenderTarget = true;
 
         Header.ControlTarget = this;
-        Header.Title.Text = $"{LanguageHelper.GetTextByPointShop("DisplayName")}";
+        Header.Title.Text = $"{PSHelper.GetTextByPointShop("DisplayName")}";
 
         Header.CloseButton.LeftMouseDown += delegate { Close(); };
 
@@ -57,10 +58,18 @@ public partial class PointShopUI : BaseBody
         SearchBar.BorderColor = SUIColor.Border * 0.75f;
         SearchBar.BackgroundColor = SUIColor.Background * 0.25f;
 
-        SearchLeftText.Text = $"{LanguageHelper.GetTextByPointShop("NameFilter")}";
+        SearchLeftText.Text = $"{PSHelper.GetTextByPointShop("NameFilter")}";
         SearchLeftText.BackgroundColor = SUIColor.Background * 0.5f;
+        SearchLeftText.LeftMouseDown += delegate
+        {
+            FilterTable.Invalid = !FilterTable.Invalid;
+        };
+        SearchLeftText.OnUpdateStatus += delegate
+        {
+            SearchLeftText.BackgroundColor = SearchLeftText.HoverTimer.Lerp(Color.Black * 0.1f, Color.Black * 0.25f);
+        };
 
-        SearchBox.Placeholder = LanguageHelper.GetTextByPointShop("ItemSearchTips").Value;
+        SearchBox.Placeholder = PSHelper.GetTextByPointShop("ItemSearchTips").Value;
         SearchBox.BackgroundColor = SUIColor.Border * 0.25f;
         SearchBox.CursorFlashColor = Color.White;
         SearchBox.ContentChanged += (sender, e) =>
@@ -69,8 +78,33 @@ public partial class PointShopUI : BaseBody
             ShopItemTableIsDirty = true;
         };
 
-        ClearSearchButton.Text = $"{LanguageHelper.GetTextByPointShop("Clear")}";
+        ClearSearchButton.Text = $"{PSHelper.GetTextByPointShop("Clear")}";
         ClearSearchButton.LeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
+        ClearSearchButton.OnUpdateStatus += delegate
+        {
+            ClearSearchButton.BackgroundColor = ClearSearchButton.HoverTimer.Lerp(Color.Black * 0.1f, Color.Black * 0.25f);
+        };
+
+        foreach (var item in FilterTable.Children)
+        {
+            item.StyleSheet.AllTransition.Duration = 0.2f;
+
+            item.StyleSheet.SetStyle(UIElementState.Normal, new StyleDefinition()
+            {
+                [$"{nameof(BackgroundColor)}"] = Color.Black * 0.25f,
+                [$"{nameof(Border)}"] = 2f
+            });
+
+            item.StyleSheet.SetStyle(UIElementState.Hover, new StyleDefinition()
+            {
+                [$"{nameof(BackgroundColor)}"] = Color.Black * 0.15f,
+            });
+
+            item.StyleSheet.SetStyle(UIElementState.Active, new StyleDefinition()
+            {
+                [$"{nameof(BackgroundColor)}"] = Color.Black * 0.05f,
+            });
+        }
 
         ShopItemTableScrollView.Container.SetGap(4);
 

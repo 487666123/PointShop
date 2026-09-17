@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using PointShop.Items;
 using SilkyUIFramework.Extensions;
 using SilkyUIFramework.UserInterfaces;
@@ -58,19 +58,24 @@ public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
         };
         BuyButton.RightMouseDown += delegate
         {
-            IMouseMenu mouseMenu = SilkyUISystem.ServiceProvider.GetRequiredService<IMouseMenu>();
-            mouseMenu.OpenMenu(MouseAnchor.TopLeft, BuyButton.Bounds.Center,
-                ["购买 3 份", "购买 5 份", "购买 10 份", "购买 100 份"], (content, index) =>
-                {
-                    return index switch
+            if (UISceneManager.Instance.TryGetInstance<MouseMenuUI>(out var mouseMenuUI)
+                && mouseMenuUI is IMouseMenu mouseMenu)
+            {
+                mouseMenu.OpenMenu(MouseAnchor.TopLeft, BuyButton.Bounds.Center,
+                    [new("购买 25 份"), new("购买 50 份"), new("购买 100 份"), new("购买 250 份"), new("购买 500 份"), new("购买 1000 份")], (content, index) =>
                     {
-                        0 => ShopItem.Buy(3),
-                        1 => ShopItem.Buy(5),
-                        2 => ShopItem.Buy(10),
-                        3 => ShopItem.Buy(100),
-                        _ => ShopItem.Buy(),
-                    };
-                });
+                        return index switch
+                        {
+                            0 => ShopItem.Buy(25),
+                            1 => ShopItem.Buy(50),
+                            2 => ShopItem.Buy(100),
+                            3 => ShopItem.Buy(250),
+                            4 => ShopItem.Buy(500),
+                            5 => ShopItem.Buy(1000),
+                            _ => ShopItem.Buy(),
+                        };
+                    });
+            }
         };
 
         // 价格左边的积分币 ItemSlot
@@ -150,7 +155,7 @@ public partial class SUIShopItemComponent : UIElementGroup, IEventHandlerHolder
         base.Draw(gameTime, spriteBatch);
 
         if (BuyButton.IsMouseHovering)
-            UICommon.TooltipMouseText(LanguageHelper.GetTextByPointShop("Buy").Value);
+            UICommon.TooltipMouseText(PSHelper.GetTextByPointShop("Buy").Value);
     }
 }
 
