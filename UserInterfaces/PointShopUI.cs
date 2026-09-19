@@ -56,13 +56,10 @@ public partial class PointShopUI : BaseBody
         SearchBar.BorderColor = SUIColor.Border * 0.75f;
         SearchBar.BackgroundColor = SUIColor.Background * 0.25f;
 
-        SearchLeftText.Text = $"{PSHelper.GetTextByPointShop("NameFilter")}";
-        SearchLeftText.BackgroundColor = SUIColor.Background * 0.5f;
+        FilterButton.Text = $"{PSHelper.GetTextByPointShop("NameFilter")}";
+        FilterButton.BackgroundColor = SUIColor.Background * 0.5f;
 
-        SearchLeftText.LeftMouseDown += (s, e) => FilterTable.Invalid = !FilterTable.Invalid;
-
-        SearchLeftText.OnUpdateStatus += (g) =>
-            SearchLeftText.BackgroundColor = SearchLeftText.HoverTimer.Lerp(Color.Black * 0.1f, Color.Black * 0.25f);
+        FilterButton.LeftMouseDown += (s, e) => FilterTable.Invalid = !FilterTable.Invalid;
 
         SearchBox.Placeholder = PSHelper.GetTextByPointShop("ItemSearchTips").Value;
         SearchBox.BackgroundColor = SUIColor.Border * 0.25f;
@@ -72,26 +69,19 @@ public partial class PointShopUI : BaseBody
             ShopItemTableIsDirty = true;
         };
 
-        ClearSearchButton.Text = $"{PSHelper.GetTextByPointShop("Clear")}";
-        ClearSearchButton.LeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
-        ClearSearchButton.OnUpdateStatus += (g) =>
-            ClearSearchButton.BackgroundColor = ClearSearchButton.HoverTimer.Lerp(Color.Black * 0.1f, Color.Black * 0.25f);
+        ClearButton.Text = $"{PSHelper.GetTextByPointShop("Clear")}";
+        ClearButton.LeftMouseDown += (_, _) => SearchBox.Text = string.Empty;
 
-        foreach (var item in TagContainer.Children)
+        foreach (var item in TagContainer.Children.Concat([FilterButton, ClearButton]))
         {
             item.StyleSheet.AllTransition.Duration = 0.2f;
 
             item.StyleSheet.SetStyle(UIElementState.Normal, new StyleDefinition()
             {
-                [$"{nameof(BackgroundColor)}"] = Color.Black * 0.1f,
-            });
-
-            item.StyleSheet.SetStyle(UIElementState.Hover, new StyleDefinition()
-            {
                 [$"{nameof(BackgroundColor)}"] = Color.Black * 0.2f,
             });
 
-            item.StyleSheet.SetStyle(UIElementState.Active, new StyleDefinition()
+            item.StyleSheet.SetStyle(UIElementState.Hover, new StyleDefinition()
             {
                 [$"{nameof(BackgroundColor)}"] = Color.Black * 0.3f,
             });

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using PointShop.Items;
+﻿using PointShop.Items;
 using PointShop.UserInterfaces.About;
 using SilkyUIFramework.Attributes;
 using SilkyUIFramework.Extensions;
