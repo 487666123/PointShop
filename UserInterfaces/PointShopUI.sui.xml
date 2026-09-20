@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Body
-	xmlns:se="clr-namespace:SilkyUIFramework.Elements;assembly=SilkyUIFramework"
+	xmlns:se="clr-namespace:SilkyUIFramework.Elements"
 	xmlns:sui="https://github.com/487666123/SilkyUIFramework"
+	xmlns:prop="https://github.com/487666123/SilkyUIFramework/Properties"
     sui:Class="PointShop.UserInterfaces.PointShopUI" Enabled="false"
     FitWidth="false" FitHeight="true" EnableBlur="true"
 	OverflowHidden="true" IndependentRenderTarget="true"
@@ -16,8 +17,8 @@
 		<!-- 菜单栏 -->
 		<ScrollView sui:Name="MenuListScrollView"
 					Width="25%" Height="100%" Gap="4" Padding="4">
-			<M.Mask Border="2" BorderRadius="4" BorderColor="rgba(0,0,0,0.75)" BackgroundColor="rgba(0,0,0,0.25)" />
-			<M.Container HiddenBox="Inner" Gap="0" />
+			<prop:Mask Border="2" BorderRadius="4" BorderColor="rgba(0,0,0,0.75)" BackgroundColor="rgba(0,0,0,0.25)" />
+			<prop:Container HiddenBox="Inner" Gap="0" />
 		</ScrollView>
 		<VR BackgroundColor="rgba(0,0,0,0.75)" />
 		<!-- RightContainer -->

@@ -3,6 +3,7 @@
 <Body xmlns:sui="https://github.com/487666123/SilkyUIFramework"
 	  sui:Class="PointShop.UserInterfaces.DisplayUI.SUIDisplayItem"
 	  CrossAlignment="Center" CrossContentAlignment="Center"
+	  FitWidth="true" FitHeight="true"
 	  Border="2" BorderRadius="4" Gap="2" OverflowHidden="true" FlexGrow="1">
 	<Image sui:Name="Icon" FitWidth="false" FitHeight="false"
 		   ImageScale="0.75" ImageAlign="0.5" Width="30px" Height="100%"/>

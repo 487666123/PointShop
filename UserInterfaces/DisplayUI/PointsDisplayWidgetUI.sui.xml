@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- sui:Class 填写对应 UIElementGroup 类名 -->
 <Body xmlns:s="https://github.com/487666123/SilkyUIFramework"
+	  xmlns:prop="https://github.com/487666123/SilkyUIFramework/Properties"
 	  s:Class="PointShop.UserInterfaces.DisplayUI.PointsDisplayWidgetUI"
 	  Enabled="true" Left="50#" Top="-20px -100% 100#"
 	  CrossAlignment="Stretch" CrossContentAlignment="Stretch"
@@ -17,9 +18,9 @@
 
 	<ScrollView s:Name="ScrollView" Orientation="Vertical"
 				Gap="4" Padding="4" Width="245px" Height="140px">
-		<M.Mask />
-		<M.Container LayoutType="Grid" Gap="4" GridDirection="Row"
-					 GridItemsHorizontalAlignment="Stretch" GridVerticalAlignment="Center" />
+		<prop:Mask />
+		<prop:Container LayoutType="Grid" Gap="4" GridDirection="Row"
+					 GridItemsHorizontalAlignment="Stretch" GridVerticalAlignment="Stretch" />
 	</ScrollView>
 
 </Body>

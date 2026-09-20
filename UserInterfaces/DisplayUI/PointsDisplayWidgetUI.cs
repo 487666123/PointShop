@@ -19,7 +19,7 @@ public partial class PointsDisplayWidgetUI : BaseBody
         TitleText.Text = PSHelper.GetTextByPointShop("DisplayName").Value;
 
         var content = ScrollView.Container;
-        content.SetTemplateColumns([GridTrack.Fr(1f), GridTrack.Fr(1f)]);
+        content.SetTemplateColumns([GridTrack.Fr(10f), GridTrack.Fr(10f)]);
         content.SetAutoRows([GridTrack.Pixels(32f)]);
 
         var environments = PointShopSystem.Environments;
@@ -88,12 +88,12 @@ public partial class PointsDisplayWidgetUI : BaseBody
         {
             if (field == value) return;
             field = value;
-            if (field) ToStyle(new Anchor(20, 0f, 0f));
-            else ToStyle(new Anchor(-10, -1f, 1f));
+            if (field) SetStyleByTween(new Anchor(20, 0f, 0f));
+            else SetStyleByTween(new Anchor(-10, -1f, 1f));
         }
     }
 
-    private void ToStyle(Anchor target)
+    private void SetStyleByTween(Anchor target)
     {
         _tween?.Kill();
         _tween = CreateTween().Parallel().SetTrans(TransitionType.Back).SetEase(EaseType.Out);
