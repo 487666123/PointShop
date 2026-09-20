@@ -1,6 +1,4 @@
-﻿using SilkyUIFramework.Common.Tweening;
-using SilkyUIFramework.Extensions;
-using SilkyUIFramework.StyleSystem;
+﻿using SilkyUIFramework.StyleSystem;
 
 namespace PointShop.UserInterfaces.DisplayUI;
 
