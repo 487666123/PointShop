@@ -77,14 +77,10 @@ public partial class PointShopUI : BaseBody
             item.StyleSheet.AllTransition.Duration = 0.2f;
 
             item.StyleSheet.SetStyle(UIElementState.Normal, new StyleDefinition()
-            {
-                [$"{nameof(BackgroundColor)}"] = Color.Black * 0.2f,
-            });
+                .Set(nameof(BackgroundColor), Color.Black * 0.2f));
 
             item.StyleSheet.SetStyle(UIElementState.Hover, new StyleDefinition()
-            {
-                [$"{nameof(BackgroundColor)}"] = Color.Black * 0.3f,
-            });
+                .Set(nameof(BackgroundColor), Color.Black * 0.3f));
         }
 
         ShopItemTableScrollView.Container.SetGap(4);

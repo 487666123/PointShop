@@ -41,14 +41,10 @@ public class SUIMenuComponent : UIElementGroup
         Text.SetHeight(0f, 1f);
 
         StyleSheet.SetStyle(UIElementState.Normal, new StyleDefinition()
-        {
-            [nameof(BackgroundColor)] = Color.Transparent
-        });
+            .Set(nameof(BackgroundColor), Color.Transparent));
 
         StyleSheet.SetStyle(UIElementState.Hover, new StyleDefinition()
-        {
-            [nameof(BackgroundColor)] = Color.Black * 0.25f
-        });
+            .Set(nameof(BackgroundColor), Color.Black * 0.25f));
     }
 
     protected override void OnEnterTree()
